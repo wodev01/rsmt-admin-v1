@@ -1,0 +1,56 @@
+@media (max-width: 959px) {
+    .login-form-container {
+        min-width: 300px;
+    }
+
+    img.rsmt-logo {
+        height: 60px;
+    }
+
+    md-sidenav.right-side-nav {
+        min-width: 100%;
+    }
+
+    /*---------- Segments modal ----------*/
+    md-dialog#segment-interaction-dialog, md-dialog#sub-segment-dialog {
+        min-width: 600px;
+    }
+
+    md-dialog#sub-segment-dialog #segment-preview-ro-sidenav md-content.contentSection {
+        height: calc(100% - 50px);
+        min-height: calc(100% - 50px);
+    }
+
+    md-toolbar .md-toolbar-tools .text-small-959 {
+        font-size: 16px;
+    }
+
+    #client-page section > form > input.filterBox {
+        margin-left: -8px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    /* All Modal Dialog */
+    md-toolbar .md-toolbar-tools .text-small-599 {
+        font-size: 14px;
+    }
+
+    md-dialog.subSegmentDialog .roListContainer {
+        height: calc(100% - 86px) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Customize breadcrumb */
+    #customerTab ul.breadcrumb {
+        font-size: 12px;
+        margin-left: -3.3em;
+    }
+}
+
+@media (min-width: 599px) {
+    #group-member-list button.addMemberBtn {
+        margin-right: 0 !important;
+    }
+}
