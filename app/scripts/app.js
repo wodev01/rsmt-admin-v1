@@ -105,9 +105,14 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             controller: 'LoginCtrl'
         })
         .state('resetPassword', {
-            url: '/resetPassword?resetpw',
+            url: '/reset-password',
             templateUrl: 'views/resetPassword.html',
-            controller: 'ResetPasswordCtrl'
+            controller: 'ResetPasswordCtrl',
+            resolve: {
+                AuthService : ['AuthService', function (AuthService) {
+                    return AuthService.fnResetPWTokenVerified();
+                }]
+            }
         })
         .state('main', {
             abstract: true,
@@ -120,8 +125,8 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             templateUrl: 'views/authenticated/clients/clients.html',
             controller: 'clientsCtrl',
             resolve: {
-                GetUser: ['GetUserService', function (GetUserService) {
-                    return GetUserService.fetchUser();
+                AuthService: ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -130,8 +135,8 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             templateUrl: 'views/authenticated/payments/payments.html',
             controller: 'paymentsCtrl',
             resolve: {
-                GetUser: ['GetUserService', function (GetUserService) {
-                    return GetUserService.fetchUser();
+                AuthService: ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -140,8 +145,8 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             templateUrl: 'views/authenticated/shopLocations/shopLocations.html',
             controller: 'shopLocationsCtrl',
             resolve: {
-                GetUser: ['GetUserService', function (GetUserService) {
-                    return GetUserService.fetchUser();
+                AuthService: ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -150,8 +155,8 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             templateUrl: 'views/authenticated/shopGroups/groups.html',
             controller: 'groupsCtrl',
             resolve: {
-                GetUser: ['GetUserService', function (GetUserService) {
-                    return GetUserService.fetchUser();
+                AuthService: ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -160,8 +165,8 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             templateUrl: 'views/authenticated/settings/settings.html',
             controller: 'settingsCtrl',
             resolve: {
-                GetUser: ['GetUserService', function (GetUserService) {
-                    return GetUserService.fetchUser();
+                AuthService: ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
                 }]
             }
         });

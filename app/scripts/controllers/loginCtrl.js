@@ -8,7 +8,7 @@
  * Controller of the rsmtAdminApp
  */
 app.controller('LoginCtrl',
-    function ($scope, $rootScope, $mdDialog, $state, $stateParams, localStorage, toastr, ErrorMsg) {
+    function ($scope, $rootScope, $mdDialog, $state, $stateParams, toastr, ErrorMsg) {
 
         $scope.user = {isProcessing: false};
 
@@ -24,7 +24,6 @@ app.controller('LoginCtrl',
                 function (response) {
                     user.isProcessing = false;
                     $scope.fnRefreshDom();
-                    localStorage.setItem('userObj', JSON.stringify(response));
                     if (response.verified === 'true') {
                         $rootScope.loginUserName = response.name;
                         toastr.success('Signed in as ' + $rootScope.loginUserName);

@@ -1,6 +1,6 @@
 @media (max-width: 959px) {
-    .login-form-container {
-        min-width: 300px;
+    .center-form-container {
+        width: 300px;
     }
 
     img.rsmt-logo {

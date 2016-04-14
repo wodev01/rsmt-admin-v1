@@ -8,7 +8,7 @@
  * Controller of the rsmtAdminApp
  */
 angular.module('rsmtAdminApp')
-    .controller('MainCtrl', function ($scope, $state, $location, $cookies, $mdSidenav, $mdUtil, cookieName, localStorage) {
+    .controller('MainCtrl', function ($scope, $state, $location, $cookies, $mdSidenav, $mdUtil, cookieName) {
 
         $scope.fnToggleSideNav = function (componentId) {
             $mdSidenav(componentId).toggle().then(function () {
@@ -36,8 +36,8 @@ angular.module('rsmtAdminApp')
         };
 
         $scope.fnInitMain = function () {
-            if (localStorage.getItem('userObj')) {
-                $scope.userObj = JSON.parse(localStorage.getItem('userObj'));
+            if (CarglyPartner.user) {
+                $scope.userObj = CarglyPartner.user;
             }
         };
     });
