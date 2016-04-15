@@ -1,6 +1,6 @@
 'use strict';
 app.controller('manageGroupCtrl',
-    function ($scope, $rootScope, toastr, groupService, $mdDialog) {
+    function ($scope, $rootScope, $q, toastr, groupService, $mdDialog) {
 
         var groupId = '';
         $scope.isAddBtnDisabled = true;
@@ -12,16 +12,20 @@ app.controller('manageGroupCtrl',
 
         $scope.searchTextChange = function (text) {
             $scope.isAddBtnDisabled = true;
-            if (text) {
-                groupService.fetchClientsUsingFilter(text)
-                    .then(function (res) {
-                        var clientsArr = [];
-                        angular.forEach(res, function (key) {
-                            clientsArr.push({label: key.partner, id: key.id});
-                        });
-                        $scope.members = clientsArr;
+        };
+
+        $scope.initMember = function (text) {
+            var deffered = $q.defer();
+            groupService.fetchClientsUsingFilter(text)
+                .then(function (res) {
+                    var clientsArr = [];
+                    angular.forEach(res, function (key) {
+                        clientsArr.push({label: key.partner, id: key.id});
                     });
-            }
+                    $scope.members = clientsArr;
+                    deffered.resolve($scope.members);
+                });
+            return deffered.promise;
         };
 
         $scope.selectedItemChange = function (item) {
@@ -59,7 +63,7 @@ app.controller('manageGroupCtrl',
                     $scope.fnGroupToastMsg(res);
                     $scope.fnCloseManageGroupSwap();
                     $scope.isProcessing = false;
-                }, function(error) {
+                }, function (error) {
                     toastr.error('Failed saving group information.', 'STATUS CODE: ' + error.status);
                     $scope.isProcessing = false;
                 });
@@ -69,7 +73,7 @@ app.controller('manageGroupCtrl',
                     $scope.fnGroupToastMsg(res);
                     $scope.fnCloseManageGroupSwap();
                     $scope.isProcessing = false;
-                }, function(error) {
+                }, function (error) {
                     toastr.error('Failed creating group.', 'STATUS CODE: ' + error.status);
                     $scope.isProcessing = false;
                 });
