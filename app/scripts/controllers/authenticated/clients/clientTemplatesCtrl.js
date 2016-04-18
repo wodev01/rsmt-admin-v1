@@ -77,9 +77,9 @@ app.controller('clientTemplatesCtrl',
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             columnDefs: [
-                {field: 'name', displayName: 'Name', enableHiding: false},
-                {field: 'subject', displayName: 'Subject', enableHiding: false},
-                {field: 'from_name', displayName: 'From Name', enableHiding: false},
+                {field: 'name', displayName: 'Name', minWidth:150, enableHiding: false},
+                {field: 'subject', displayName: 'Subject', minWidth:200, enableHiding: false},
+                {field: 'from_name', displayName: 'From Name', minWidth:150, enableHiding: false},
                 {
                     name: 'action',
                     displayName: '',

@@ -1,15 +1,15 @@
 <md-content id="client-updates-tab" class="md-padding">
-    <div layout="row" layout-align="space-between center">
+    <div layout="row" layout-xs="column" layout-align="space-between center">
         <div class="md-display-1">Updates</div>
 
-        <div layout="row" layout-xs="column" layout-align="end center">
+        <div layout="row" layout-align="end center">
             <md-button class="md-raised md-accent" ng-click="fnNewUpdateView();">New Update</md-button>
             <md-button class="md-raised md-accent" ng-click="fnRunUpdateNow($event);">Update Now
             </md-button>
         </div>
     </div>
 
-    <div layout="row">
+    <div layout="row" layout-xs="column">
         <md-input-container>
             <md-select aria-label="Select Type"
                        ng-model="selectType"
