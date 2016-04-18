@@ -70,7 +70,7 @@ app.controller('shopLocationsSegmentsCtrl',
             enableVerticalScrollbar: 0,
             columnDefs: [
                 {field: 'name', displayName: 'Segment Name', minWidth: 100, enableHiding: false},
-                {field: 'sub_segments', displayName: 'SubSegment', cellFilter: 'joinArrayOfObj', enableHiding: false},
+                {field: 'sub_segments', displayName: 'SubSegment', cellFilter: 'joinArrayOfObj', minWidth: 200, enableHiding: false},
                 {field: 'delivery_enabled', displayName: 'Delivery Enabled', minWidth: 100, enableHiding: false},
                 {
                     name: 'action',
