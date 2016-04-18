@@ -1233,9 +1233,15 @@ md-toolbar.light-black-bg-1 {
     line-height: 3em;
 }
 
-md-dialog[aria-label=Delete] button[aria-label=Delete] {
+md-dialog[aria-label=Delete] button[aria-label=Delete], md-dialog[aria-label=Delete] button[aria-label=Remove] {
     background-color: rgb(198, 40, 40) !important;
     border-color: #C9302C !important;
+    color: rgba(255, 255, 255, 0.87) !important;
+}
+
+md-dialog[aria-label=Ok] button[aria-label=Run], md-dialog[aria-label=Ok] button[aria-label=Refund]  {
+    background-color: rgb(91, 123, 227) !important;
+    border-color: #5b94e3 !important;
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
