@@ -1350,3 +1350,8 @@ md-input-container.remove-error-space .md-errors-spacer {
 .c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
     cursor: pointer !important;
 }
+
+/* Remove outline for repair order list */
+md-list md-list-item > div {
+    outline: none;
+}

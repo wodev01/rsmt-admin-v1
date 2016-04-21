@@ -181,6 +181,7 @@
 
 .breadcrumb li {
     float: left;
+    outline: none;
 }
 
 .breadcrumb li a {
