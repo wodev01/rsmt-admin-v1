@@ -4,11 +4,13 @@
     <md-toolbar class="light-black-bg-1">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             {{shopLocationObj.name}}
-            <div class="bottom-sheet-demo inset" layout="row" layout-align="end center">
-                <md-button class="md-raised md-accent" ng-click="fnCloseManageShopLocationsSwapView();">Back</md-button>
+            <div class="bottom-sheet-demo inset padding-right-0" layout="row" layout-align="end center">
                 <md-button class="md-icon-button" ng-click="fnOpenBottomSheet();">
                     <md-icon md-font-set="material-icons">more_vert</md-icon>
                     <md-tooltip ng-if="$root.isMobile === null" md-direction="top">More</md-tooltip>
+                </md-button>
+                <md-button class="md-raised md-accent margin-right-0" ng-click="fnCloseManageShopLocationsSwapView();">
+                    Back
                 </md-button>
             </div>
         </div>
@@ -70,6 +72,13 @@
                      ng-include="'views/authenticated/shopLocations/shopLocationsCustomers.html'"
                      ng-init="fnInitShopLocCustomers();"></div>
             </md-tab>
+
+            <md-tab label="Customer List">
+                <div ng-if="selectedIndex == 9"
+                     ng-controller="shopLocationCustomersListCtrl"
+                     ng-include="'views/authenticated/shopLocations/shopLocationsCustomersList.html'"
+                     ng-init="fnInitShopLocCustomersList();"></div>
+            </md-tab>
         </md-tabs>
     </div>
 </md-sidenav>
@@ -77,3 +86,4 @@
 <!-- include swapping view-->
 <div ng-include="rightManageSegmentSwapView"></div>
 <div ng-include="rightOpenSegmentsSwapView"></div>
+<div ng-include="manageCustomerListSwapView"></div>

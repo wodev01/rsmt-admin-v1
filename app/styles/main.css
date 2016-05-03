@@ -450,19 +450,35 @@ md-dialog#sub-segment-dialog md-sidenav#segment-preview-ro-sidenav md-content.co
 
 /*------- START : md-date-time --------*/
 .time-date > .control > .slider > .date-control,
-.time-date > .control > .slider > .time-control{
+.time-date > .control > .slider > .time-control {
     overflow: hidden;
 }
+
 .time-date > .display > .title,
 .time-date > .control > .slider > .date-control > .days .day-cell:hover,
-.time-date > .control > .slider > .date-control > .days .day-cell:active{
+.time-date > .control > .slider > .date-control > .days .day-cell:active {
     background-color: #2D2D2D;
 }
+
 .time-date > .display > .content,
-.time-date > .control > .slider > .date-control > .days .day-cell.selected{
+.time-date > .control > .slider > .date-control > .days .day-cell.selected {
     background-color: #448AFF;
 }
-.time-date button, .time-date .button{
+
+.time-date button, .time-date .button {
     color: #2D2D2D;
 }
+
+.time-date > .control > .slider > .date-control > .days .day-cell.today {
+    color: #F44336;
+}
+
 /*------- END : md-date-time --------*/
+
+/*------- Customer List tab --------*/
+#customer-list-side-nav .expressionPreviewContainer {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 300px;
+}
