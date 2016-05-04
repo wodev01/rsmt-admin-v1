@@ -29,7 +29,7 @@ app.controller('shopLocationCustomersListCtrl',
         };
 
         /*---------- Close Customer List Swapping View ----------*/
-        $scope.fnCloseManageCustomerListView = function () {
+        $rootScope.fnCloseManageCustomerListView = function () {
             shopLocationsCustomerListService.setCustomerListObj({});
             $mdSidenav('manageCustomerListView').close().then(function () {
             });
@@ -57,7 +57,7 @@ app.controller('shopLocationCustomersListCtrl',
         };
 
         $scope.$on('refreshCustomerListGrid', function () {
-            $scope.fnCloseManageCustomerListView();
+            $rootScope.fnCloseManageCustomerListView();
             $scope.getPagedDataAsync();
         });
 

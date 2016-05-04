@@ -6,7 +6,7 @@
         <div class="md-toolbar-tools" layout="row">
             <span ng-bind="$root.isCustomerListName ? $root.isCustomerListName : 'Create New List' "></span>
             <span flex></span>
-            <md-button class="md-raised md-accent margin-right-0" ng-click="fnCloseManageCustomerListView();">
+            <md-button class="md-raised md-accent margin-right-0" ng-click="$root.fnCloseManageCustomerListView();">
                 Back
             </md-button>
         </div>
@@ -54,10 +54,21 @@
                 </div>
 
                 <div layout="row" layout-fill flex>
-                    <md-input-container class="remove-error-space" flex>
-                        <label>Value</label>
-                        <input type="text" name="exprValue" ng-model="filter.value" required/>
-                    </md-input-container>
+                    <md-autocomplete
+                            md-search-text="filter.searchText"
+                            md-search-text-change="fnSearchTextChange(filter.searchText);"
+                            md-selected-item="filter.value"
+                            md-selected-item-change="fnSelectedItemChange(filter.value);"
+                            md-items="item in fnGetMatches(filter.searchText, filter.name)"
+                            md-item-text="item"
+                            md-delay="500"
+                            md-no-cache="true"
+                            md-min-length="0"
+                            placeholder="Search/Type values" flex>
+                        <md-item-template>
+                            <span md-highlight-text="filter.searchText" md-highlight-flags="^i">{{item}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
 
                     <md-button class="md-fab md-mini"
                                ng-disabled="searchForm.$invalid"
@@ -113,21 +124,11 @@
             </div>
         </form>
 
-        <div layout="column" layout-gt-sm="row" layout-padding>
-            <div class="expressionPreviewContainer" flex>
-                <div>
-                    ({{filter.name}} {{filter.operator}}
-                    <span ng-bind="filter.operator == 'IN' ? '('+ filter.value + ')' : filter.value"></span>)
-                </div>
-                <div ng-repeat="exp in expressionArr | reverse">
-                    &nbsp;AND ({{exp.name}} {{exp.operator}}
-                    <span ng-bind="exp.operator == 'IN' ? '('+exp.value + ')' : exp.value"></span>)
-                </div>
-            </div>
-            &nbsp;&nbsp;
-            <div class="expressionPreviewContainer" flex>
-                <pre>{{filterObj | json}}</pre>
-            </div>
+        <div layout="row" layout-padding>
+            <md-button class="md-raised md-accent"
+                       aria-label="Preview values"
+                       ng-disabled="expressionArr.length == 0 || isProcessing"
+                       ng-click="fnSetPreviewValues(customerListName);">Preview values</md-button>
         </div>
     </md-content>
 </md-sidenav>

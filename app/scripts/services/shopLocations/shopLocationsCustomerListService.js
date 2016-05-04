@@ -54,6 +54,24 @@ app.factory('shopLocationsCustomerListService', ['$q', 'ErrorMsg',
             return defer.promise;
         };
 
+        shopLocationsCustomerListService.fnSetPreviewValues = function (locId, filterObj) {
+            var defer = $q.defer();
+            CarglyPartner.ajax({
+                url: '/partners/api/crm/' + locId + '/customer-list-preview',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(filterObj),
+                success: function (data) {
+                    defer.resolve(data);
+                },
+                error: function (error) {
+                    ErrorMsg.CheckStatusCode(error.status);
+                    defer.reject(error);
+                }
+            });
+            return defer.promise;
+        };
+
         shopLocationsCustomerListService.fnUpdateCustomerList = function (locId, filterObj) {
             var defer = $q.defer();
             CarglyPartner.ajax({
@@ -77,6 +95,22 @@ app.factory('shopLocationsCustomerListService', ['$q', 'ErrorMsg',
             CarglyPartner.ajax({
                 url: '/partners/api/crm/' + locId + '/customer-lists/' + customerListId,
                 type: 'DELETE',
+                success: function (data) {
+                    defer.resolve(data);
+                },
+                error: function (error) {
+                    ErrorMsg.CheckStatusCode(error.status);
+                    defer.reject(error);
+                }
+            });
+            return defer.promise;
+        };
+
+        shopLocationsCustomerListService.fetchFilterValues = function (locId, query) {
+            var defer = $q.defer();
+            CarglyPartner.ajax({
+                url: '/partners/api/crm/' + locId + '/customer-list-filter-values/' + query,
+                type: 'GET',
                 success: function (data) {
                     defer.resolve(data);
                 },

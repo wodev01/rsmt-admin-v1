@@ -1,6 +1,6 @@
 'use strict';
 app.controller('manageCustomerListCtrl',
-    function ($scope, $rootScope, toastr, shopLocationsService, shopLocationsCustomerListService) {
+    function ($scope, $rootScope, $q, $filter, toastr, shopLocationsService, shopLocationsCustomerListService) {
 
         var filterOption = "v.odo,v.make,v.model,v.year,v.ro_count,v.ro_avg,v.spent,v.labor_spent,v.parts_spent," +
             "v.delivered_message,v.scheduled_message,v.any_message,c.customer_type,c.company_name,c.first_seen," +
@@ -28,6 +28,51 @@ app.controller('manageCustomerListCtrl',
         $scope.filterObj = {}, $scope.filter = {};
 
         $scope.customerListFilterOptions = filterOption.split(',');
+        $scope.customerListFilterValues = [];
+        var filteredValuesFor = ['c.first_seen', 'c.last_seen', 'c.customer_type', 'v.make', 'v.model', 'v.year',
+            'c.postal_code', 'ro.marketing_source', 'ro.techician_name'];
+
+        $scope.fnGetFilterValues = function (filterName) {
+            $scope.customerListFilterValues = [];
+            if (filteredValuesFor.indexOf(filterName) == -1) return false;
+
+            var deffered = $q.defer();
+            shopLocationsCustomerListService.fetchFilterValues(locId, filterName)
+                .then(function (res) {
+                    $scope.customerListFilterValues = res;
+                    deffered.resolve($scope.customerListFilterValues);
+                });
+            return deffered.promise;
+        };
+
+        $scope.fnSearchTextChange = function(searchText) {
+            //console.log('>' + searchText + '<');
+            //if (typeof searchText === 'undefined' || searchText === null) searchText = undefined;
+
+        };
+
+        $scope.fnSelectedItemChange = function(item) {
+            //console.log('item ',item);
+            //if (typeof item === 'undefined' || item === null) item = undefined;
+        };
+
+        $scope.fnGetMatches = function (searchText, filterName) {
+            /*console.log($scope.customerListFilterValues);
+             return searchText ?
+             $filter('filter')($scope.customerListFilterValues, searchText) : $scope.customerListFilterValues;*/
+
+            $scope.customerListFilterValues = [];
+            if (filteredValuesFor.indexOf(filterName) == -1) return false;
+
+            var deffered = $q.defer();
+            shopLocationsCustomerListService.fetchFilterValues(locId, filterName)
+                .then(function (res) {
+                    $scope.customerListFilterValues = searchText ?
+                        $filter('filter')(res, searchText) : res;
+                    deffered.resolve($scope.customerListFilterValues);
+                });
+            return deffered.promise;
+        };
 
         $scope.fnConvertExpressionToJson = function (customerListName) {
             $scope.filterObj.name = customerListName;
@@ -92,6 +137,20 @@ app.controller('manageCustomerListCtrl',
                         $scope.isProcessing = false;
                     });
             }
+        };
+
+        $scope.fnSetPreviewValues = function (customerListName) {
+            $scope.fnConvertExpressionToJson(customerListName);
+
+            $scope.isProcessing = true;
+            shopLocationsCustomerListService.fnSetPreviewValues(locId, $scope.filterObj)
+                .then(function (data) {
+                    $rootScope.$broadcast('refreshCustomerListGrid');
+                    $scope.isProcessing = true;
+                }, function (error) {
+                    toastr.error('Failed setting preview values.', 'STATUS CODE: ' + error.status);
+                    $scope.isProcessing = false;
+                });
         };
 
         $scope.fnInit = function () {
