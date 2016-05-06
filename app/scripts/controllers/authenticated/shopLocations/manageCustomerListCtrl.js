@@ -7,9 +7,7 @@ app.controller('manageCustomerListCtrl',
             "c.last_seen,c.postal_code,c.ro_count,c.ro_avg,c.spent,c.labor_spent,c.parts_spent,c.vehicle_count," +
             "c.delivered_message,c.scheduled_message,c.any_message,ro.closed_day,ro.marketing_source,ro.techician_name";
 
-        var locId =
-            shopLocationsService.getShopLocationsObj().id ?
-                shopLocationsService.getShopLocationsObj().id : '';
+        var locId = shopLocationsService.getShopLocationsObj().id ? shopLocationsService.getShopLocationsObj().id : '';
 
         $scope.isProcessing = false;
         $scope.customerListObj = {};
@@ -32,35 +30,7 @@ app.controller('manageCustomerListCtrl',
         var filteredValuesFor = ['c.first_seen', 'c.last_seen', 'c.customer_type', 'v.make', 'v.model', 'v.year',
             'c.postal_code', 'ro.marketing_source', 'ro.techician_name'];
 
-        $scope.fnGetFilterValues = function (filterName) {
-            $scope.customerListFilterValues = [];
-            if (filteredValuesFor.indexOf(filterName) == -1) return false;
-
-            var deffered = $q.defer();
-            shopLocationsCustomerListService.fetchFilterValues(locId, filterName)
-                .then(function (res) {
-                    $scope.customerListFilterValues = res;
-                    deffered.resolve($scope.customerListFilterValues);
-                });
-            return deffered.promise;
-        };
-
-        $scope.fnSearchTextChange = function(searchText) {
-            //console.log('>' + searchText + '<');
-            //if (typeof searchText === 'undefined' || searchText === null) searchText = undefined;
-
-        };
-
-        $scope.fnSelectedItemChange = function(item) {
-            //console.log('item ',item);
-            //if (typeof item === 'undefined' || item === null) item = undefined;
-        };
-
-        $scope.fnGetMatches = function (searchText, filterName) {
-            /*console.log($scope.customerListFilterValues);
-             return searchText ?
-             $filter('filter')($scope.customerListFilterValues, searchText) : $scope.customerListFilterValues;*/
-
+        $scope.fnGetFilteredValues = function (searchText, filterName) {
             $scope.customerListFilterValues = [];
             if (filteredValuesFor.indexOf(filterName) == -1) return false;
 
@@ -91,12 +61,13 @@ app.controller('manageCustomerListCtrl',
         };
 
         $scope.fnAddExpression = function (filter) {
+            console.log('called');
             var temp = angular.copy(filter);
 
             $scope.expressionArr.push({
                 'name': temp.name,
                 'operator': temp.operator,
-                'value': temp.value
+                'value': temp.searchText
             });
 
             $scope.filter = {};

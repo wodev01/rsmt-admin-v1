@@ -5,7 +5,7 @@ app.controller('shopLocationsCtrl',
 
         $scope.rightEditView = 'views/authenticated/shopLocations/manageShopLocations.html';
         $scope.isTabsLoad = false;
-        $scope.searchFilter = '';
+        $scope.searchFilter = 'Test';
         $scope.selectedLocationId = '';
         $scope.isPagingCursor = false;
         $scope.isMoreShopLocations = false;

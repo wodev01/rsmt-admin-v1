@@ -3,7 +3,8 @@
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-            {{shopLocationObj.name}}
+            <span>{{shopLocationObj.name}}</span>
+
             <div class="bottom-sheet-demo inset padding-right-0" layout="row" layout-align="end center">
                 <md-button class="md-icon-button" ng-click="fnOpenBottomSheet();">
                     <md-icon md-font-set="material-icons">more_vert</md-icon>
@@ -17,7 +18,7 @@
     </md-toolbar>
 
     <div layout="column" md-theme="grey">
-        <md-tabs class="md-primary" md-dynamic-height md-selected="selectedIndex" ng-if="isTabsLoad">
+        <md-tabs class="md-primary" md-dynamic-height md-selected="selectedIndex=9" ng-if="isTabsLoad">
             <md-tab label="Dashboard" id="dashboard">
                 <div ng-if="selectedIndex == 0"
                      ng-controller="shopLocationsDashboardCtrl"

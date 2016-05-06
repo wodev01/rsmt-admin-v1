@@ -14,6 +14,7 @@ var app = angular
         'ngAnimate',
         'ngCookies',
         'ngSanitize',
+        'ngMessages',
         'ui.router',
         'angular.filter',
         'ngMaterial',

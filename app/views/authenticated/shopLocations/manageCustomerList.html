@@ -21,7 +21,7 @@
                 </md-input-container>
 
                 <div>
-                    <md-button class="md-raised md-accent"
+                    <md-button class="md-raised md-accent margin-top-13"
                                aria-label="Add to customer list"
                                ng-disabled="expressionArr.length == 0 || isProcessing"
                                ng-click="fnAddExprToCustomerList(customerListName);">
@@ -55,24 +55,23 @@
 
                 <div layout="row" layout-fill flex>
                     <md-autocomplete
+                            md-input-name="autocomplete"
                             md-search-text="filter.searchText"
-                            md-search-text-change="fnSearchTextChange(filter.searchText);"
                             md-selected-item="filter.value"
-                            md-selected-item-change="fnSelectedItemChange(filter.value);"
-                            md-items="item in fnGetMatches(filter.searchText, filter.name)"
+                            md-items="item in fnGetFilteredValues(filter.searchText, filter.name)"
                             md-item-text="item"
                             md-delay="500"
                             md-no-cache="true"
                             md-min-length="0"
-                            placeholder="Search/Type values" flex>
+                            placeholder="Search/Type values" required flex>
                         <md-item-template>
                             <span md-highlight-text="filter.searchText" md-highlight-flags="^i">{{item}}</span>
                         </md-item-template>
                     </md-autocomplete>
 
-                    <md-button class="md-fab md-mini"
-                               ng-disabled="searchForm.$invalid"
-                               ng-click="fnAddExpression(filter);fnConvertExpressionToJson(customerListName);">
+                    <md-button class="md-fab md-mini margin-top-0 margin-bottom-13"
+                               ng-disabled="searchForm.$invalid || !filter.searchText"
+                               ng-click="fnAddExpression(filter);">
                         <md-icon md-font-set="material-icons">add</md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Add Expression</md-tooltip>
                     </md-button>
@@ -88,7 +87,6 @@
                     <md-input-container flex>
                         <md-select aria-label="Select operand1"
                                    ng-model="expr.name"
-                                   ng-change="fnConvertExpressionToJson(customerListName);"
                                    placeholder="-- Select Option --">
                             <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
                                 {{operand1}}
@@ -99,7 +97,6 @@
                     <md-input-container flex>
                         <md-select aria-label="Select operator"
                                    ng-model="expr.operator"
-                                   ng-change="fnConvertExpressionToJson(customerListName);"
                                    placeholder="-- Select Option --">
                             <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
                                 {{operator.label}}
@@ -109,26 +106,36 @@
                 </div>
 
                 <div layout="row" layout-fill flex>
-                    <md-input-container class="remove-error-space" flex>
-                        <label>Value</label>
-                        <input type="text" name="exprValue"
-                               ng-model="expr.value"
-                               ng-change="fnConvertExpressionToJson(customerListName);" required/>
-                    </md-input-container>
+                    <md-autocomplete
+                            md-search-text="expr.searchText"
+                            md-selected-item="expr.value"
+                            md-items="item in fnGetFilteredValues(expr.searchText, expr.name)"
+                            md-item-text="item"
+                            md-delay="500"
+                            md-no-cache="true"
+                            md-min-length="0"
+                            placeholder="Search/Type values" flex>
+                        <md-item-template>
+                            <span md-highlight-text="expr.searchText" md-highlight-flags="^i">{{item}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
 
-                    <md-button class="md-icon-button md-warn" ng-click="fnDeleteRow(customerListName, $index);">
+                    <md-button class="md-icon-button md-warn"
+                               style="margin-bottom: 13px;"
+                               ng-click="fnDeleteRow(customerListName, $index);">
                         <md-icon md-font-set="material-icons">delete</md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>
                     </md-button>
                 </div>
             </div>
-        </form>
 
-        <div layout="row" layout-padding>
-            <md-button class="md-raised md-accent"
-                       aria-label="Preview values"
-                       ng-disabled="expressionArr.length == 0 || isProcessing"
-                       ng-click="fnSetPreviewValues(customerListName);">Preview values</md-button>
-        </div>
+            <div layout="row">
+                <md-button class="md-raised md-accent margin-left-0"
+                           aria-label="Preview values"
+                           ng-disabled="expressionArr.length == 0 || isProcessing"
+                           ng-click="fnSetPreviewValues(customerListName);">Preview values
+                </md-button>
+            </div>
+        </form>
     </md-content>
 </md-sidenav>
