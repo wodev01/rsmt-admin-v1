@@ -102,12 +102,14 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            data:{pageTitle:'Login'}
         })
         .state('resetPassword', {
             url: '/reset-password',
             templateUrl: 'views/resetPassword.html',
             controller: 'ResetPasswordCtrl',
+            data:{pageTitle:'Reset Password'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnResetPWTokenVerified();
@@ -124,6 +126,7 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             url: 'clients',
             templateUrl: 'views/authenticated/clients/clients.html',
             controller: 'clientsCtrl',
+            data:{pageTitle:'Clients'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser();
@@ -134,6 +137,7 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             url: 'payments',
             templateUrl: 'views/authenticated/payments/payments.html',
             controller: 'paymentsCtrl',
+            data:{pageTitle:'Payments'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser();
@@ -144,6 +148,7 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             url: 'shop-locations',
             templateUrl: 'views/authenticated/shopLocations/shopLocations.html',
             controller: 'shopLocationsCtrl',
+            data:{pageTitle:'Shop Locations'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser();
@@ -154,6 +159,7 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             url: 'groups',
             templateUrl: 'views/authenticated/shopGroups/groups.html',
             controller: 'groupsCtrl',
+            data:{pageTitle:'Groups'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser();
@@ -164,6 +170,7 @@ app.config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRout
             url: 'settings/:settingsName',
             templateUrl: 'views/authenticated/settings/settings.html',
             controller: 'settingsCtrl',
+            data:{pageTitle:'Settings'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser();
