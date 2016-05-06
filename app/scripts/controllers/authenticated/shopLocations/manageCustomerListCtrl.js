@@ -23,7 +23,10 @@ app.controller('manageCustomerListCtrl',
         ];
 
         $scope.customerListFilterOptions = $scope.expressionArr = [];
-        $scope.filterObj = {}, $scope.filter = {};
+        $scope.filterObj = {}; $scope.filter = {};
+        $scope.isParentForm = $scope.isChildForm = false;
+        $scope.isPreviewData = false;
+        $scope.customerPreviewData = [];
 
         $scope.customerListFilterOptions = filterOption.split(',');
         $scope.customerListFilterValues = [];
@@ -61,7 +64,6 @@ app.controller('manageCustomerListCtrl',
         };
 
         $scope.fnAddExpression = function (filter) {
-            console.log('called');
             var temp = angular.copy(filter);
 
             $scope.expressionArr.push({
@@ -71,6 +73,8 @@ app.controller('manageCustomerListCtrl',
             });
 
             $scope.filter = {};
+            $scope.isChildForm = false;
+            $scope.searchForm.$setPristine();
         };
 
         $scope.fnDeleteRow = function (customerListName, index) {
@@ -112,16 +116,39 @@ app.controller('manageCustomerListCtrl',
 
         $scope.fnSetPreviewValues = function (customerListName) {
             $scope.fnConvertExpressionToJson(customerListName);
-
-            $scope.isProcessing = true;
+            $scope.isPreviewData = true;
+            $scope.isPreviewDataMsg = false;
             shopLocationsCustomerListService.fnSetPreviewValues(locId, $scope.filterObj)
                 .then(function (data) {
-                    $rootScope.$broadcast('refreshCustomerListGrid');
-                    $scope.isProcessing = true;
+                    $scope.customerPreviewData = data;
+                    $scope.isPreviewData = false;
+                    $scope.isPreviewDataMsg = true;
                 }, function (error) {
                     toastr.error('Failed setting preview values.', 'STATUS CODE: ' + error.status);
-                    $scope.isProcessing = false;
+                    $scope.isPreviewData = false;
+                    $scope.isPreviewDataMsg = true;
                 });
+        };
+
+        $scope.previewListGridOptions = {
+            data: 'customerPreviewData',
+            rowHeight: 50,
+            multiSelect: false,
+            enableRowSelection: true,
+            enableRowHeaderSelection: false,
+            enableVerticalScrollbar: 0,
+            columnDefs: [
+                {field: 'first_name', displayName: 'First Name', minWidth: 100, enableHiding: false},
+                {field: 'last_name', displayName: 'Last Name', minWidth: 100, enableHiding: false},
+                {field: 'address1', displayName: 'Address', minWidth: 100, enableHiding: false},
+                {field: 'first_seen', displayName: 'First Seen', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', enableHiding: false},
+                {field: 'last_seen', displayName: 'Last Seen', minWidth: 100, cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', enableHiding: false}
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
         };
 
         $scope.fnInit = function () {

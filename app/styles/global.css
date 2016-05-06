@@ -1239,9 +1239,9 @@ md-dialog[aria-label=Delete] button[aria-label=Delete], md-dialog[aria-label=Del
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
-md-dialog[aria-label=Ok] button[aria-label=Run], md-dialog[aria-label=Ok] button[aria-label=Refund]  {
+md-dialog[aria-label=Ok] button[aria-label=Run], md-dialog[aria-label=Ok] button[aria-label=Refund] {
     background-color: rgb(91, 123, 227) !important;
-    border-color: #5b94e3 !important;
+    border-color: #5B94E3 !important;
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
@@ -1253,6 +1253,11 @@ div.settings-tab-container md-tabs md-tabs-content-wrapper > md-tab-content > di
 /*---------- Remove error space in input-container ----------*/
 md-input-container.remove-error-space .md-errors-spacer {
     min-height: 0px;
+}
+
+.error-msg {
+    color: rgb(213, 0, 0);
+    font-size: 12px;
 }
 
 .md-rsmt-theme.md-hue-1 .md-datepicker-input {

@@ -10,6 +10,7 @@ app.controller('shopLocationCustomersListCtrl',
 
         $scope.customerListData = [];
         $scope.isDataNotNull = $scope.isMsgShow = false;
+        $scope.isChildForm = false;
 
         $scope.fnCreateNewList = function () {
             $rootScope.isCustomerListName = '';

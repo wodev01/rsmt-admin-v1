@@ -18,60 +18,80 @@
                 <md-input-container class="remove-error-space" flex>
                     <label>Customer List Name</label>
                     <input type="text" name="name" ng-model="customerListName" required/>
+
+                    <div ng-if="searchForm.$submitted || searchForm.name.$touched">
+                        <span class="error-msg" ng-if="isParentForm && searchForm.name.$error.required">List name is required.</span>
+                    </div>
                 </md-input-container>
 
                 <div>
-                    <md-button class="md-raised md-accent margin-top-13"
+                    <md-button class="md-raised md-accent margin-top-13" type="submit"
                                aria-label="Add to customer list"
-                               ng-disabled="expressionArr.length == 0 || isProcessing"
-                               ng-click="fnAddExprToCustomerList(customerListName);">
+                               ng-click="isParentForm=true;isChildForm=false;searchForm.name.$valid && fnAddExprToCustomerList(customerListName);">
                         <span ng-bind="$root.isCustomerListName ? 'Update' : 'Add To Customer List'"></span>
                     </md-button>
                 </div>
             </div>
 
-            <div layout="row" layout-xs="column" layout-align="space-between center">
+            <div layout="row" layout-xs="column" layout-align="space-between center" novalidate>
                 <div layout="row" layout-fill flex>
                     <md-input-container flex>
                         <md-select aria-label="Select operand1"
+                                   name="filterName"
                                    ng-model="filter.name"
                                    placeholder="-- Select Option --" required>
                             <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
                                 {{operand1}}
                             </md-option>
                         </md-select>
+                        <div ng-if="searchForm.$submitted || searchForm.filterName.$touched">
+                            <span class="error-msg" ng-if="isChildForm && searchForm.filterName.$error.required">Filter name is required.</span>
+                        </div>
                     </md-input-container>
 
                     <md-input-container flex>
                         <md-select aria-label="Select operator"
+                                   name="filterOperator"
                                    ng-model="filter.operator"
                                    placeholder="-- Select Option --" required>
                             <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
                                 {{operator.label}}
                             </md-option>
                         </md-select>
+                        <div ng-if="searchForm.$submitted || searchForm.filterOperator.$touched">
+                            <span class="error-msg" ng-if="isChildForm && searchForm.filterOperator.$error.required">Operator is required.</span>
+                        </div>
                     </md-input-container>
                 </div>
 
                 <div layout="row" layout-fill flex>
-                    <md-autocomplete
-                            md-input-name="autocomplete"
-                            md-search-text="filter.searchText"
-                            md-selected-item="filter.value"
-                            md-items="item in fnGetFilteredValues(filter.searchText, filter.name)"
-                            md-item-text="item"
-                            md-delay="500"
-                            md-no-cache="true"
-                            md-min-length="0"
-                            placeholder="Search/Type values" required flex>
-                        <md-item-template>
-                            <span md-highlight-text="filter.searchText" md-highlight-flags="^i">{{item}}</span>
-                        </md-item-template>
-                    </md-autocomplete>
+                    <div layout="column" flex>
+                        <md-autocomplete
+                                md-input-name="autocomplete"
+                                md-search-text="filter.searchText"
+                                md-selected-item="filter.value"
+                                md-items="item in fnGetFilteredValues(filter.searchText, filter.name)"
+                                md-item-text="item"
+                                md-delay="500"
+                                md-no-cache="true"
+                                md-min-length="0"
+                                placeholder="Search/Type values" required="true" flex>
+                            <md-item-template>
+                                <span md-highlight-text="filter.searchText" md-highlight-flags="^i">{{item}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                        <div class="error-msg margin-top-3"
+                             ng-if="isChildForm && searchForm.$submitted && !filter.searchText">
+                            This field is required.
+                        </div>
+                    </div>
 
-                    <md-button class="md-fab md-mini margin-top-0 margin-bottom-13"
-                               ng-disabled="searchForm.$invalid || !filter.searchText"
-                               ng-click="fnAddExpression(filter);">
+                    <md-button class="md-fab md-mini margin-top-0 margin-bottom-13" type="submit"
+                               ng-click="isParentForm=false;isChildForm=true;
+                               searchForm.filterName.$valid &&
+                               searchForm.filterOperator.$valid &&
+                               filter.searchText &&
+                               fnAddExpression(filter);">
                         <md-icon md-font-set="material-icons">add</md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Add Expression</md-tooltip>
                     </md-button>
@@ -86,6 +106,7 @@
                 <div layout="row" layout-fill flex>
                     <md-input-container flex>
                         <md-select aria-label="Select operand1"
+                                   name="exprName"
                                    ng-model="expr.name"
                                    placeholder="-- Select Option --">
                             <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
@@ -96,6 +117,7 @@
 
                     <md-input-container flex>
                         <md-select aria-label="Select operator"
+                                   name="exprOperator"
                                    ng-model="expr.operator"
                                    placeholder="-- Select Option --">
                             <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
@@ -106,19 +128,21 @@
                 </div>
 
                 <div layout="row" layout-fill flex>
-                    <md-autocomplete
-                            md-search-text="expr.searchText"
-                            md-selected-item="expr.value"
-                            md-items="item in fnGetFilteredValues(expr.searchText, expr.name)"
-                            md-item-text="item"
-                            md-delay="500"
-                            md-no-cache="true"
-                            md-min-length="0"
-                            placeholder="Search/Type values" flex>
-                        <md-item-template>
-                            <span md-highlight-text="expr.searchText" md-highlight-flags="^i">{{item}}</span>
-                        </md-item-template>
-                    </md-autocomplete>
+                    <div layout="column" flex>
+                        <md-autocomplete
+                                md-search-text="expr.searchText"
+                                md-selected-item="expr.value"
+                                md-items="item in fnGetFilteredValues(expr.searchText, expr.name)"
+                                md-item-text="item"
+                                md-delay="500"
+                                md-no-cache="true"
+                                md-min-length="0"
+                                placeholder="Search/Type values" flex>
+                            <md-item-template>
+                                <span md-highlight-text="expr.searchText" md-highlight-flags="^i">{{item}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
 
                     <md-button class="md-icon-button md-warn"
                                style="margin-bottom: 13px;"
@@ -130,12 +154,33 @@
             </div>
 
             <div layout="row">
-                <md-button class="md-raised md-accent margin-left-0"
+                <md-button class="md-raised md-accent margin-left-0" type="submit"
                            aria-label="Preview values"
-                           ng-disabled="expressionArr.length == 0 || isProcessing"
-                           ng-click="fnSetPreviewValues(customerListName);">Preview values
+                           ng-click="isParentForm=false;isChildForm=false;fnSetPreviewValues(customerListName);">
+                    Preview values
                 </md-button>
             </div>
         </form>
+
+        <div layout="column">
+            <!-- Loader -->
+            <div ng-if="isPreviewData" layout="column" layout-align="center center"
+                 layout-fill flex>
+                <md-progress-circular class="md-accent" md-diameter="100"
+                                      md-mode="indeterminate"></md-progress-circular>
+            </div>
+
+            <div ng-if="customerPreviewData.length == 0 && isPreviewDataMsg" layout="row" layout-align="center center">
+                <div class="md-headline">Preview data not available.</div>
+            </div>
+
+            <!-- Grid Section -->
+            <div class="margin-bottom-10" ng-if="customerPreviewData.length !== 0 && !isPreviewData">
+                <div ui-grid="previewListGridOptions" ui-grid-selection ui-grid-auto-resize
+                     ng-style="$root.fnReturnGridHeight(customerPreviewData.length);" ng-cloak></div>
+            </div>
+        </div>
+
     </md-content>
+
 </md-sidenav>
