@@ -10,16 +10,24 @@
     </md-toolbar>
 
     <md-content ng-controller="clientUserManageCtrl" ng-init="fnInitUser();" class="md-padding">
-        <form name="userForm" layout="column" novalidate>
+        <form name="userForm" ng-submit="userForm.$valid && fnSaveUser(user);" layout="column" novalidate>
             <md-input-container class="remove-error-space">
                 <label>Name</label>
                 <input name="name" ng-model="user.name" ng-minlength="5"
                        ng-pattern="/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/" required>
+                <div ng-if="userForm.$submitted || userForm.name.$touched">
+                    <span class="error-msg" ng-if="userForm.name.$error.required">Name is required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Email</label>
                 <input name="email" type="email" ng-model="user.email" ng-minlength="5" required>
+                <div ng-if="userForm.$submitted || userForm.email.$touched">
+                    <span class="error-msg" ng-if="userForm.email.$error.required">Email is required.</span>
+                    <span class="error-msg" ng-if="userForm.email.$error.minlength">This field is too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="userForm.email.$error.email">This field must be a valid email address.</span>
+                </div>
             </md-input-container>
 
             <md-input-container>
@@ -62,9 +70,8 @@
                 <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
                                       md-mode="indeterminate"></md-progress-circular>
 
-                <md-button class="md-raised md-accent"
-                           ng-disabled="userForm.$invalid || !userForm.$dirty || isProcessing"
-                           ng-click="fnSaveUser(user);">
+                <md-button type="submit" class="md-raised md-accent"
+                           ng-disabled="isProcessing">
                     Save
                 </md-button>
                 <md-button class="md-warn md-raised md-hue-2" ng-click="fnCloseManageUser();">Cancel</md-button>
