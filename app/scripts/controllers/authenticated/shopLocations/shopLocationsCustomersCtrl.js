@@ -80,6 +80,7 @@ app.controller('shopLocationsCustomersCtrl',
 
         $scope.customerAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
             '<md-button class="md-icon-button md-accent" ' +
+            '           style="margin-left: 0;" ' +
             '           ng-click="grid.appScope.fnViewCustomerDetails(row,$event);">' +
             '   <md-icon md-font-set="material-icons">launch</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +

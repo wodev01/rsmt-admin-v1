@@ -1352,18 +1352,6 @@ app.controller('shopLocationsDashboardCtrl',
 
         /*---------------- End of Marketing Source --------------*/
 
-        /*---------- Init ----------*/
-        $scope.fnInitDashboard = function () {
-            $scope.fnGetLocationDetails();
-            $scope.fnCreatechartGroupsDD();
-        };
-
-        $scope.fnRefreshDom = function () {
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        };
-
         /*---------- Dashboard Request made only when the section is visible in the view-port ----------*/
         var dashboardSection = {};
 
@@ -1415,8 +1403,17 @@ app.controller('shopLocationsDashboardCtrl',
 
         }
 
-        /*---------- Bind scroll and window resize event for viewport changes ----------*/
-        $timeout(function () {
+        $scope.fnRefreshDom = function () {
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        };
+
+        $scope.fnInitDashboard = function () {
+            $scope.fnGetLocationDetails();
+            $scope.fnCreatechartGroupsDD();
+
+            /*---------- Bind scroll and window resize event for viewport changes ----------*/
             $('#manage-shoploc-sidenav').on('scroll', function () {
                 var elem = $('#manage-shoploc-sidenav md-tabs md-tab[id=dashboard]');
                 if (elem && elem.length != 0) {
@@ -1430,7 +1427,6 @@ app.controller('shopLocationsDashboardCtrl',
                     if ($scope.selectedIndex === 0) dashboardRequest();
                 }
             });
-
-        }, 1000);
+        };
 
     });

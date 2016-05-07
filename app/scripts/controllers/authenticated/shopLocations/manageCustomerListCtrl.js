@@ -23,10 +23,13 @@ app.controller('manageCustomerListCtrl',
         ];
 
         $scope.customerListFilterOptions = $scope.expressionArr = [];
-        $scope.filterObj = {}; $scope.filter = {};
-        $scope.isParentForm = $scope.isChildForm = false;
+        $scope.filterObj = {};
+        $scope.filter = {};
         $scope.isPreviewData = false;
         $scope.customerPreviewData = [];
+
+        $scope.breadcrumbArr = [{name: 'Customers List'}];
+        $scope.customerIndex = 0;
 
         $scope.customerListFilterOptions = filterOption.split(',');
         $scope.customerListFilterValues = [];
@@ -47,18 +50,15 @@ app.controller('manageCustomerListCtrl',
             return deffered.promise;
         };
 
-        $scope.fnConvertExpressionToJson = function (customerListName) {
-            $scope.filterObj.name = customerListName;
-            $scope.filterObj.customers_only = true;
-
-            $scope.filterObj.filters = [];
+        $scope.fnConvertExpressionToJson = function (filterObj) {
+            filterObj.filters = [];
             angular.forEach($scope.expressionArr, function (obj) {
                 var tempObj = {
                     'name': obj.name,
                     'operator': obj.operator,
                     'value': obj.operator == 'IN' ? '(' + obj.value + ')' : obj.value
                 };
-                $scope.filterObj.filters.push(tempObj);
+                filterObj.filters.push(tempObj);
             });
 
         };
@@ -73,22 +73,20 @@ app.controller('manageCustomerListCtrl',
             });
 
             $scope.filter = {};
-            $scope.isChildForm = false;
-            $scope.searchForm.$setPristine();
+            $scope.expressionForm.$setPristine();
         };
 
-        $scope.fnDeleteRow = function (customerListName, index) {
+        $scope.fnDeleteRow = function (index) {
             $scope.expressionArr.splice(index, 1);
-            $scope.fnConvertExpressionToJson(customerListName);
         };
 
-        $scope.fnAddExprToCustomerList = function (customerListName) {
-            $scope.fnConvertExpressionToJson(customerListName);
+        $scope.fnAddExprToCustomerList = function (filterObj) {
+            $scope.fnConvertExpressionToJson(filterObj);
 
             $scope.isProcessing = true;
 
             if ($rootScope.isCustomerListName) {
-                shopLocationsCustomerListService.fnUpdateCustomerList(locId, $scope.filterObj)
+                shopLocationsCustomerListService.fnUpdateCustomerList(locId, filterObj)
                     .then(function (data) {
                         $rootScope.$broadcast('refreshCustomerListGrid');
                         $scope.isProcessing = false;
@@ -102,7 +100,7 @@ app.controller('manageCustomerListCtrl',
                     });
 
             } else {
-                shopLocationsCustomerListService.fnAddToCustomerListPreview(locId, $scope.filterObj)
+                shopLocationsCustomerListService.fnAddToCustomerListPreview(locId, filterObj)
                     .then(function (data) {
                         $rootScope.$broadcast('refreshCustomerListGrid');
                         $scope.isProcessing = true;
@@ -114,11 +112,13 @@ app.controller('manageCustomerListCtrl',
             }
         };
 
-        $scope.fnSetPreviewValues = function (customerListName) {
-            $scope.fnConvertExpressionToJson(customerListName);
+        $scope.fnSetPreviewValues = function (filterObj) {
+            $scope.fnConvertExpressionToJson(filterObj);
+
             $scope.isPreviewData = true;
             $scope.isPreviewDataMsg = false;
-            shopLocationsCustomerListService.fnSetPreviewValues(locId, $scope.filterObj)
+
+            shopLocationsCustomerListService.fnSetPreviewValues(locId, filterObj)
                 .then(function (data) {
                     $scope.customerPreviewData = data;
                     $scope.isPreviewData = false;
@@ -130,6 +130,20 @@ app.controller('manageCustomerListCtrl',
                 });
         };
 
+        $scope.customerPreviewAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
+            '<md-button class="md-icon-button md-accent"' +
+            '           style="margin-left: 0;" ' +
+            '           ng-click="grid.appScope.fnViewCustomerDetails(row,$event);">' +
+            '   <md-icon md-font-set="material-icons">launch</md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
+            '</md-button></div>';
+
+        $scope.full_name = '<div layout="row" class="ui-grid-cell-contents">' +
+            '{{row.entity.first_name}}&nbsp;{{row.entity.last_name}}</div>';
+
+        $scope.visit_seen = '<div layout="row" class="ui-grid-cell-contents">' +
+            '{{row.entity.first_seen | date: \'MM/dd/yyyy\'}},&nbsp;{{row.entity.last_seen | date: \'MM/dd/yyyy\'}}</div>';
+
         $scope.previewListGridOptions = {
             data: 'customerPreviewData',
             rowHeight: 50,
@@ -138,11 +152,30 @@ app.controller('manageCustomerListCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'first_name', displayName: 'First Name', minWidth: 100, enableHiding: false},
-                {field: 'last_name', displayName: 'Last Name', minWidth: 100, enableHiding: false},
-                {field: 'address1', displayName: 'Address', minWidth: 100, enableHiding: false},
-                {field: 'first_seen', displayName: 'First Seen', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', enableHiding: false},
-                {field: 'last_seen', displayName: 'Last Seen', minWidth: 100, cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', enableHiding: false}
+                {
+                    name: 'action',
+                    displayName: '',
+                    cellTemplate: $scope.customerPreviewAction,
+                    width: 50,
+                    enableSorting: false,
+                    enableColumnMenu: false
+                },
+                {
+                    name: 'full name',
+                    displayName: 'Full Name',
+                    cellTemplate: $scope.full_name,
+                    minWidth: 200,
+                    enableSorting: false,
+                    enableColumnMenu: false
+                },
+                {
+                    name: 'fist seen, last seen',
+                    displayName: 'First Seen, Last Seen',
+                    cellTemplate: $scope.visit_seen,
+                    minWidth: 200,
+                    enableSorting: false,
+                    enableColumnMenu: false
+                }
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -151,16 +184,32 @@ app.controller('manageCustomerListCtrl',
             }
         };
 
+        $scope.fnOnSelectBreadcrumb = function (customerIndex) {
+            $scope.customerIndex = customerIndex;
+            $scope.breadcrumbArr.splice(customerIndex + 1, $scope.breadcrumbArr.length);
+
+            if (customerIndex == 0) delete $scope.selectedRow;
+        };
+
+        $scope.fnViewCustomerDetails = function (row, ev) {
+            $scope.intGridIndex = row.rowIndex;
+            $scope.customerIndex = 1;
+            $scope.customer = row.entity;
+            $scope.breadcrumbArr.push({name: row.entity.first_name + ' ' + row.entity.last_name});
+        };
+
+        $scope.setClickedRow = function (index) {
+            $scope.selectedRow = index;
+        };
+
         $scope.fnInit = function () {
             var customerListObj = angular.copy(shopLocationsCustomerListService.getCustomerListObj());
 
             if (Object.keys(customerListObj).length) {
-                $scope.filterObj.id = customerListObj.id;
-                $scope.customerListName = customerListObj.name;
-
+                $scope.filterObj = customerListObj;
                 $scope.expressionArr = customerListObj.filters;
 
-                $scope.fnConvertExpressionToJson($scope.customerListName);
+                $scope.fnConvertExpressionToJson($scope.filterObj);
             }
         };
 
