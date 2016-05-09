@@ -182,20 +182,24 @@ app.controller('clientTemplateManageCtrl',
                 locals: {scope_template: $scope.template},
                 template: '<md-dialog aria-label="Test Email dialog" style="min-width: 300px;">' +
                 '   <md-content layout="column" layout-padding>' +
+                '   <form name="testEmailForm" ng-submit="testEmailForm.$valid && fnSendTestEmail(to_address);" novalidate>' +
                 '       <div class="md-headline"> Send Test Email </div>' +
-                '       <div layout="column" ng-form="testEmailForm">' +
+                '       <div layout="column">' +
                 '           <md-input-container class="remove-error-space">' +
                 '               <label> To Address </label>' +
                 '               <input type="email" name="to_address" ng-model="to_address" required />' +
+                '               <div ng-if="testEmailForm.$submitted || testEmailForm.to_address.$touched">' +
+                '                   <span class="error-msg" ng-if="testEmailForm.to_address.$error.required">To Adress is required.</span>' +
+                '                   <span class="error-msg" ng-if="testEmailForm.to_address.$error.email">This field must be a valid email address.</span>' +
+                '               </div>' +
                 '           </md-input-container>' +
                 '       </div>' +
                 '       <md-dialog-actions>' +
-                '           <md-button class="md-raised md-accent"' +
-                '                       ng-disabled="testEmailForm.to_address.$invalid"' +
-                '                       ng-click="fnSendTestEmail(to_address);">Send</md-button>' +
+                '           <md-button type="submit" class="md-raised md-accent">Send</md-button>' +
                 '           <md-button class="md-warn md-raised md-hue-2"' +
                 '                       ng-click="fnCloseDialog();">Cancel</md-button>' +
                 '       </md-dialog-actions>' +
+                '    </form>' +
                 '    </md-content>' +
                 '</md-dialog>',
                 targetEvent: ev

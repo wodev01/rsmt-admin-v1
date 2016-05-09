@@ -1,8 +1,11 @@
 <md-content class="md-padding" flex="70" flex-xs="100">
-    <form name="clientInfoForm" layout="column" novalidate>
+    <form name="clientInfoForm" ng-submit="clientInfoForm.$valid && fnSaveClientInfo(client);" layout="column" novalidate>
         <md-input-container class="remove-error-space">
             <label>Partner Name</label>
             <input name="partner" ng-model="client.partner" required>
+            <div ng-if="clientInfoForm.$submitted || clientInfoForm.partner.$touched">
+                <span class="error-msg" ng-if="clientInfoForm.partner.$error.required">Partner name is required.</span>
+            </div>
         </md-input-container>
 
         <md-input-container>
@@ -34,15 +37,18 @@
         <md-input-container class="remove-error-space">
             <label>Contact Phone</label>
             <input name="contactPhone" ng-model="client.contactPhone" required>
+            <div ng-if="clientInfoForm.$submitted || clientInfoForm.contactPhone.$touched">
+                <span class="error-msg" ng-if="clientInfoForm.contactPhone.$error.required">Contact Phone is required.</span>
+            </div>
         </md-input-container>
 
         <div layout="row" layout-align="end center">
             <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
                                   md-mode="indeterminate"></md-progress-circular>
 
-            <md-button class="md-raised md-accent"
-                       ng-disabled="clientInfoForm.$invalid || !clientInfoForm.$dirty || isProcessing"
-                       ng-click="fnSaveClientInfo(client);">Save
+            <md-button type="submit" class="md-raised md-accent"
+                       ng-disabled="isProcessing">
+                Save
             </md-button>
         </div>
     </form>
