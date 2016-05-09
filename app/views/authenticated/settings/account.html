@@ -3,24 +3,32 @@
         <div class="md-display-1">Account Settings</div>
     </div>
 
-    <form name="partner_form" layout="column" novalidate flex="70" flex-xs="100">
+    <form name="partner_form" ng-submit="partner_form.$valid && updateUser();" layout="column" novalidate flex="70" flex-xs="100">
         <div class="md-title">Business Information</div>
 
         <div layout="column" class="md-padding">
             <md-input-container class="remove-error-space">
                 <label>Business Name</label>
-                <input ng-model="user.businessName" minlength="5" required>
+                <input name="businessName" ng-model="user.businessName" minlength="5" required>
+                <div ng-if="partner_form.$submitted || partner_form.businessName.$touched">
+                    <span class="error-msg" ng-if="partner_form.businessName.$error.required">Business Name is required.</span>
+                    <span class="error-msg" ng-if="partner_form.businessName.$error.minlength">This field is too short minimum 5 character is required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Business Website</label>
-                <input ng-model="user.website"
+                <input name="website" ng-model="user.website"
                        ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/" required>
+                <div ng-if="partner_form.$submitted || partner_form.website.$touched">
+                    <span class="error-msg" ng-if="partner_form.website.$error.required">Business website is required.</span>
+                    <span class="error-msg" ng-if="partner_form.website.$error.pattern">This field must be a valid url.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Address</label>
-                <input ng-model="user.address">
+                <input name="address" ng-model="user.address">
             </md-input-container>
 
             <md-input-container class="remove-error-space">
@@ -35,9 +43,15 @@
 
             <md-input-container class="remove-error-space">
                 <label>Business Zip</label>
-                <input ng-model="user.zip"
+                <input name="businessZip" ng-model="user.zip"
                        ng-pattern="/^[0-9]+$/"
-                       md-maxlength="10" minlength="5" required>
+                       maxlength="10" minlength="5" required>
+                <div ng-if="partner_form.$submitted || partner_form.businessZip.$touched">
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.required">Business Zip is required</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.pattern">This field must contain number only.</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.minlength">This field is too short minimum 5 character required.</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.maxlength">This field is too long maximum 10 character required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container>
@@ -54,9 +68,14 @@
         <div class="md-padding" layout="column">
             <md-input-container class="remove-error-space">
                 <label>Contact Name</label>
-                <input ng-model="user.contactName"
+                <input name="contactName" ng-model="user.contactName"
                        ng-pattern="/^[A-Za-z ]+$/"
-                       minlength="5" required>
+                       minlength="6" required>
+                <div ng-if="partner_form.$submitted || partner_form.contactName.$touched">
+                    <span class="error-msg" ng-if="partner_form.contactName.$error.required">Contact Name is required.</span>
+                    <span class="error-msg" ng-if="partner_form.contactName.$error.pattern">This field must contain alphabets only.</span>
+                    <span class="error-msg" ng-if="partner_form.contactName.$error.minlength">This field is too short minimum 6 character required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
@@ -69,24 +88,33 @@
         <div class="md-padding" layout="column">
             <md-input-container class="remove-error-space">
                 <label>API Secret Key</label>
-                <input ng-model="user.paymentProcessingSecretKey" minlength="6">
+                <input name="apiSecretKey" ng-model="user.paymentProcessingSecretKey" minlength="6">
+                <div ng-if="partner_form.$submitted || partner_form.apiSecretKey.$touched">
+                    <span class="error-msg" ng-if="partner_form.apiSecretKey.$error.minlength">This field too short minimum 6 character is required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>API Public Key</label>
-                <input ng-model="user.paymentProcessingPublicKey" minlength="5">
+                <input name="apiPublicKey" ng-model="user.paymentProcessingPublicKey" minlength="5">
+                <div ng-if="partner_form.$submitted || partner_form.apiPublicKey.$touched">
+                    <span class="error-msg" ng-if="partner_form.apiPublicKey.$error.minlength">This field too short minimum 5 character is required.</span>
+                </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Account ID</label>
-                <input ng-model="user.paymentProcessingAccountId" minlength="5">
+                <input name="apiAccountId" ng-model="user.paymentProcessingAccountId" minlength="5">
+                <div ng-if="partner_form.$submitted || partner_form.apiAccountId.$touched">
+                    <span class="error-msg" ng-if="partner_form.apiAccountId.$error.minlength">This field too short minimum 5 character is required.</span>
+                </div>
             </md-input-container>
         </div>
 
         <div layout="row">
-            <md-button class="md-raised md-accent"
-                       ng-disabled="partner_form.$invalid || !partner_form.$dirty || isProcessing"
-                       ng-click="updateUser();">Save
+            <md-button type="submit" class="md-raised md-accent"
+                       ng-disabled="isProcessing">
+                Save
             </md-button>
 
             <md-button class="md-warn md-raised md-hue-2" ng-click="fnCancelAccount();">Cancel</md-button>

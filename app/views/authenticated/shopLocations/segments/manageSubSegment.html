@@ -22,26 +22,42 @@
             </md-toolbar>
 
             <md-content class="contentViewSection">
-                <form name="manageSubSegmentForm" class="md-padding" layout="column" novalidate>
+                <form name="manageSubSegmentForm" class="md-padding" ng-submit="manageSubSegmentForm.$valid && fnSaveSubSegment(subSegment);" layout="column" novalidate>
                     <md-input-container class="remove-error-space">
                         <label flex>Sub-segment Name</label>
-                        <input type="text" ng-model="subSegment.name" ng-minlength="5" required flex/>
+                        <input name="name" type="text" ng-model="subSegment.name" ng-minlength="5" required flex/>
+                        <div ng-if="manageSubSegmentForm.$submitted || manageSubSegmentForm.name.$touched">
+                            <span class="error-msg" ng-if="manageSubSegmentForm.name.$error.required">Sub-segment Name is required.</span>
+                            <span class="error-msg" ng-if="manageSubSegmentForm.name.$error.minlength">This field is too short minimum 5 character is required.</span>
+                        </div>
                     </md-input-container>
 
                     <md-input-container class="remove-error-space">
                         <label flex>Template Name</label>
-                        <input type="text" ng-model="subSegment.template_name" ng-minlength="3" required flex/>
+                        <input name="templateName" type="text" ng-model="subSegment.template_name" ng-minlength="3" required flex/>
+                        <div ng-if="manageSubSegmentForm.$submitted || manageSubSegmentForm.templateName.$touched">
+                            <span class="error-msg" ng-if="manageSubSegmentForm.templateName.$error.required">Template name is required.</span>
+                            <span class="error-msg" ng-if="manageSubSegmentForm.templateName.$error.minlength">This field is too short minimum 3 character is required.</span>
+                        </div>
                     </md-input-container>
 
                     <md-input-container class="remove-error-space">
                         <label flex>Scheduled Days</label>
-                        <input type="number" ng-model="subSegment.interaction_delay_days" min="0" required flex/>
+                        <input name="scheduleDay" type="number" ng-model="subSegment.interaction_delay_days" min="0" required flex/>
+                        <div ng-if="manageSubSegmentForm.$submitted || manageSubSegmentForm.scheduleDay.$touched">
+                            <span class="error-msg" ng-if="manageSubSegmentForm.scheduleDay.$error.required">Scheduled Days is required.</span>
+                            <span class="error-msg" ng-if="manageSubSegmentForm.scheduleDay.$error.min">Invalid scheduled days.</span>
+                        </div>
+
                     </md-input-container>
 
                     <md-input-container class="remove-error-space">
                         <label flex>Expression</label>
                         <textarea rows="3" cols="50" name="expression"
                                   ng-model="subSegment.expression" required flex></textarea>
+                        <div ng-if="manageSubSegmentForm.$submitted || manageSubSegmentForm.expression.$touched">
+                            <span class="error-msg" ng-if="manageSubSegmentForm.expression.$error.required">Expression is required.</span>
+                        </div>
                     </md-input-container>
 
                     <md-checkbox aria-label="verified" ng-model="subSegment.enabled" class="md-accent">
@@ -56,10 +72,9 @@
                                    ng-click="fnCloseDialog();">Cancel
                         </md-button>
 
-                        <md-button class="md-raised md-accent"
-                                   ng-disabled="manageSubSegmentForm.$invalid
-                                                    || !manageSubSegmentForm.$dirty || isProcessing"
-                                   ng-click="fnSaveSubSegment(subSegment);">Save
+                        <md-button type="submit" class="md-raised md-accent"
+                                   ng-disabled="isProcessing">
+                            Save
                         </md-button>
                     </md-dialog-actions>
                 </form>
