@@ -54,7 +54,7 @@ app.factory('shopLocationsCustomerListService', ['$q', 'ErrorMsg',
             return defer.promise;
         };
 
-        shopLocationsCustomerListService.fnSetPreviewValues = function (locId, filterObj) {
+        shopLocationsCustomerListService.fnGetPreviewValues = function (locId, filterObj) {
             var defer = $q.defer();
             CarglyPartner.ajax({
                 url: '/partners/api/crm/' + locId + '/customer-list-preview',

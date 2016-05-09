@@ -1,6 +1,6 @@
 'use strict';
 app.controller('manageCustomerListCtrl',
-    function ($scope, $rootScope, $q, $filter, toastr, shopLocationsService, shopLocationsCustomerListService) {
+    function ($scope, $rootScope, $q, $filter, uiGridConstants, toastr, shopLocationsService, shopLocationsCustomerListService) {
 
         var filterOption = "v.odo,v.make,v.model,v.year,v.ro_count,v.ro_avg,v.spent,v.labor_spent,v.parts_spent," +
             "v.delivered_message,v.scheduled_message,v.any_message,c.customer_type,c.company_name,c.first_seen," +
@@ -112,21 +112,35 @@ app.controller('manageCustomerListCtrl',
             }
         };
 
-        $scope.fnSetPreviewValues = function (filterObj) {
+        $scope.fnGetPreviewValues = function (filterObj) {
             $scope.fnConvertExpressionToJson(filterObj);
 
             $scope.isPreviewData = true;
             $scope.isPreviewDataMsg = false;
+            $scope.isProcessing = true;
 
-            shopLocationsCustomerListService.fnSetPreviewValues(locId, filterObj)
+            $scope.fnOnSelectBreadcrumb(0);
+
+            if ($scope.gridApi && filterObj.customers_only) {
+                $scope.previewListGridOptions.columnDefs[3].visible = false;
+                $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+            } else if ($scope.gridApi) {
+                $scope.previewListGridOptions.columnDefs[3].visible = true;
+                $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+            }
+
+            shopLocationsCustomerListService.fnGetPreviewValues(locId, filterObj)
                 .then(function (data) {
                     $scope.customerPreviewData = data;
                     $scope.isPreviewData = false;
                     $scope.isPreviewDataMsg = true;
+                    $scope.isProcessing = false;
+
                 }, function (error) {
-                    toastr.error('Failed setting preview values.', 'STATUS CODE: ' + error.status);
+                    toastr.error('Failed retrieving preview values.', 'STATUS CODE: ' + error.status);
                     $scope.isPreviewData = false;
                     $scope.isPreviewDataMsg = true;
+                    $scope.isProcessing = false;
                 });
         };
 
@@ -138,50 +152,63 @@ app.controller('manageCustomerListCtrl',
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
             '</md-button></div>';
 
-        $scope.full_name = '<div layout="row" class="ui-grid-cell-contents">' +
-            '{{row.entity.first_name}}&nbsp;{{row.entity.last_name}}</div>';
+        $scope.initPreviewListGrid = function () {
+            $scope.previewListGridOptions = {
+                data: 'customerPreviewData',
+                rowHeight: 50,
+                multiSelect: false,
+                enableRowSelection: true,
+                enableRowHeaderSelection: false,
+                enableVerticalScrollbar: 0,
+                columnDefs: [
+                    {
+                        name: 'action',
+                        displayName: '',
+                        cellTemplate: $scope.customerPreviewAction,
+                        width: 50,
+                        enableSorting: false,
+                        enableColumnMenu: false
+                    },
+                    {
+                        name: 'full name',
+                        displayName: 'Full Name',
+                        cellTemplate: '<div layout="row" class="ui-grid-cell-contents">' +
+                        '{{row.entity.first_name}}&nbsp;{{row.entity.last_name}}</div>',
+                        minWidth: 200,
+                        enableSorting: false,
+                        enableColumnMenu: false
+                    },
+                    {
+                        name: 'fist seen, last seen',
+                        displayName: 'First Seen, Last Seen',
+                        cellTemplate: '<div layout="row" class="ui-grid-cell-contents">' +
+                        '{{row.entity.first_seen | date: \'MM/dd/yyyy\'}},&nbsp;' +
+                        '{{row.entity.last_seen | date: \'MM/dd/yyyy\'}}</div>',
+                        minWidth: 200,
+                        enableSorting: false,
+                        enableColumnMenu: false
+                    },
+                    {
+                        name: 'year, make, model',
+                        displayName: 'Vehicle Info',
+                        cellTemplate: '<div layout="row" class="ui-grid-cell-contents">' +
+                        '{{row.entity.matched_vehicle.year}}&nbsp;{{row.entity.matched_vehicle.make}}' +
+                        '&nbsp;{{row.entity.matched_vehicle.model}}</div>',
+                        minWidth: 200,
+                        visible: typeof $scope.filterObj.customers_only == 'undefined' ?
+                            true : $scope.filterObj.customers_only ? false : true,
+                        enableSorting: false,
+                        enableColumnMenu: false
+                    }
+                ],
+                onRegisterApi: function (gridApi) {
+                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                        row.isSelected = true;
+                    });
 
-        $scope.visit_seen = '<div layout="row" class="ui-grid-cell-contents">' +
-            '{{row.entity.first_seen | date: \'MM/dd/yyyy\'}},&nbsp;{{row.entity.last_seen | date: \'MM/dd/yyyy\'}}</div>';
-
-        $scope.previewListGridOptions = {
-            data: 'customerPreviewData',
-            rowHeight: 50,
-            multiSelect: false,
-            enableRowSelection: true,
-            enableRowHeaderSelection: false,
-            enableVerticalScrollbar: 0,
-            columnDefs: [
-                {
-                    name: 'action',
-                    displayName: '',
-                    cellTemplate: $scope.customerPreviewAction,
-                    width: 50,
-                    enableSorting: false,
-                    enableColumnMenu: false
-                },
-                {
-                    name: 'full name',
-                    displayName: 'Full Name',
-                    cellTemplate: $scope.full_name,
-                    minWidth: 200,
-                    enableSorting: false,
-                    enableColumnMenu: false
-                },
-                {
-                    name: 'fist seen, last seen',
-                    displayName: 'First Seen, Last Seen',
-                    cellTemplate: $scope.visit_seen,
-                    minWidth: 200,
-                    enableSorting: false,
-                    enableColumnMenu: false
+                    $scope.gridApi = gridApi;
                 }
-            ],
-            onRegisterApi: function (gridApi) {
-                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    row.isSelected = true;
-                });
-            }
+            };
         };
 
         $scope.fnOnSelectBreadcrumb = function (customerIndex) {
@@ -198,6 +225,14 @@ app.controller('manageCustomerListCtrl',
             $scope.breadcrumbArr.push({name: row.entity.first_name + ' ' + row.entity.last_name});
         };
 
+        $scope.fnViewVehicleDetails = function (obj) {
+            $scope.customerIndex = 2;
+            $scope.vehicleObj = obj;
+            $scope.breadcrumbArr.push({
+                name: obj.year + ' ' + obj.make + ' ' + obj.model
+            });
+        };
+
         $scope.setClickedRow = function (index) {
             $scope.selectedRow = index;
         };
@@ -211,6 +246,8 @@ app.controller('manageCustomerListCtrl',
 
                 $scope.fnConvertExpressionToJson($scope.filterObj);
             }
+
+            $scope.initPreviewListGrid();
         };
 
     });

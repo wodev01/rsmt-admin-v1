@@ -1207,6 +1207,11 @@ md-toolbar.light-black-bg-1 {
 
 .datagrid table tbody tr.selected {
     background-color: #E5E3E3 !important;
+    outline: none;
+}
+
+.datagrid table tbody tr:focus {
+    outline: none;
 }
 
 .datagrid table tbody td {

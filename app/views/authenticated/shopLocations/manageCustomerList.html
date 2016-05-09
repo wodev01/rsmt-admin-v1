@@ -6,9 +6,8 @@
         <div class="md-toolbar-tools" layout="row">
             <span ng-bind="$root.isCustomerListName ? $root.isCustomerListName : 'Create New List' "></span>
             <span flex></span>
-            <md-button class="md-raised md-accent margin-right-0" ng-click="$root.fnCloseManageCustomerListView();">
-                Back
-            </md-button>
+            <md-button class="md-raised md-accent" style="margin-right: 8px;"
+                       ng-click="$root.fnCloseManageCustomerListView();">Back</md-button>
         </div>
     </md-toolbar>
 
@@ -27,11 +26,13 @@
                 <div>
                     <md-checkbox class="md-accent"
                                  aria-label="Checkbox No Ink"
+                                 ng-disabled="isProcessing"
                                  ng-model="filterObj.customers_only" md-no-ink>Customers Only
                     </md-checkbox>
 
                     <md-button class="md-raised md-accent margin-top-13" type="submit"
                                aria-label="Add to customer list"
+                               ng-disabled="isProcessing"
                                ng-click="searchForm.$valid && fnAddExprToCustomerList(filterObj);">
                         <span ng-bind="$root.isCustomerListName ? 'Update' : 'Add To Customer List'"></span>
                     </md-button>
@@ -94,6 +95,7 @@
                     </div>
 
                     <md-button class="md-fab md-mini margin-top-0 margin-bottom-13" type="submit"
+                               ng-disabled="isProcessing"
                                ng-click="expressionForm.$valid && filter.searchText && fnAddExpression(filter);">
                         <md-icon md-font-set="material-icons">add</md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Add Expression</md-tooltip>
@@ -112,6 +114,7 @@
                     <md-select aria-label="Select operand1"
                                name="exprName"
                                ng-model="expr.name"
+                               ng-disabled="isProcessing"
                                placeholder="-- Select Option --">
                         <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
                             {{operand1}}
@@ -123,6 +126,7 @@
                     <md-select aria-label="Select operator"
                                name="exprOperator"
                                ng-model="expr.operator"
+                               ng-disabled="isProcessing"
                                placeholder="-- Select Option --">
                         <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
                             {{operator.label}}
@@ -141,6 +145,7 @@
                             md-delay="500"
                             md-no-cache="true"
                             md-min-length="0"
+                            ng-disabled="isProcessing"
                             placeholder="Search/Type values" flex>
                         <md-item-template>
                             <span md-highlight-text="expr.searchText" md-highlight-flags="^i">{{item}}</span>
@@ -150,6 +155,7 @@
 
                 <md-button class="md-icon-button md-warn"
                            style="margin-bottom: 13px;"
+                           ng-disabled="isProcessing"
                            ng-click="fnDeleteRow($index);">
                     <md-icon md-font-set="material-icons">delete</md-icon>
                     <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>
@@ -160,7 +166,8 @@
         <div layout="row">
             <md-button class="md-raised md-accent margin-left-0" type="submit"
                        aria-label="Preview values"
-                       ng-click="showPreview=true; fnSetPreviewValues(filterObj);">
+                       ng-disabled="isProcessing"
+                       ng-click="showPreview=true; fnGetPreviewValues(filterObj);">
                 Preview values
             </md-button>
         </div>
@@ -292,6 +299,7 @@
                                             <th>Odometer</th>
                                             <th>Notes</th>
                                             <th>Reference</th>
+                                            <th>&nbsp;</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -306,6 +314,17 @@
                                             <td>{{val.last_odo}}</td>
                                             <td>{{val.notes}}</td>
                                             <td>{{val.reference}}</td>
+                                            <td>
+                                                <div layout="row">
+                                                    <md-button class="md-icon-button md-accent"
+                                                               ng-click="fnViewVehicleDetails(val); setClickedRow($index);">
+                                                        <md-icon md-font-set="material-icons">launch</md-icon>
+                                                        <md-tooltip ng-if="$root.isMobile === null" md-direction="top">
+                                                            View
+                                                        </md-tooltip>
+                                                    </md-button>
+                                                </div>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -313,6 +332,79 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div ng-if="customerIndex == 2">
+                <!-- Vehicles Info-->
+                <div class="md-whiteframe-10dp">
+                    <md-toolbar class="md-primary md-hue-1">
+                        <div class="md-toolbar-tools" layout layout-align="center center">
+                            <span class="md-title">Vehicles Info</span>
+                        </div>
+                    </md-toolbar>
+
+                    <div layout="row" layout-xs="column" layout-margin>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Model:</label>
+                            <label flex>{{vehicleObj.model}}</label>
+                        </div>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Make:</label>
+                            <label flex>{{vehicleObj.make}}</label>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-xs="column" layout-margin>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Licenses:</label>
+                            <label flex>{{vehicleObj.license}}</label>
+                        </div>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Year:</label>
+                            <label flex>{{vehicleObj.year}}</label>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-xs="column" layout-margin>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Color:</label>
+                            <label flex>{{vehicleObj.color}}</label>
+                        </div>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Odometer:</label>
+                            <label flex>{{vehicleObj.last_odo}}</label>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-xs="column" layout-margin>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Notes:</label>
+                            <label flex>{{vehicleObj.notes}}</label>
+                        </div>
+                        <div layout="row" flex>
+                            <label class="leftLabel">Reference:</label>
+                            <label flex>{{vehicleObj.reference}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md-whiteframe-10dp margin-bottom-10">
+                    <md-toolbar class="md-primary md-hue-1">
+                        <div class="md-toolbar-tools" layout layout-align="center center">
+                            <span class="md-title">Recommended Items</span>
+                        </div>
+                    </md-toolbar>
+                    <recommended-grid vehicle-id="vehicleObj.id"></recommended-grid>
+                </div>
+
+                <div class="md-whiteframe-10dp">
+                    <md-toolbar class="md-primary md-hue-1">
+                        <div class="md-toolbar-tools" layout layout-align="center center">
+                            <span class="md-title">Repair Orders</span>
+                        </div>
+                    </md-toolbar>
+                    <repair-order-grid vehicle-id="vehicleObj.id"></repair-order-grid>
                 </div>
             </div>
         </div>

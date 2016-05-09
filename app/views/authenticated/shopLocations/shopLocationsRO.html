@@ -1,11 +1,11 @@
-<div id="ro-grid" class="md-padding">
+<div id="ro-grid" class="md-padding" style="min-height: 100px;">
     <!-- Loader -->
     <div ng-if="!isRODataNotNull && !isROMsgShow" layout="column" layout-align="center center" layout-fill flex>
         <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
     </div>
 
     <div ng-if="isROMsgShow" layout="row" layout-align="center center">
-        <div class="md-headline">No repair orders available.</div>
+        <div class="md-headline">Repair orders not available.</div>
     </div>
 
     <div ng-if="isRODataNotNull"
