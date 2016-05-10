@@ -2,8 +2,9 @@
 
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
-        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+        <div class="md-toolbar-tools" layout="row">
             <span ng-bind="editGroupName && isGroupEditable ? editGroupName : 'New Group'"></span>
+            <span flex></span>
             <md-button ng-click="fnCloseManageGroupSwap();" class="md-raised md-accent">Back</md-button>
         </div>
     </md-toolbar>

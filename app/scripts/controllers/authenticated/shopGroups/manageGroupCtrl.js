@@ -115,7 +115,7 @@ app.controller('manageGroupCtrl',
         $scope.fnGenerateGroupMemberGrid = function (data) {
             $scope.groupsMembersData = data;
             $scope.groupMembersAction = '<div layout="row">' +
-                '<md-button class="md-icon-button md-warn md-hue-2" ' +
+                '<md-button class="md-icon-button md-warn"' +
                 '           ng-click="grid.appScope.fnGroupMemberDelete(row,$event);">' +
                 '   <md-icon md-font-set="material-icons">delete</md-icon>' +
                 '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +

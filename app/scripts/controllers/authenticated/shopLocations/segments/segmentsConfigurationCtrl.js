@@ -46,7 +46,7 @@ app.controller('segmentsConfigurationCtrl',
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnEditManageSegmentsView(row);">' +
             '   <md-icon md-font-set="material-icons">edit</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip></md-button>' +
-            '<md-button class="md-icon-button md-warn md-hue-2" ' +
+            '<md-button class="md-icon-button md-warn" ' +
             '           ng-click="grid.appScope.fnRemoveSubSegmentsView(row)">' +
             '   <md-icon md-font-set="material-icons">delete</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +

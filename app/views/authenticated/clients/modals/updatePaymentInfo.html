@@ -6,26 +6,31 @@
     </md-toolbar>
 
     <md-content class="md-padding">
-        <form name="updatePaymentInfoForm" ng-submit="updatePaymentInfoForm.$valid && updateUserPaymentInfo();" layout="column" novalidate>
+        <form name="updatePaymentInfoForm" layout="column" novalidate>
             <md-input-container class="remove-error-space">
                 <label>Card Number</label>
                 <input name="cardNumber"
                        ng-model="paymentInfo.number"
                        ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/"
                        required/>
+
                 <div ng-if="updatePaymentInfoForm.$submitted || updatePaymentInfoForm.cardNumber.$touched">
-                    <span class="error-msg" ng-if="updatePaymentInfoForm.cardNumber.$error.required">Card number is required.</span>
-                    <span class="error-msg" ng-if="updatePaymentInfoForm.cardNumber.$error.pattern">This field must contain valid card number</span>
+                    <span class="error-msg" ng-if="updatePaymentInfoForm.cardNumber.$error.required">
+                        Card number is required.</span>
+                    <span class="error-msg" ng-if="updatePaymentInfoForm.cardNumber.$error.pattern">
+                        This field must contain valid card number.</span>
                 </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>CVV</label>
                 <input name="cvv" ng-model="paymentInfo.cvv" required ng-pattern="/^[0-9]{3,4}$/"/>
+
                 <div ng-if="updatePaymentInfoForm.$submitted || updatePaymentInfoForm.cvv.$touched">
                         <span class="error-msg"
                               ng-if="updatePaymentInfoForm.cvv.$error.required">CVV is required.</span>
-                    <span class="error-msg" ng-if="updatePaymentInfoForm.cvv.$error.pattern">This field must contain valid CVV number</span>
+                    <span class="error-msg" ng-if="updatePaymentInfoForm.cvv.$error.pattern">
+                        This field must contain valid CVV number.</span>
                 </div>
             </md-input-container>
 
@@ -36,10 +41,15 @@
                     <label>Month</label>
                     <input name="exp_month" type="number" min="1" max="12"
                            ng-model="paymentInfo.exp_month" required/>
+
                     <div ng-if="updatePaymentInfoForm.$submitted || updatePaymentInfoForm.exp_month.$touched">
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_month.$error.required">Month is required.</span>
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_month.$error.min || updatePaymentInfoForm.exp_month.$error.max">Month must be between 1-12.</span>
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_month.$error.number">This field must contain numbers only.</span>
+                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_month.$error.required">
+                            Month is required.</span>
+                        <span class="error-msg"
+                              ng-if="updatePaymentInfoForm.exp_month.$error.min || updatePaymentInfoForm.exp_month.$error.max">
+                            Month must be between 1-12.</span>
+                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_month.$error.number">
+                            This field must contain numbers only.</span>
                     </div>
                 </md-input-container>
 
@@ -47,25 +57,30 @@
                     <label>Year</label>
                     <input name="exp_year" type="number" min="1000" max="9999"
                            ng-model="paymentInfo.exp_year" required/>
+
                     <div ng-if="updatePaymentInfoForm.$submitted || updatePaymentInfoForm.exp_year.$touched">
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_year.$error.required">Year is required.</span>
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_year.$error.min || updatePaymentInfoForm.exp_year.$error.max">Year is invalid.</span>
-                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_year.$error.number">This field must contain numbers only.</span>
+                        <span class="error-msg"
+                              ng-if="updatePaymentInfoForm.exp_year.$error.required">Year is required.</span>
+                        <span class="error-msg"
+                              ng-if="updatePaymentInfoForm.exp_year.$error.min || updatePaymentInfoForm.exp_year.$error.max">
+                            Year is invalid.</span>
+                        <span class="error-msg" ng-if="updatePaymentInfoForm.exp_year.$error.number">
+                            This field must contain numbers only.</span>
                     </div>
                 </md-input-container>
             </div>
 
-            <md-dialog-actions>
-                <div ng-if="isProcessing">
-                    <div layout="row" layout-sm="column" layout-align="left center" md-theme="rsmt">
-                        <md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular>
-                    </div>
-                </div>
+            <md-dialog-actions class="padding-right-0">
+                <md-progress-circular md-theme="rsmt" class="md-primary" ng-if="isProcessing"
+                                      md-mode="indeterminate"></md-progress-circular>
+
                 <md-button type="submit" class="md-raised md-accent"
-                           ng-disabled="isProcessing">
+                           ng-disabled="isProcessing"
+                           ng-click="updatePaymentInfoForm.$valid && updateUserPaymentInfo();">
                     Save
                 </md-button>
-                <md-button class="md-warn md-raised md-hue-2" ng-click="fnCancel();">Cancel</md-button>
+
+                <md-button class="md-warn md-raised margin-right-0" ng-click="fnCancel();">Cancel</md-button>
             </md-dialog-actions>
         </form>
     </md-content>

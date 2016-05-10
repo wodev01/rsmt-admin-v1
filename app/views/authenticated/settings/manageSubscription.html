@@ -9,30 +9,33 @@
 
     <!-- swapping view content -->
     <md-content class="md-padding" ng-controller="manageSubscriptionCtrl" ng-init="fnInitSubscription();">
-        <form id="subscriptionForm" name="subscriptionForm" ng-submit="subscriptionForm.$valid && fnSaveSubscription(subscription, editSubscriptionName);" layout="column" novalidate>
+        <form id="subscriptionForm" name="subscriptionForm" layout="column" novalidate>
             <md-input-container class="remove-error-space">
                 <label>Name</label>
                 <input name="name" ng-model="subscription.name" ng-minlength="5" ng-disabled="isNameEditable" required>
+
                 <div ng-if="subscriptionForm.$submitted || subscriptionForm.name.$touched">
                     <span class="error-msg" ng-if="subscriptionForm.name.$error.required">Name is required.</span>
-                    <span class="error-msg" ng-if="subscriptionForm.name.$error.minlength">This field is too short minimum 5 character required.</span>
+                    <span class="error-msg" ng-if="subscriptionForm.name.$error.minlength">This field is too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Description</label>
-                <input name="description" ng-model="subscription.description" ng-minlength="5" required>
+                <input name="description" ng-model="subscription.description" required>
+
                 <div ng-if="subscriptionForm.$submitted || subscriptionForm.description.$touched">
                     <span class="error-msg" ng-if="subscriptionForm.description.$error.required">Description is required.</span>
-                    <span class="error-msg" ng-if="subscriptionForm.description.$error.minlength">This field is too short minimum 5 character required.</span>
                 </div>
             </md-input-container>
 
             <md-input-container class="remove-error-space">
                 <label>Amount</label>
                 <input type="number" name="amount_cents" ng-model="subscription.amount_cents" min="0" required>
+
                 <div ng-if="subscriptionForm.$submitted || subscriptionForm.amount_cents.$touched">
-                    <span class="error-msg" ng-if="subscriptionForm.amount_cents.$error.required">Amount is required.</span>
+                    <span class="error-msg"
+                          ng-if="subscriptionForm.amount_cents.$error.required">Amount is required.</span>
                     <span class="error-msg" ng-if="subscriptionForm.amount_cents.$error.min">Invalid amount.</span>
                 </div>
             </md-input-container>
@@ -42,14 +45,12 @@
                                       ng-if="isProcessing" md-mode="indeterminate"></md-progress-circular>
 
                 <md-button type="submit" class="md-raised md-accent"
-                           ng-disabled="isProcessing">
+                           ng-disabled="isProcessing"
+                           ng-click="subscriptionForm.$valid && fnSaveSubscription(subscription, editSubscriptionName);">
                     Save
                 </md-button>
-                <md-button class="md-warn md-raised md-hue-2" ng-click="fnCloseSwap();">Cancel</md-button>
+                <md-button class="md-warn md-raised margin-right-0" ng-click="fnCloseSwap();">Cancel</md-button>
             </div>
         </form>
     </md-content>
 </md-sidenav>
-
-
-

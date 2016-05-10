@@ -10,7 +10,7 @@
     </md-toolbar>
 
     <md-content ng-controller="clientTemplateManageCtrl">
-        <form id="template-form" name="templateForm" ng-submit="templateForm.$valid && fnSaveTemplate(template);" layout="column" md-theme="grey" novalidate>
+        <form id="template-form" name="templateForm" layout="column" md-theme="grey" novalidate>
 
             <md-tabs class="md-primary" md-selected="selectedIndex" md-dynamic-height md-enable-disconnect
                      ng-click="selectedIndex == 3 ? toggleText ===  'Text' ?
@@ -21,14 +21,17 @@
                         <md-input-container class="remove-error-space">
                             <label>Name</label>
                             <input name="name" ng-model="template.name" required/>
+
                             <div ng-if="templateForm.$submitted || templateForm.name.$touched">
-                                <span class="error-msg" ng-if="templateForm.name.$error.required">Name is required.</span>
+                                <span class="error-msg"
+                                      ng-if="templateForm.name.$error.required">Name is required.</span>
                             </div>
                         </md-input-container>
 
                         <md-input-container class="remove-error-space">
                             <label>Subject</label>
                             <input name="subject" ng-model="template.subject" required/>
+
                             <div ng-if="templateForm.$submitted || templateForm.subject.$touched">
                                 <span class="error-msg" ng-if="templateForm.subject.$error.required">Subject is required.</span>
                             </div>
@@ -37,6 +40,7 @@
                         <md-input-container class="remove-error-space">
                             <label>From Address</label>
                             <input name="from_address" ng-model="template.from_address" required/>
+
                             <div ng-if="templateForm.$submitted || templateForm.from_address.$touched">
                                 <span class="error-msg" ng-if="templateForm.from_address.$error.required">From Address is required.</span>
                             </div>
@@ -45,6 +49,7 @@
                         <md-input-container class="remove-error-space">
                             <label>From Name</label>
                             <input name="from_name" ng-model="template.from_name" required/>
+
                             <div ng-if="templateForm.$submitted || templateForm.from_name.$touched">
                                 <span class="error-msg" ng-if="templateForm.from_name.$error.required">From Name is required.</span>
                             </div>
@@ -118,11 +123,12 @@
                                               md-mode="indeterminate"></md-progress-circular>
 
                         <md-button type="submit" class="md-raised md-accent"
-                                   ng-disabled="isProcessing">
+                                   ng-disabled="isProcessing"
+                                   ng-click="templateForm.$valid && fnSaveTemplate(template);">
                             Save
                         </md-button>
 
-                        <md-button class="md-warn md-raised md-hue-2"
+                        <md-button class="md-warn md-raised"
                                    ng-click="fnCloseManageTemplate();">Cancel
                         </md-button>
                     </div>

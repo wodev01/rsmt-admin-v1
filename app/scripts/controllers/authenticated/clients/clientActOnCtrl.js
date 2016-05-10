@@ -22,66 +22,41 @@ app.controller('clientActOnCtrl',
 
         };
 
-        $rootScope.$on('actonAccountLinked', function () {
-            $scope.fnGetActonInfo();
-        });
-
         $scope.fnToggleActonModal = function (ev, isActonAccountLinked) {
             if (!isActonAccountLinked) {
-                var ActonDialogController = ['$scope', '$rootScope', function ($scope, $rootScope) {
+                var ActonDialogController = ['$scope', function ($scope) {
                     $scope.fnToggleActonAccount = function (user) {
                         var paramObj = {};
                         paramObj.email = user.username;
                         paramObj.password = user.password;
 
+                        $scope.isProcessing = true;
                         clientActonService.linkActonAccount(partnerId, paramObj)
                             .then(function (data) {
                                 toastr.success('User account linked successfully.');
-                                $rootScope.$broadcast('actonAccountLinked');
+                                $scope.isProcessing = false;
+                                $mdDialog.hide();
 
                             }, function (error) {
                                 toastr.error('Something goe\'s wrong while linking act-on.');
+                                $scope.isProcessing = false;
+                                $mdDialog.cancel();
                             });
 
-                        $scope.fnCloseActonDialog();
                     };
 
                     $scope.fnCloseActonDialog = function () {
-                        $mdDialog.hide();
+                        $mdDialog.cancel();
                     };
 
                 }];
 
                 $mdDialog.show({
                     controller: ActonDialogController,
-                    template: '<md-dialog aria-label="Act on form dialog" flex-gt-sm="40" flex-sm="60" flex>' +
-                    '       <md-toolbar>' +
-                    '           <div class="md-toolbar-tools"><span class="md-title">Acton Form</span></div>' +
-                    '       </md-toolbar>' +
-                    '       <md-dialog-content layout-padding>' +
-                    '           <form name="downloadCustomerCSVForm" ng-init="fnInit();" layout="column" novalidate>' +
-                    '               <md-input-container class="remove-error-space">' +
-                    '                   <md-icon class="md-accent">person</md-icon>' +
-                    '                   <input type="text" ng-model="user.username" ' +
-                    '                                                   placeholder="Username" required />' +
-                    '               </md-input-container>' +
-                    '               <md-input-container class="remove-error-space">' +
-                    '                   <md-icon class="md-accent">lock</md-icon>' +
-                    '                   <input type="password" ng-model="user.password" ' +
-                    '                                                   placeholder="Password" required />' +
-                    '               </md-input-container>' +
-                    '           </form>' +
-                    '           <md-dialog-actions>' +
-                    '               <md-button class="md-raised md-accent"' +
-                    '                          ng-disabled="downloadCustomerCSVForm.$invalid"' +
-                    '                          ng-click="fnToggleActonAccount(user);">Link Account</md-button>' +
-                    '               <md-button class="md-warn md-raised md-hue-2" style="margin:0px 10px !important;"' +
-                    '                          ng-click="fnCloseActonDialog();">Cancel</md-button>' +
-                    '           </md-dialog-actions>' +
-                    '       </md-dialog-content>' +
-                    '</md-dialog>',
+                    templateUrl: 'views/authenticated/clients/modals/clientActOn.tmpl.html',
                     targetEvent: ev
                 }).then(function (answer) {
+                    $scope.fnGetActonInfo();
                 }, function (err) {
                 });
 
@@ -90,7 +65,7 @@ app.controller('clientActOnCtrl',
                 var confirm = $mdDialog.confirm()
                     .title('Unlink Account')
                     .content('Are you sure you want to unlink act-on account?')
-                    .ariaLabel('Delete')
+                    .ariaLabel('Ok')
                     .ok('Unlink')
                     .cancel('Cancel');
 

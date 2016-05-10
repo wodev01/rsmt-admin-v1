@@ -1,8 +1,9 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2 right-side-nav overflow-auto" md-component-id="manageUserSwap">
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
-        <h1 class="md-toolbar-tools" layout="row" layout-align="space-between center">
+        <h1 class="md-toolbar-tools" layout="row">
             <span>{{editUserName}}</span>
+            <span flex></span>
             <md-button class="md-raised md-accent" ng-click="fnCloseManageUser();">
                 Back
             </md-button>
@@ -10,11 +11,12 @@
     </md-toolbar>
 
     <md-content ng-controller="clientUserManageCtrl" ng-init="fnInitUser();" class="md-padding">
-        <form name="userForm" ng-submit="userForm.$valid && fnSaveUser(user);" layout="column" novalidate>
+        <form name="userForm" layout="column" novalidate>
             <md-input-container class="remove-error-space">
                 <label>Name</label>
                 <input name="name" ng-model="user.name" ng-minlength="5"
                        ng-pattern="/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/" required>
+
                 <div ng-if="userForm.$submitted || userForm.name.$touched">
                     <span class="error-msg" ng-if="userForm.name.$error.required">Name is required.</span>
                 </div>
@@ -23,6 +25,7 @@
             <md-input-container class="remove-error-space">
                 <label>Email</label>
                 <input name="email" type="email" ng-model="user.email" ng-minlength="5" required>
+
                 <div ng-if="userForm.$submitted || userForm.email.$touched">
                     <span class="error-msg" ng-if="userForm.email.$error.required">Email is required.</span>
                     <span class="error-msg" ng-if="userForm.email.$error.minlength">This field is too short minimum 5 character is required.</span>
@@ -59,8 +62,9 @@
                 </md-select>
             </md-input-container>
 
-            <div layout="row" layout-margin>
-                <md-checkbox class="md-accent" aria-label="owner" ng-model="user.owner">Owner</md-checkbox>
+            <div class="margin-left-0" layout="row" layout-margin>
+                <md-checkbox class="md-accent margin-left-0" aria-label="owner" ng-model="user.owner">Owner
+                </md-checkbox>
                 <md-checkbox class="md-accent" aria-label="verified" ng-model="user.verified" ng-disabled="true">
                     Verified
                 </md-checkbox>
@@ -71,12 +75,12 @@
                                       md-mode="indeterminate"></md-progress-circular>
 
                 <md-button type="submit" class="md-raised md-accent"
-                           ng-disabled="isProcessing">
+                           ng-disabled="isProcessing"
+                           ng-click="userForm.$valid && fnSaveUser(user);">
                     Save
                 </md-button>
-                <md-button class="md-warn md-raised md-hue-2" ng-click="fnCloseManageUser();">Cancel</md-button>
+                <md-button class="md-warn md-raised margin-right-0" ng-click="fnCloseManageUser();">Cancel</md-button>
             </div>
         </form>
     </md-content>
 </md-sidenav>
-

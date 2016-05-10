@@ -1,4 +1,37 @@
 'use strict';
+
+app.directive("passwordVerify", function () {
+    return {
+        require: "ngModel",
+        scope: {
+            passwordVerify: '='
+        },
+        link: function (scope, element, attrs, ctrl) {
+            scope.$watch(function () {
+                var combined;
+
+                if (scope.passwordVerify || ctrl.$viewValue) {
+                    combined = scope.passwordVerify + '_' + ctrl.$viewValue;
+                }
+                return combined;
+            }, function (value) {
+                if (value) {
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        var origin = scope.passwordVerify;
+                        if (origin !== viewValue) {
+                            ctrl.$setValidity("passwordVerify", false);
+                            return undefined;
+                        } else {
+                            ctrl.$setValidity("passwordVerify", true);
+                            return viewValue;
+                        }
+                    });
+                }
+            });
+        }
+    };
+});
+
 app.directive('pageTitle', function ($rootScope, $timeout) {
     return {
         link: function (scope, element) {
@@ -182,8 +215,9 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
             };
 
             $scope.fnSetGridOptions = function (id) {
-                $scope.roAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
-                    '<md-button class="md-icon-button md-accent" ' +
+                $scope.roAction = '<div class="ui-grid-cell-contents">' +
+                    '<md-button class="md-icon-button md-accent"' +
+                    '           style="margin-left: 0;"' +
                     '           ng-click="grid.appScope.fnViewRODetails(row,$event);">' +
                     '   <md-icon md-font-set="material-icons">launch</md-icon>' +
                     '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
@@ -204,7 +238,7 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                             name: 'action',
                             displayName: '',
                             cellTemplate: $scope.roAction,
-                            minWidth: 80,
+                            minWidth: 50,
                             enableSorting: false,
                             enableColumnMenu: false
                         },

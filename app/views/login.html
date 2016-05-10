@@ -9,14 +9,15 @@
         <div class="md-whiteframe-z1 md-padding center-form-container" layout-margin>
             <div class="md-display-1 text-center" layout-padding>Sign In</div>
 
-            <form name="signInForm" layout="column"
-                  ng-submit="signInForm.$valid && fnSignInUser(user);" novalidate>
+            <form name="signInForm" layout="column" novalidate>
                 <md-input-container class="remove-error-space">
                     <md-icon class="md-accent margin-top-5">person</md-icon>
                     <input type="email" name="email" placeholder="Email" ng-model="user.email" required>
+
                     <div ng-if="signInForm.$submitted || signInForm.email.$touched">
                         <span class="error-msg" ng-if="signInForm.email.$error.required">Email is required.</span>
-                        <span class="error-msg" ng-if="signInForm.email.$error.email">This field must be a valid email address.</span>
+                        <span class="error-msg" ng-if="signInForm.email.$error.email">
+                            This field must be a valid email address.</span>
                     </div>
                 </md-input-container>
 
@@ -24,6 +25,7 @@
                     <md-icon class="md-accent margin-top-5">lock</md-icon>
                     <input type="password" name="password" placeholder="Password"
                            ng-model="user.password" required/>
+
                     <div ng-if="signInForm.$submitted || signInForm.password.$touched">
                         <span class="error-msg" ng-if="signInForm.password.$error.required">Password is required.</span>
                     </div>
@@ -32,7 +34,8 @@
                 <div layout="column" layout-align="center center">
                     <div layout="row">
                         <md-button type="submit" class="md-raised md-accent"
-                                   ng-disabled="user.isProcessing">
+                                   ng-disabled="user.isProcessing"
+                                   ng-click="signInForm.$valid && fnSignInUser(user);">
                             Sign In
                         </md-button>
                     </div>

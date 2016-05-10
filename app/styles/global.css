@@ -1244,7 +1244,9 @@ md-dialog[aria-label=Delete] button[aria-label=Delete], md-dialog[aria-label=Del
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
-md-dialog[aria-label=Ok] button[aria-label=Run], md-dialog[aria-label=Ok] button[aria-label=Refund] {
+md-dialog[aria-label=Ok] button[aria-label=Resend], md-dialog[aria-label=Ok] button[aria-label=Refund],
+md-dialog[aria-label=Ok] button[aria-label=Reset], md-dialog[aria-label=Ok] button[aria-label=Run],
+md-dialog[aria-label=Ok] button[aria-label=Unlink]{
     background-color: rgb(91, 123, 227) !important;
     border-color: #5B94E3 !important;
     color: rgba(255, 255, 255, 0.87) !important;
@@ -1364,4 +1366,13 @@ md-input-container.remove-error-space .md-errors-spacer {
 /* Remove outline for repair order list */
 md-list md-list-item > div {
     outline: none;
+}
+
+/*----- margin removed from md-toolbar (default -8px) -----*/
+.md-toolbar-tools > .md-button:last-child {
+    margin-right: 0;
+}
+
+.md-toolbar-tools > .md-button:first-child {
+    margin-left: 0;
 }

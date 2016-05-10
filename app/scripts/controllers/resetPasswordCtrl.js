@@ -11,7 +11,7 @@ app.controller('ResetPasswordCtrl',
                 pass.isProcessing = true;
                 var passObj = angular.copy(pass);
                 delete passObj.isProcessing;
-                CarglyPartner.resetPassword(passObj, function() {
+                CarglyPartner.resetPassword(passObj.password, function() {
                     pass.isProcessing = false;
                     toastr.success('Password changed successfully.');
                     $location.url('/login');
@@ -20,7 +20,6 @@ app.controller('ResetPasswordCtrl',
                     toastr.error('Something goe\'s wrong, while resetting password.');
                 });
             }
-            return false;
         };
 
     });

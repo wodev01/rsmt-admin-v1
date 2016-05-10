@@ -189,14 +189,14 @@ app.controller('clientTemplateManageCtrl',
                 '               <label> To Address </label>' +
                 '               <input type="email" name="to_address" ng-model="to_address" required />' +
                 '               <div ng-if="testEmailForm.$submitted || testEmailForm.to_address.$touched">' +
-                '                   <span class="error-msg" ng-if="testEmailForm.to_address.$error.required">To Adress is required.</span>' +
+                '                   <span class="error-msg" ng-if="testEmailForm.to_address.$error.required">To Address is required.</span>' +
                 '                   <span class="error-msg" ng-if="testEmailForm.to_address.$error.email">This field must be a valid email address.</span>' +
                 '               </div>' +
                 '           </md-input-container>' +
                 '       </div>' +
-                '       <md-dialog-actions>' +
+                '       <md-dialog-actions class="padding-right-0">' +
                 '           <md-button type="submit" class="md-raised md-accent">Send</md-button>' +
-                '           <md-button class="md-warn md-raised md-hue-2"' +
+                '           <md-button class="md-warn md-raised margin-right-0"' +
                 '                       ng-click="fnCloseDialog();">Cancel</md-button>' +
                 '       </md-dialog-actions>' +
                 '    </form>' +

@@ -6,7 +6,7 @@
         <div class="md-toolbar-tools" layout="row">
             <span ng-bind="$root.isCustomerListName ? $root.isCustomerListName : 'Create New List' "></span>
             <span flex></span>
-            <md-button class="md-raised md-accent" style="margin-right: 8px;"
+            <md-button class="md-raised md-accent"
                        ng-click="$root.fnCloseManageCustomerListView();">Back</md-button>
         </div>
     </md-toolbar>
@@ -30,7 +30,7 @@
                                  ng-model="filterObj.customers_only" md-no-ink>Customers Only
                     </md-checkbox>
 
-                    <md-button class="md-raised md-accent margin-top-13" type="submit"
+                    <md-button class="md-raised md-accent margin-top-13 margin-right-0" type="submit"
                                aria-label="Add to customer list"
                                ng-disabled="isProcessing"
                                ng-click="searchForm.$valid && fnAddExprToCustomerList(filterObj);">

@@ -122,8 +122,9 @@ app.controller('segmentsInteractionCtrl',
             + '{{row.entity.segment.name}}\\{{ row.entity.sub_segment.name}}'
             + '</span></div>';
 
-        $scope.sgmentInteractionAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
-            '<md-button class="md-icon-button md-accent" ' +
+        $scope.sgmentInteractionAction = '<div class="ui-grid-cell-contents">' +
+            '<md-button class="md-icon-button md-accent"' +
+            '           style="margin-left: 0;"' +
             '           ng-click="grid.appScope.fnOpenSegmentInteraction(row);">' +
             '   <md-icon md-font-set="material-icons">launch</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +

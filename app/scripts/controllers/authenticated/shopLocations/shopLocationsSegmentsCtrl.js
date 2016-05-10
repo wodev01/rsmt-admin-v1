@@ -55,7 +55,7 @@ app.controller('shopLocationsSegmentsCtrl',
             '           ng-click="grid.appScope.fnOpenManageShopLocSegmentsView(row, $event);">' +
             '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip></md-button>' +
-            '<md-button class="md-icon-button md-warn md-hue-2" ' +
+            '<md-button class="md-icon-button md-warn" ' +
             '           ng-click="grid.appScope.fnRemoveManageShopLocSegmentsView(row,$event);">' +
             '   <md-icon md-font-set="material-icons">delete</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
