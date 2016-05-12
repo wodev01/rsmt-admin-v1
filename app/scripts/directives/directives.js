@@ -225,10 +225,9 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
 
             $scope.fnSetGridOptions = function (id) {
                 $scope.roAction = '<div class="ui-grid-cell-contents">' +
-                    '<md-button class="md-icon-button md-accent"' +
-                    '           style="margin-left: 0;"' +
-                    '           ng-click="grid.appScope.fnViewRODetails(row,$event);">' +
-                    '   <md-icon md-font-set="material-icons">launch</md-icon>' +
+                    '<md-button aria-label="view" class="md-icon-button md-accent margin-left-0"' +
+                    '           ng-click="grid.appScope.fnViewRODetails(row, $event);">' +
+                    '   <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
                     '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
                     '</md-button></div>';
 

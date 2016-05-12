@@ -71,7 +71,7 @@
             </div>
 
             <div layout="row" layout-align="end center">
-                <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
+                <md-progress-circular ng-if="isProcessing" class="md-accent"
                                       md-mode="indeterminate"></md-progress-circular>
 
                 <md-button type="submit" class="md-raised md-accent"
@@ -79,6 +79,7 @@
                            ng-click="userForm.$valid && fnSaveUser(user);">
                     Save
                 </md-button>
+
                 <md-button class="md-warn md-raised margin-right-0" ng-click="fnCloseManageUser();">Cancel</md-button>
             </div>
         </form>

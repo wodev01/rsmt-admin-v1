@@ -51,13 +51,13 @@ app.controller('shopLocationsSegmentsCtrl',
         };
 
         $scope.shopLocationSegmentsAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ' +
+            '<md-button aria-label="open" class="md-icon-button md-accent" ' +
             '           ng-click="grid.appScope.fnOpenManageShopLocSegmentsView(row, $event);">' +
-            '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip></md-button>' +
-            '<md-button class="md-icon-button md-warn" ' +
-            '           ng-click="grid.appScope.fnRemoveManageShopLocSegmentsView(row,$event);">' +
-            '   <md-icon md-font-set="material-icons">delete</md-icon>' +
+            '<md-button aria-label="delete" class="md-icon-button md-warn" ' +
+            '           ng-click="grid.appScope.fnRemoveManageShopLocSegmentsView(row, $event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
             '</md-button></div';
 

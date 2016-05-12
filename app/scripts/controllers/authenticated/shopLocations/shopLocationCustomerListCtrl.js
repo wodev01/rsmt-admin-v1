@@ -1,6 +1,7 @@
 'use strict';
 app.controller('shopLocationCustomersListCtrl',
-    function ($scope, $rootScope, $mdDialog, $mdSidenav, toastr, shopLocationsService, shopLocationsCustomerListService) {
+    function ($scope, $rootScope, $mdDialog, $mdSidenav, $window,
+              toastr, shopLocationsService, shopLocationsCustomerListService) {
 
         $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/manageCustomerList.html';
 
@@ -63,11 +64,17 @@ app.controller('shopLocationCustomersListCtrl',
         });
 
         $scope.customerListAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnEditCustomerList(row);">' +
-            '   <md-icon md-font-set="material-icons">edit</md-icon>' +
+            '<md-button aria-label="edit" class="md-icon-button md-accent" ' +
+            '           ng-click="grid.appScope.fnEditCustomerList(row);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-pencil"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip></md-button>' +
-            '<md-button class="md-icon-button md-warn" ng-click="grid.appScope.fnRemoveCustomerList(row,$event);">' +
-            '   <md-icon md-font-set="material-icons">delete</md-icon>' +
+            '<md-button aria-label="download" class="md-icon-button md-accent"' +
+            '           ng-click="grid.appScope.fnExportPreviewListCSV(row, $event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-download"></md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Export</md-tooltip></md-button>' +
+            '<md-button aria-label="delete" class="md-icon-button md-warn" ' +
+            '           ng-click="grid.appScope.fnRemoveCustomerList(row,$event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip></md-button></div>';
 
         $scope.customerListGridOptions = {
@@ -83,7 +90,7 @@ app.controller('shopLocationCustomersListCtrl',
                     name: 'action',
                     displayName: '',
                     cellTemplate: $scope.customerListAction,
-                    width: 100,
+                    width: 150,
                     enableSorting: false,
                     enableColumnMenu: false
                 }
@@ -114,6 +121,49 @@ app.controller('shopLocationCustomersListCtrl',
                         toastr.error('Failed deleting customer list...', 'STATUS CODE: ' + error.status);
                     });
             }, function () {
+            });
+        };
+
+        $scope.fnExportPreviewListCSV = function (row, event) {
+            var downloadCSVDialogCtrl = ['$scope', function ($scope) {
+
+                $scope.customerListId = row.entity.id;
+
+                $scope.fnDownloadCSV = function () {
+
+                    $scope.downloadLink = CarglyPartner.src + '/partners/api/crm/' +
+                        locId + '/customer-lists/' + $scope.customerListId + '/results.csv?oauth_token='
+                        + CarglyPartner.accessToken;
+
+                    $window.open($scope.downloadLink, '_blank');
+
+                    $scope.fnCloseDialog();
+                };
+
+                $scope.fnCloseDialog = function () {
+                    $mdDialog.cancel();
+                };
+            }];
+
+            $mdDialog.show({
+                controller: downloadCSVDialogCtrl,
+                scope: $scope,
+                template: '<md-dialog aria-label="Download CSV Dialog">' +
+                '   <md-content layout="column" layout-margin>' +
+                '       <div class="md-headline"> Export CSV </div>' +
+                '       <div layout-margin>This could take some time. Are you sure?</div>' +
+                '       <md-dialog-actions class="padding-right-0">' +
+                '           <md-button class="md-raised md-accent"' +
+                '                       ng-click="fnDownloadCSV();">Download</md-button>' +
+                '           <md-button class="md-raised md-warn margin-right-0"' +
+                '                       ng-click="fnCloseDialog();">Cancel</md-button>' +
+                '       </md-dialog-actions>' +
+                '    </md-content>' +
+                '</md-dialog>',
+                targetEvent: event
+
+            }).then(function (answer) {
+            }, function (err) {
             });
         };
 

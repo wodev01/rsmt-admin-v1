@@ -14,7 +14,8 @@
                 <div ng-if="partner_form.$submitted || partner_form.businessName.$touched">
                     <span class="error-msg"
                           ng-if="partner_form.businessName.$error.required">Business Name is required.</span>
-                    <span class="error-msg" ng-if="partner_form.businessName.$error.minlength">This field is too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="partner_form.businessName.$error.minlength">
+                        This field is too short minimum 5 characters is required.</span>
                 </div>
             </md-input-container>
 
@@ -55,9 +56,12 @@
                 <div ng-if="partner_form.$submitted || partner_form.businessZip.$touched">
                     <span class="error-msg"
                           ng-if="partner_form.businessZip.$error.required">Business Zip is required.</span>
-                    <span class="error-msg" ng-if="partner_form.businessZip.$error.pattern">This field must contain number only.</span>
-                    <span class="error-msg" ng-if="partner_form.businessZip.$error.minlength">This field is too short minimum 5 characters required.</span>
-                    <span class="error-msg" ng-if="partner_form.businessZip.$error.maxlength">This field is too long maximum 10 characters are allowed.</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.pattern">
+                        This field must contain number only.</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
+                    <span class="error-msg" ng-if="partner_form.businessZip.$error.maxlength">
+                        This field is too long maximum 10 characters allowed.</span>
                 </div>
             </md-input-container>
 
@@ -82,8 +86,10 @@
                 <div ng-if="partner_form.$submitted || partner_form.contactName.$touched">
                     <span class="error-msg"
                           ng-if="partner_form.contactName.$error.required">Contact Name is required.</span>
-                    <span class="error-msg" ng-if="partner_form.contactName.$error.pattern">This field must contain alphabets only.</span>
-                    <span class="error-msg" ng-if="partner_form.contactName.$error.minlength">This field is too short minimum 6 character required.</span>
+                    <span class="error-msg" ng-if="partner_form.contactName.$error.pattern">
+                        This field must contain alphabets only.</span>
+                    <span class="error-msg" ng-if="partner_form.contactName.$error.minlength">
+                        This field is too short minimum 6 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -100,7 +106,8 @@
                 <input name="apiSecretKey" ng-model="user.paymentProcessingSecretKey" minlength="6">
 
                 <div ng-if="partner_form.$submitted || partner_form.apiSecretKey.$touched">
-                    <span class="error-msg" ng-if="partner_form.apiSecretKey.$error.minlength">This field too short minimum 6 character is required.</span>
+                    <span class="error-msg" ng-if="partner_form.apiSecretKey.$error.minlength">
+                        This field too short minimum 6 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -109,7 +116,8 @@
                 <input name="apiPublicKey" ng-model="user.paymentProcessingPublicKey" minlength="5">
 
                 <div ng-if="partner_form.$submitted || partner_form.apiPublicKey.$touched">
-                    <span class="error-msg" ng-if="partner_form.apiPublicKey.$error.minlength">This field too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="partner_form.apiPublicKey.$error.minlength">
+                        This field too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -118,7 +126,8 @@
                 <input name="apiAccountId" ng-model="user.paymentProcessingAccountId" minlength="5">
 
                 <div ng-if="partner_form.$submitted || partner_form.apiAccountId.$touched">
-                    <span class="error-msg" ng-if="partner_form.apiAccountId.$error.minlength">This field too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="partner_form.apiAccountId.$error.minlength">
+                        This field too short minimum 5 characters is required.</span>
                 </div>
             </md-input-container>
         </div>
@@ -132,7 +141,7 @@
 
             <md-button class="md-warn md-raised" ng-click="fnCancelAccount();">Cancel</md-button>
 
-            <md-progress-circular class="md-primary" md-theme="rsmt" ng-if="isProcessing"
+            <md-progress-circular class="md-accent" md-theme="rsmt" ng-if="isProcessing"
                                   md-mode="indeterminate"></md-progress-circular>
         </div>
 

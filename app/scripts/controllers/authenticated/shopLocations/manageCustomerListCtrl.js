@@ -1,6 +1,7 @@
 'use strict';
 app.controller('manageCustomerListCtrl',
-    function ($scope, $rootScope, $q, $filter, uiGridConstants, toastr, shopLocationsService, shopLocationsCustomerListService) {
+    function ($scope, $rootScope, $q, $filter, uiGridConstants,
+              toastr, shopLocationsService, shopLocationsCustomerListService) {
 
         var filterOption = "v.odo,v.make,v.model,v.year,v.ro_count,v.ro_avg,v.spent,v.labor_spent,v.parts_spent," +
             "v.delivered_message,v.scheduled_message,v.any_message,c.customer_type,c.company_name,c.first_seen," +
@@ -145,12 +146,12 @@ app.controller('manageCustomerListCtrl',
         };
 
         $scope.customerPreviewAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
-            '<md-button class="md-icon-button md-accent"' +
-            '           style="margin-left: 0;" ' +
+            '<md-button aria-label="open" class="md-icon-button md-accent margin-left-0"' +
             '           ng-click="grid.appScope.fnViewCustomerDetails(row,$event);">' +
-            '   <md-icon md-font-set="material-icons">launch</md-icon>' +
-            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip>' +
             '</md-button></div>';
+
 
         $scope.initPreviewListGrid = function () {
             $scope.previewListGridOptions = {

@@ -2,12 +2,12 @@
             md-component-id="manageShopLocationsView">
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
-        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+        <div class="md-toolbar-tools" layout="row">
             <span>{{shopLocationObj.name}}</span>
-
+            <span flex></span>
             <div class="bottom-sheet-demo inset padding-right-0" layout="row" layout-align="end center">
-                <md-button class="md-icon-button" ng-click="fnOpenBottomSheet();">
-                    <md-icon md-font-set="material-icons">more_vert</md-icon>
+                <md-button aria-label="more" class="md-icon-button" ng-click="fnOpenBottomSheet();">
+                    <md-icon md-font-set="fa fa-lg fa-fw fa-ellipsis-v"></md-icon>
                     <md-tooltip ng-if="$root.isMobile === null" md-direction="top">More</md-tooltip>
                 </md-button>
                 <md-button class="md-raised md-accent margin-right-0" ng-click="fnCloseManageShopLocationsSwapView();">

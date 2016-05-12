@@ -43,12 +43,13 @@ app.controller('segmentsConfigurationCtrl',
         };
 
         $scope.subSegmentsAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnEditManageSegmentsView(row);">' +
-            '   <md-icon md-font-set="material-icons">edit</md-icon>' +
-            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip></md-button>' +
-            '<md-button class="md-icon-button md-warn" ' +
+            '<md-button aria-label="view" class="md-icon-button md-accent" ' +
+            '           ng-click="grid.appScope.fnEditManageSegmentsView(row);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip></md-button>' +
+            '<md-button aria-label="delete" class="md-icon-button md-warn" ' +
             '           ng-click="grid.appScope.fnRemoveSubSegmentsView(row)">' +
-            '   <md-icon md-font-set="material-icons">delete</md-icon>' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
             '</md-button></div>';
 

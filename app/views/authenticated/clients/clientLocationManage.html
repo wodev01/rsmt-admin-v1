@@ -16,7 +16,8 @@
 
                 <div ng-if="locationForm.$submitted || locationForm.name.$touched">
                     <span class="error-msg" ng-if="locationForm.name.$error.required">Name is required.</span>
-                    <span class="error-msg" ng-if="locationForm.name.$error.minlength">This field is too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="locationForm.name.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -26,8 +27,10 @@
 
                 <div ng-if="locationForm.$submitted || locationForm.phone.$touched">
                     <span class="error-msg" ng-if="locationForm.phone.$error.required">Phone is required.</span>
-                    <span class="error-msg" ng-if="locationForm.phone.$error.minlength">This field is too short minimum 10 character is required.</span>
-                    <span class="error-msg" ng-if="locationForm.phone.$error.maxlength">This field is too long maximum 20 character is allowed.</span>
+                    <span class="error-msg" ng-if="locationForm.phone.$error.minlength">
+                        This field is too short minimum 10 characters required.</span>
+                    <span class="error-msg" ng-if="locationForm.phone.$error.maxlength">
+                        This field is too long maximum 20 characters allowed.</span>
                 </div>
             </md-input-container>
 
@@ -65,8 +68,10 @@
 
                 <div ng-if="locationForm.$submitted || locationForm.zip.$touched">
                     <span class="error-msg" ng-if="locationForm.zip.$error.required">Zip is required.</span>
-                    <span class="error-msg" ng-if="locationForm.zip.$error.maxlength">This field is too long maximum 10 characters is allowed.</span>
-                    <span class="error-msg" ng-if="locationForm.zip.$error.minlength">This field is too short minimum 5 characters is required.</span>
+                    <span class="error-msg" ng-if="locationForm.zip.$error.maxlength">
+                        This field is too long maximum 10 characters allowed.</span>
+                    <span class="error-msg" ng-if="locationForm.zip.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
                     <span class="error-msg"
                           ng-if="locationForm.zip.$error.pattern">This field must contain only digits.</span>
                 </div>
@@ -82,7 +87,7 @@
             </md-input-container>
 
             <div layout="row" layout-align="end center">
-                <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
+                <md-progress-circular ng-if="isProcessing" class="md-accent"
                                       md-mode="indeterminate"></md-progress-circular>
 
                 <md-button type="submit" class="md-raised md-accent"
@@ -94,6 +99,5 @@
                 <md-button class="md-warn md-raised margin-right-0" ng-click="fnCloseManageLoc();">Cancel</md-button>
             </div>
         </form>
-
     </md-content>
 </md-sidenav>

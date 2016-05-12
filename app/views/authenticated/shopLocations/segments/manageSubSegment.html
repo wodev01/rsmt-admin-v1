@@ -5,8 +5,8 @@
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             <span class="md-title" ng-bind="isEdit ? 'Edit Sub Segment' : 'Create Sub Segment'"></span>
 
-            <md-button class="md-icon-button" ng-click="fnCloseDialog();">
-                <md-icon md-font-set="material-icons">close</md-icon>
+            <md-button aria-label="close" class="md-icon-button" ng-click="fnCloseDialog();">
+                <md-icon md-font-set="fa fa-lg fa-fw fa-close"></md-icon>
                 <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Close</md-tooltip>
             </md-button>
         </div>
@@ -89,8 +89,8 @@
                     <span class="text-small-599 text-small-959" flex="20">Segment Preview</span>
 
                     <div layout="row" layout-align="space-between center">
-                        <md-button class="md-fab md-mini" ng-click="fnPrevDate();" show-md hide-sm hide-xs>
-                            <md-icon md-font-set="material-icons">keyboard_arrow_left</md-icon>
+                        <md-button aria-label="previous" class="md-fab md-mini" ng-click="fnPrevDate();" show-md hide-sm hide-xs>
+                            <md-icon md-font-set="fa fa-lg fa-fw fa-chevron-left"></md-icon>
                             <md-tooltip md-direction="top">Previous</md-tooltip>
                         </md-button>
 
@@ -98,16 +98,16 @@
                                        ng-model="subSegmentDate"
                                        md-placeholder="Enter date"></md-datepicker>
 
-                        <md-button class="md-fab md-mini" ng-click="fnNextDate();" show-md hide-sm hide-xs>
-                            <md-icon md-font-set="material-icons">keyboard_arrow_right</md-icon>
+                        <md-button aria-label="next" class="md-fab md-mini" ng-click="fnNextDate();" show-md hide-sm hide-xs>
+                            <md-icon md-font-set="fa fa-lg fa-fw fa-chevron-right"></md-icon>
                             <md-tooltip md-direction="top">Next</md-tooltip>
                         </md-button>
                     </div>
 
-                    <md-button class="md-fab md-mini"
+                    <md-button aria-label="refresh" class="md-fab md-mini"
                                ng-disabled="manageSubSegmentForm.expression.$invalid"
                                ng-click="fnSegmentPreview();">
-                        <md-icon md-font-set="material-icons">refresh</md-icon>
+                        <md-icon md-font-set="fa fa-lg fa-fw fa-repeat"></md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Refresh Preview</md-tooltip>
                     </md-button>
                 </div>

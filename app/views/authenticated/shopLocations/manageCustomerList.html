@@ -7,7 +7,8 @@
             <span ng-bind="$root.isCustomerListName ? $root.isCustomerListName : 'Create New List' "></span>
             <span flex></span>
             <md-button class="md-raised md-accent"
-                       ng-click="$root.fnCloseManageCustomerListView();">Back</md-button>
+                       ng-click="$root.fnCloseManageCustomerListView();">Back
+            </md-button>
         </div>
     </md-toolbar>
 
@@ -94,10 +95,10 @@
                         </div>
                     </div>
 
-                    <md-button class="md-fab md-mini margin-top-0 margin-bottom-13" type="submit"
+                    <md-button aria-label="add" class="md-fab md-mini margin-top-0 margin-bottom-13" type="submit"
                                ng-disabled="isProcessing"
                                ng-click="expressionForm.$valid && filter.searchText && fnAddExpression(filter);">
-                        <md-icon md-font-set="material-icons">add</md-icon>
+                        <md-icon md-font-set="fa fa-lg fa-fw fa-plus"></md-icon>
                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Add Expression</md-tooltip>
                     </md-button>
                 </div>
@@ -153,11 +154,12 @@
                     </md-autocomplete>
                 </div>
 
-                <md-button class="md-icon-button md-warn"
+                <md-button aria-label="delete"
+                           class="md-icon-button md-warn"
                            style="margin-bottom: 13px;"
                            ng-disabled="isProcessing"
                            ng-click="fnDeleteRow($index);">
-                    <md-icon md-font-set="material-icons">delete</md-icon>
+                    <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>
                     <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>
                 </md-button>
             </div>
@@ -316,11 +318,11 @@
                                             <td>{{val.reference}}</td>
                                             <td>
                                                 <div layout="row">
-                                                    <md-button class="md-icon-button md-accent"
+                                                    <md-button aria-label="open" class="md-icon-button md-accent"
                                                                ng-click="fnViewVehicleDetails(val); setClickedRow($index);">
-                                                        <md-icon md-font-set="material-icons">launch</md-icon>
+                                                        <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>
                                                         <md-tooltip ng-if="$root.isMobile === null" md-direction="top">
-                                                            View
+                                                            Open
                                                         </md-tooltip>
                                                     </md-button>
                                                 </div>

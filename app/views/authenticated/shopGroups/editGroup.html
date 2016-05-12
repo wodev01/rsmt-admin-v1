@@ -2,16 +2,17 @@
       layout="column" novalidate>
     <md-input-container class="remove-error-space">
         <label>Group Name</label>
-        <input name="name" ng-model="group.name" required minlength="5">
+        <input name="name" ng-model="group.name" minlength="5" required>
 
         <div ng-if="groupForm.$submitted || groupForm.name.$touched">
             <span class="error-msg" ng-if="groupForm.name.$error.required">Name is required.</span>
-            <span class="error-msg" ng-if="groupForm.name.$error.minlength">This field too short minimum 5 characters required.</span>
+            <span class="error-msg" ng-if="groupForm.name.$error.minlength">
+                This field too short minimum 5 characters required.</span>
         </div>
     </md-input-container>
 
     <div layout="row" layout-align="end center">
-        <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
+        <md-progress-circular ng-if="isProcessing" class="md-accent"
                               md-mode="indeterminate"></md-progress-circular>
 
         <md-button type="submit" class="md-raised md-accent"

@@ -72,6 +72,22 @@ app.factory('shopLocationsCustomerListService', ['$q', 'ErrorMsg',
             return defer.promise;
         };
 
+        shopLocationsCustomerListService.fnDownloadPreviewListCSV = function (locId, customerListId) {
+            var defer = $q.defer();
+            CarglyPartner.ajax({
+                url: '/partners/api/crm/' + locId + '/customer-lists/' + customerListId + '/results.csv',
+                type: 'GET',
+                success: function (data) {
+                    defer.resolve(data);
+                },
+                error: function (error) {
+                    ErrorMsg.CheckStatusCode(error.status);
+                    defer.reject(error);
+                }
+            });
+            return defer.promise;
+        };
+
         shopLocationsCustomerListService.fnUpdateCustomerList = function (locId, filterObj) {
             var defer = $q.defer();
             CarglyPartner.ajax({

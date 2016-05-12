@@ -34,7 +34,7 @@ app.factory('ErrorMsg',['$state', 'toastr', '$cookies', 'cookieName',
                 case 500:
                     toastr.remove();
                     toastr.error('An unexpected error has occurred. Please refresh the page and try again.',
-                        'STATUS CODE: 500');
+                        '500 - Internal Server Error');
                     break;
 
                 default:

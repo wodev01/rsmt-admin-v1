@@ -20,16 +20,16 @@ app.controller('clientLocationCtrl',
             $scope.isDataNotNull = false;
             $scope.isMsgShow = false;
 
-                clientLocationService.fetchLocations(cId).then(function (data) {
-                    if (data.length !== 0) {
-                        $scope.isDataNotNull = true;
-                        $scope.isMsgShow = false;
-                        $scope.locationData = data;
-                    } else {
-                        $scope.isDataNotNull = false;
-                        $scope.isMsgShow = true;
-                    }
-                });
+            clientLocationService.fetchLocations(cId).then(function (data) {
+                if (data.length !== 0) {
+                    $scope.isDataNotNull = true;
+                    $scope.isMsgShow = false;
+                    $scope.locationData = data;
+                } else {
+                    $scope.isDataNotNull = false;
+                    $scope.isMsgShow = true;
+                }
+            });
         };
 
         //$broadcast event
@@ -41,10 +41,11 @@ app.controller('clientLocationCtrl',
             '<div class="checked_item after-status" location-indicator data-obj="row.entity"></div>';
 
         $scope.locationAction = '<div layout="row">' +
-        '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnLocationEdit(row,$event)">' +
-        '   <md-icon md-font-set="material-icons">edit</md-icon>' +
-        '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip>' +
-        '</md-button></div>';
+            '<md-button aria-label="edit" class="md-icon-button md-accent" ' +
+            '           ng-click="grid.appScope.fnLocationEdit(row,$event)">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-pencil"></md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip>' +
+            '</md-button></div>';
 
 
         $scope.locationGridOptions = {
@@ -76,7 +77,7 @@ app.controller('clientLocationCtrl',
                     enableSorting: false,
                     enableColumnMenu: false
                 }
-            ]  ,
+            ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                     row.isSelected = true;

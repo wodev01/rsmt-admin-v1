@@ -61,7 +61,6 @@ app.controller('manageGroupCtrl',
                 groupService.editGroup(group.id, group).then(function (res) {
                     toastr.success('Group saved successfully.');
                     $scope.fnGroupToastMsg(res);
-                    $scope.fnCloseManageGroupSwap();
                     $scope.isProcessing = false;
                 }, function (error) {
                     toastr.error('Failed saving group information.', 'STATUS CODE: ' + error.status);
@@ -115,9 +114,9 @@ app.controller('manageGroupCtrl',
         $scope.fnGenerateGroupMemberGrid = function (data) {
             $scope.groupsMembersData = data;
             $scope.groupMembersAction = '<div layout="row">' +
-                '<md-button class="md-icon-button md-warn"' +
-                '           ng-click="grid.appScope.fnGroupMemberDelete(row,$event);">' +
-                '   <md-icon md-font-set="material-icons">delete</md-icon>' +
+                '<md-button aria-label="delete" class="md-icon-button md-warn"' +
+                '           ng-click="grid.appScope.fnGroupMemberDelete(row, $event);">' +
+                '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
                 '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
                 '</md-button></div>';
 

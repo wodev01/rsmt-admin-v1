@@ -1,9 +1,11 @@
 'use strict';
 app.controller('clientUpdatesCtrl',
-    function ($scope, $mdSidenav, $rootScope, pagingOptions, $mdDialog, updateService, clientService, clientLocationService, shopLocationsService) {
+    function ($scope, $mdSidenav, $rootScope, pagingOptions, $mdDialog,
+              updateService, clientService, clientLocationService, shopLocationsService) {
 
         $scope.client = clientService.getClientObj().id ? angular.copy(clientService.getClientObj()) : {};
         var partnerId = $scope.client.id;
+
         $rootScope.rightUpdateSwapView = 'views/authenticated/clients/clientUpdateManage.html';
         $scope.updatesDefinitions = [];
         $rootScope.isFetchUpdateDefinitions = false;
@@ -85,13 +87,6 @@ app.controller('clientUpdatesCtrl',
                         $scope.isMsgShow = true;
                     }
                     $scope.setLocationData(data.updates);
-                    /* if ($scope.isMsgShow) {
-                     setTimeout(function () {
-                     $('#client-updates-tab .ui-grid-viewport ')
-                     .text('No updates available.')
-                     .css({'text-align': 'center', 'height': '50px', 'overflow': 'hidden'});
-                     }, 1000);
-                     }*/
                 });
             }
         };
@@ -131,9 +126,11 @@ app.controller('clientUpdatesCtrl',
         };
 
         $scope.updateAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-warn" ng-click="grid.appScope.fnUpdateDelete(row,$event);">' +
-            '   <md-icon md-font-set="material-icons">delete</md-icon>' +
-            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip></md-button></div>';
+            '<md-button aria-label="delete" class="md-icon-button md-warn" ' +
+            '           ng-click="grid.appScope.fnUpdateDelete(row, $event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
+            '</md-button></div>';
 
         $scope.updateGridOptions = {
             data: 'clientUpdatesData',

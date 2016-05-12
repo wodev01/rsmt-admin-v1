@@ -39,15 +39,18 @@ app.controller('clientBillingHistoryCtrl',
 
         $scope.errorTooltip = '<div layout="row" class="ui-grid-cell-contents">' +
             '<div ng-show="{{row.entity.details.messages[0]}}"> ' +
-            '   <md-button class="md-icon-button md-warn">' +
-            '       <md-icon md-font-set="material-icons">highlight_off</md-icon>' +
-            '       <md-tooltip ng-if="$root.isMobile === null" md-direction="top">{{row.entity.details.messages[0].message}}</md-tooltip>' +
+            '   <md-button aria-label="failed" class="md-icon-button md-warn">' +
+            '       <md-icon md-font-set="fa fa-lg fa-fw fa-exclamation-circle"></md-icon>' +
+            '       <md-tooltip ng-if="$root.isMobile === null" md-direction="top">' +
+            '                   {{row.entity.details.messages[0].message}}</md-tooltip>' +
             '   </md-button>' +
             '</div>{{row.entity.status}}</div>';
 
         $scope.billingHistoryAction = '<div layout="row">' +
-            '<md-button ng-if="grid.appScope.isPaid(row)" ng-disabled="grid.appScope.isProcessing" class="md-icon-button md-accent" ng-click="grid.appScope.fnRefund(row,$event)">' +
-            '   <md-icon md-font-set="material-icons">payment</md-icon>' +
+            '<md-button aria-label="refund" class="md-icon-button md-accent" ng-if="grid.appScope.isPaid(row);" ' +
+            '           ng-disabled="grid.appScope.isProcessing" ' +
+            '           ng-click="grid.appScope.fnRefund(row, $event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-credit-card"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Refund</md-tooltip>' +
             '</md-button> </div>';
 

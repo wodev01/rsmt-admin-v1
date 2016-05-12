@@ -16,7 +16,8 @@
 
                 <div ng-if="newClientForm.$submitted || newClientForm.name.$touched">
                     <span class="error-msg" ng-if="newClientForm.name.$error.required">Name is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.name.$error.minlength">This field is too short minimum 5 character required.</span>
+                    <span class="error-msg" ng-if="newClientForm.name.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -48,7 +49,8 @@
                 <div ng-if="newClientForm.$submitted || newClientForm.contact_name.$touched">
                     <span class="error-msg"
                           ng-if="newClientForm.contact_name.$error.required">Contact name is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.contact_name.$error.minlength">This field is too short minimum 5 character is required.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_name.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -58,9 +60,12 @@
                        ng-pattern="/^\d+$/" required>
 
                 <div ng-if="newClientForm.$submitted || newClientForm.contact_phone.$touched">
-                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.required">Contact name is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.minlength">This field is too short minimum 5 character is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.pattern">This field contains only digit.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.required">
+                        Contact name is required.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_phone.$error.pattern">
+                        This field contains only digit.</span>
                 </div>
             </md-input-container>
 
@@ -69,9 +74,12 @@
                 <input type="email" name="contact_email" ng-model="client.contact_email" ng-minlength="5" required/>
 
                 <div ng-if="newClientForm.$submitted || newClientForm.contact_email.$touched">
-                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.required">Contact name is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.minlength">This field is too short minimum 5 character is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.email">This field must be a valid email address.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.required">
+                        Contact name is required.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.minlength">
+                        This field is too short minimum 5 characters required.</span>
+                    <span class="error-msg" ng-if="newClientForm.contact_email.$error.email">
+                        This field must be a valid email address.</span>
                 </div>
             </md-input-container>
 
@@ -108,12 +116,13 @@
 
                 <div ng-if="newClientForm.$submitted || newClientForm.zip.$touched">
                     <span class="error-msg" ng-if="newClientForm.zip.$error.required">Zip is required.</span>
-                    <span class="error-msg" ng-if="newClientForm.zip.$error.maxlength">This field is too long maximum 15 characters are allowed.</span>
+                    <span class="error-msg" ng-if="newClientForm.zip.$error.maxlength">
+                        This field is too long maximum 15 characters allowed.</span>
                 </div>
             </md-input-container>
 
             <div layout="row" layout-align="end center">
-                <md-progress-circular md-theme="rsmt" ng-if="isProcessing" class="md-primary"
+                <md-progress-circular ng-if="isProcessing" class="md-accent"
                                       md-mode="indeterminate"></md-progress-circular>
 
                 <md-button type="submit" class="md-raised md-accent"

@@ -81,8 +81,9 @@ app.controller('shopLocationsCtrl',
             '     data-obj="row.entity"></div>';
 
         $scope.shopLocationsAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnShopLocationsEdit(row, $event);">' +
-            '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '<md-button aria-label="open" class="md-icon-button md-accent" ' +
+            '           ng-click="grid.appScope.fnShopLocationsEdit(row, $event);">' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip>' +
             '</md-button></div>';
 
@@ -215,7 +216,7 @@ app.controller('shopLocationsCtrl',
                 controller: dailyEmailDialogCtrl,
                 template: '<md-dialog aria-label="Daily Email dialog">' +
                 '   <md-content layout="column" layout-margin>' +
-                '       <h2 layout-padding> Send Daily Email </h2>' +
+                '       <div class="md-headline" layout-padding> Send Daily Email </div>' +
                 '       <div layout="column" layout-margin>' +
                 '           <md-input-container>' +
                 '               <md-select aria-label="Select Year" ng-model="selectedYear">' +
@@ -228,7 +229,7 @@ app.controller('shopLocationsCtrl',
                 '       <div layout="row" layout-align="end center">' +
                 '           <md-button class="md-raised md-accent"' +
                 '                       ng-click="fnSendDailyEmail();">Send</md-button>' +
-                '           <md-button class="md-raised md-warn" style="margin:0px 10px !important;"' +
+                '           <md-button class="md-raised md-warn margin-right-0"' +
                 '                       ng-click="fnCloseDialog();">Cancel</md-button>' +
                 '       </div>' +
                 '    </md-content>' +
