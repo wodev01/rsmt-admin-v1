@@ -39,14 +39,14 @@ app.directive('pageTitle', function ($rootScope, $timeout) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
 
-            function fnSetPageTitle(state, params){
+            function fnSetPageTitle(state, params) {
                 // Default title
                 var title = 'Rlo training';
                 // Create your own title pattern
                 if (state.data && state.data.pageTitle) {
-                    if(state.data.pageTitle === 'Settings'){
+                    if (state.data.pageTitle === 'Settings') {
                         title = fnCapitalize(params.settingsName) + ' ' + state.data.pageTitle + ' - ' + title;
-                    }else{
+                    } else {
                         title = state.data.pageTitle + ' - ' + title;
                     }
                 }
@@ -237,9 +237,9 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                     $scope._filteringEnabled = false;
 
                     $scope.laborTmpl = '<div class="highLight ui-grid-cell-contents overflow-auto" layout="column" ' +
-                                            'layout-fill add-description arr="row.entity.labor"></div>';
+                        'layout-fill add-description arr="row.entity.labor"></div>';
                     $scope.partsTmpl = '<div class="highLight ui-grid-cell-contents overflow-auto" layout="column" ' +
-                                            'layout-fill add-description arr="row.entity.parts"></div>';
+                        'layout-fill add-description arr="row.entity.parts"></div>';
 
                     colDffArr = [
                         {
@@ -279,8 +279,13 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                             minWidth: 400,
                             enableSorting: false
                         },
-                        {field: 'total_sold_price_cents', displayName: 'Total RO $', minWidth: 100,
-                            enableSorting: false},
+                        {
+                            field: 'total_sold_price_cents',
+                            displayName: 'Total RO $',
+                            cellFilter: 'CentToDollar',
+                            minWidth: 100,
+                            enableSorting: false
+                        },
                         {
                             field: 'labor',
                             displayName: 'Sold',
@@ -426,7 +431,7 @@ app.directive('addDescription', function () {
             var html = '';
             angular.forEach(scope.arr, function (objVal) {
                 html += '<div style="white-space: normal; line-height: normal;" layout-margin>'
-                                                                    + objVal.description + '</div>';
+                    + objVal.description + '</div>';
             });
             iElement.append(html);
         }

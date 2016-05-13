@@ -1,41 +1,35 @@
-<md-content id="customerTab" class="md-padding">
-    <ul class="breadcrumb">
+<md-content id="preview-list" layout="column" md-theme="grey" layout-padding>
+    <ul class="breadcrumb margin-left-0">
         <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index)">
             <a href="javascript:void(0);">{{breadcrumb.name}}</a>
         </li>
     </ul>
 
     <div ng-if="customerIndex == 0">
-        <form name="searchForm" class="margin-bottom-10">
-            <input type="text" name="searchFilter"
-                   class="filterBox"
-                   ng-model="searchCustomerFilter"
-                   placeholder="Search..."
-                   ng-change="fnFilterKeyEvent(searchCustomerFilter)"
-                   ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-                   ng-keyup="fnCancelSearchFilter($event, this)"/>
-        </form>
-
-        <div ng-if="isMsgShow">
-            <div class="md-headline text-center">No customers data available.</div>
+        <!-- Loader -->
+        <div ng-if="isPreviewData" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100"
+                                  md-mode="indeterminate"></md-progress-circular>
         </div>
 
-        <div ng-if="!isDataNotNull && !isMsgShow" layout="column" layout-align="center center"
-             layout-fill flex>
-            <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+        <div ng-if="customerPreviewData.length == 0 && isPreviewDataMsg" layout="row"
+             layout-align="center center">
+            <div class="md-headline">Preview data not available.</div>
         </div>
 
         <!-- Grid Section -->
-        <div ng-if="isDataNotNull"
-             ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize
-             ng-style="$root.fnReturnGridHeight(customersData.length, false, true);" ng-cloak></div>
+        <div class="margin-bottom-10" ng-if="customerPreviewData.length !== 0 && !isPreviewData">
+            <div ui-grid="previewListGridOptions" ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(customerPreviewData.length);" ng-cloak></div>
+        </div>
     </div>
 
     <div ng-if="customerIndex == 1">
         <!-- Customer Info-->
         <div class="md-whiteframe-1dp">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout="row" layout-align="center center">
+                <div class="md-toolbar-tools" layout layout-align="center center">
                     <span class="md-title">Customer Info</span>
                 </div>
             </md-toolbar>
@@ -83,6 +77,28 @@
                     <label flex>{{customer.email_addresses | joinArray}}</label>
                 </div>
             </div>
+
+            <div layout="row" layout-xs="column" layout-margin>
+                <div layout="row" flex>
+                    <label class="leftLabel">SMS_CRM_Active:</label>
+                    <label flex>{{customer.sms_crm_active}}</label>
+                </div>
+                <div layout="row" flex>
+                    <label class="leftLabel">Email Unsubscribed:</label>
+                    <label flex>{{customer.email_unsubscribed}}</label>
+                </div>
+            </div>
+
+            <div layout="row" layout-xs="column" layout-margin>
+                <div layout="row" flex>
+                    <label class="leftLabel">Vehicle RO Count:</label>
+                    <label flex>{{customer.vehicle_ro_count}}</label>
+                </div>
+                <div layout="row" flex>
+                    <label class="leftLabel">Vehicle Total Spent:</label>
+                    <label flex>{{customer.vehicle_total_spent}}</label>
+                </div>
+            </div>
         </div>
 
         <!-- Vehicles Info-->
@@ -112,7 +128,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="val in customer.vehicles" ng-class="{'selected':$index == selectedRow}"
+                                <tr ng-repeat="val in customer.vehicles"
+                                    ng-class="{'selected':$index == selectedRow}"
                                     ng-click="setClickedRow($index)">
                                     <td>{{val.model}}</td>
                                     <td>{{val.make}}</td>
@@ -127,7 +144,9 @@
                                             <md-button aria-label="open" class="md-icon-button md-accent"
                                                        ng-click="fnViewVehicleDetails(val); setClickedRow($index);">
                                                 <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>
-                                                <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip>
+                                                <md-tooltip ng-if="$root.isMobile === null" md-direction="top">
+                                                    Open
+                                                </md-tooltip>
                                             </md-button>
                                         </div>
                                     </td>

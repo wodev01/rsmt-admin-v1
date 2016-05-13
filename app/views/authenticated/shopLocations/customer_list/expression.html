@@ -1,0 +1,156 @@
+<md-content layout-padding>
+    <form name="searchForm" layout="column" novalidate>
+        <div layout="row">
+            <md-input-container class="remove-error-space" flex>
+                <label>Customer List Name</label>
+                <input type="text" name="name" ng-model="filterObj.name" required/>
+
+                <div ng-if="searchForm.$submitted || searchForm.name.$touched">
+                    <span class="error-msg" ng-if="searchForm.name.$error.required">List name is required.</span>
+                </div>
+            </md-input-container>
+
+            <div>
+                <md-checkbox class="md-accent"
+                             aria-label="Checkbox No Ink"
+                             ng-disabled="isProcessing"
+                             ng-model="filterObj.customers_only" md-no-ink>Customers Only
+                </md-checkbox>
+
+                <md-button class="md-raised md-accent margin-top-13 margin-right-0" type="submit"
+                           aria-label="Add to customer list"
+                           ng-disabled="isProcessing"
+                           ng-click="searchForm.$valid && fnAddExprToCustomerList(filterObj);">
+                    <span ng-bind="filterObj.id ? 'Update' : 'Add To Customer List'"></span>
+                </md-button>
+            </div>
+        </div>
+    </form>
+
+    <form name="expressionForm" novalidate>
+        <div layout="row" layout-xs="column" layout-align="space-between center" novalidate>
+            <div layout="row" layout-fill flex>
+                <md-input-container flex>
+                    <md-select aria-label="Select operand1"
+                               name="filterName"
+                               ng-model="filter.name"
+                               placeholder="-- Select Option --" required>
+                        <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
+                            {{operand1}}
+                        </md-option>
+                    </md-select>
+
+                    <div ng-if="expressionForm.$submitted || expressionForm.filterName.$touched">
+                        <span class="error-msg" ng-if="expressionForm.filterName.$error.required">
+                            Filter name is required.</span>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <md-select aria-label="Select operator"
+                               name="filterOperator"
+                               ng-model="filter.operator"
+                               placeholder="-- Select Option --" required>
+                        <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
+                            {{operator.label}}
+                        </md-option>
+                    </md-select>
+                    <div ng-if="expressionForm.$submitted || expressionForm.filterOperator.$touched">
+                        <span class="error-msg" ng-if="expressionForm.filterOperator.$error.required">
+                            Operator is required.</span>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout="row" layout-fill flex>
+                <div layout="column" flex>
+                    <md-autocomplete
+                            md-input-name="autocomplete"
+                            md-search-text="filter.searchText"
+                            md-selected-item="filter.value"
+                            md-items="item in fnGetFilteredValues(filter.searchText, filter.name)"
+                            md-item-text="item"
+                            md-delay="500"
+                            md-no-cache="true"
+                            md-min-length="0"
+                            placeholder="Search/Type values" required="true" flex>
+                        <md-item-template>
+                            <span md-highlight-text="filter.searchText" md-highlight-flags="^i">{{item}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+
+                    <div class="error-msg margin-top-3"
+                         ng-if="expressionForm.$submitted && !filter.searchText">
+                        This field is required.
+                    </div>
+                </div>
+
+                <md-button aria-label="add" class="md-fab md-mini margin-top-0 margin-bottom-13" type="submit"
+                           ng-disabled="isProcessing"
+                           ng-click="expressionForm.$valid && filter.searchText && fnAddExpression(filter);">
+                    <md-icon md-font-set="fa fa-lg fa-fw fa-plus"></md-icon>
+                    <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Add Expression</md-tooltip>
+                </md-button>
+            </div>
+        </div>
+    </form>
+
+    <md-divider></md-divider>
+
+    <div layout="row" layout-xs="column" layout-align="space-between center"
+         ng-repeat="expr in expressionArr">
+        <div class="margin-top-8 margin-right-8">{{$index + 1}}.</div>
+        <div layout="row" layout-fill flex>
+            <md-input-container flex>
+                <md-select aria-label="Select operand1"
+                           name="exprName"
+                           ng-model="expr.name"
+                           ng-disabled="isProcessing"
+                           placeholder="-- Select Option --">
+                    <md-option ng-repeat="operand1 in customerListFilterOptions" ng-value="operand1">
+                        {{operand1}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <md-input-container flex>
+                <md-select aria-label="Select operator"
+                           name="exprOperator"
+                           ng-model="expr.operator"
+                           ng-disabled="isProcessing"
+                           placeholder="-- Select Option --">
+                    <md-option ng-repeat="operator in operatorDD" ng-value="operator.value">
+                        {{operator.label}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="row" layout-fill flex>
+            <div layout="column" flex>
+                <md-autocomplete
+                        md-search-text="expr.searchText"
+                        md-selected-item="expr.value"
+                        md-items="item in fnGetFilteredValues(expr.searchText, expr.name)"
+                        md-item-text="item"
+                        md-delay="500"
+                        md-no-cache="true"
+                        md-min-length="0"
+                        ng-disabled="isProcessing"
+                        placeholder="Search/Type values" flex>
+                    <md-item-template>
+                        <span md-highlight-text="expr.searchText" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+            </div>
+
+            <md-button aria-label="delete"
+                       class="md-icon-button md-warn margin-bottom-13"
+                       ng-disabled="isProcessing"
+                       ng-click="fnDeleteRow($index);">
+                <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>
+                <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>
+            </md-button>
+        </div>
+    </div>
+</md-content>

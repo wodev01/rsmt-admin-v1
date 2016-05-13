@@ -11,8 +11,8 @@ app.controller('segmentsConfigurationCtrl',
             shopLocationSegmentService.getShopLocSegmentObj().id ?
                 shopLocationSegmentService.getShopLocSegmentObj().id : undefined;
 
-        $scope.fnCreateNewSubSegment = function () {
-            $scope.fnOpenSegmentModal();
+        $scope.fnCreateNewSubSegment = function (event) {
+            $scope.fnOpenSegmentModal({}, event);
         };
 
         $scope.getPagedDataAsync = function () {
@@ -44,11 +44,11 @@ app.controller('segmentsConfigurationCtrl',
 
         $scope.subSegmentsAction = '<div layout="row">' +
             '<md-button aria-label="view" class="md-icon-button md-accent" ' +
-            '           ng-click="grid.appScope.fnEditManageSegmentsView(row);">' +
+            '           ng-click="grid.appScope.fnEditManageSegmentsView(row, $event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip></md-button>' +
             '<md-button aria-label="delete" class="md-icon-button md-warn" ' +
-            '           ng-click="grid.appScope.fnRemoveSubSegmentsView(row)">' +
+            '           ng-click="grid.appScope.fnRemoveSubSegmentsView(row, $event)">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Delete</md-tooltip>' +
             '</md-button></div>';
@@ -117,14 +117,15 @@ app.controller('segmentsConfigurationCtrl',
         };
 
         /*----- For update segment ----------*/
-        $scope.fnEditManageSegmentsView = function (row) {
-            $scope.fnOpenSegmentModal(row.entity);
+        $scope.fnEditManageSegmentsView = function (row, event) {
+            $scope.fnOpenSegmentModal(row.entity, event);
         };
 
-        $scope.fnOpenSegmentModal = function (obj) {
+        $scope.fnOpenSegmentModal = function (obj, event) {
             $mdDialog.show({
-                controller: 'manageSubSegmentsCtrl',
-                templateUrl: 'views/authenticated/shopLocations/segments/manageSubSegment.html',
+                controller: 'segmentsConfigurationDialogCtrl',
+                templateUrl: 'views/authenticated/shopLocations/segments/modals/segmentConfiguration.dialog.html',
+                targetEvent: event,
                 resolve: {
                     subSegment: function () {
                         return obj;
@@ -133,13 +134,14 @@ app.controller('segmentsConfigurationCtrl',
             });
         };
 
-        $scope.fnRemoveSubSegmentsView = function (row) {
+        $scope.fnRemoveSubSegmentsView = function (row, event) {
             var confirm = $mdDialog.confirm()
                 .title('Delete')
                 .content('Are you sure you want to remove?')
                 .ariaLabel('Delete')
                 .ok('Remove')
-                .cancel('Cancel');
+                .cancel('Cancel')
+                .targetEvent(event);
 
             $mdDialog.show(confirm).then(function () {
                 var subSegmentId = row.entity.id;

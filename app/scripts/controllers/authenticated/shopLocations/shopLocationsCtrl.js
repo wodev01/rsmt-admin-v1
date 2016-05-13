@@ -149,14 +149,16 @@ app.controller('shopLocationsCtrl',
 
         /*-------------- Load More Shop-locations ---------------*/
         $scope.fnLoadMoreShopLocations = function () {
-            $scope.isMoreShopLocations = true;
-            shopLocationsService.fetchMoreShopLocations()
-                .then(function (response) {
-                    $scope.shopLocationsData = $scope.shopLocationsData.concat(response.data);
-                    $scope.isPagingCursor =
-                        response.headers['x-paging-cursor'] ? false : true;
-                    $scope.isMoreShopLocations = false;
-                });
+            if (!$scope.isMoreShopLocations) {
+                $scope.isMoreShopLocations = true;
+                shopLocationsService.fetchMoreShopLocations()
+                    .then(function (response) {
+                        $scope.shopLocationsData = $scope.shopLocationsData.concat(response.data);
+                        $scope.isPagingCursor =
+                            response.headers['x-paging-cursor'] ? false : true;
+                        $scope.isMoreShopLocations = false;
+                    });
+            }
         };
 
         /*----------- Manage Shop Locations ------------*/
@@ -247,11 +249,12 @@ app.controller('shopLocationsCtrl',
             event.stopPropagation();
         });
 
-        $scope.fnDownloadCustomerCSV = function (shopLocationObj) {
+        $scope.fnDownloadCustomerCSV = function (shopLocationObj, event) {
             $mdDialog.show({
                 locals: {locationId: $scope.selectedLocationId, pId: shopLocationObj.partnerId},
                 controller: 'downloadCustomerCSVCtrl',
-                templateUrl: 'views/authenticated/shopLocations/modals/downloadCustomerCSV.tmpl.html'
+                templateUrl: 'views/authenticated/shopLocations/modals/downloadCustomerCSV.tmpl.html',
+                targetEvent: event
             }).then(function () {
                 },
                 function (err) {
@@ -273,7 +276,7 @@ app.controller('shopLocationsCtrl',
                 '                  ng-click="fnSendDailyEmail(shopLocationObj, $event);">Send Daily Email' +
                 '       </md-button>' +
                 '       <md-button class="md-raised md-accent" ' +
-                '                  ng-click="fnDownloadCustomerCSV(shopLocationObj);">Export Customer CSV ' +
+                '                  ng-click="fnDownloadCustomerCSV(shopLocationObj, $event);">Export Customer CSV ' +
                 '       </md-button>' +
                 '   </div>' +
                 '</md-bottom-sheet>'

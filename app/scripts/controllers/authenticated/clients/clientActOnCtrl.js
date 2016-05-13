@@ -67,7 +67,8 @@ app.controller('clientActOnCtrl',
                     .content('Are you sure you want to unlink act-on account?')
                     .ariaLabel('Ok')
                     .ok('Unlink')
-                    .cancel('Cancel');
+                    .cancel('Cancel')
+                    .targetEvent(ev);
 
                 $mdDialog.show(confirm).then(function () {
                     $scope.isProcessing = true;

@@ -3,7 +3,7 @@ app.controller('shopLocationCustomersListCtrl',
     function ($scope, $rootScope, $mdDialog, $mdSidenav, $window,
               toastr, shopLocationsService, shopLocationsCustomerListService) {
 
-        $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/manageCustomerList.html';
+        $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/customer_list/manageCustomerList.html';
 
         var locId =
             shopLocationsService.getShopLocationsObj().id ?
@@ -14,7 +14,6 @@ app.controller('shopLocationCustomersListCtrl',
         $scope.isChildForm = false;
 
         $scope.fnCreateNewList = function () {
-            $rootScope.isCustomerListName = '';
             $scope.fnOpenTemplateSwap();
         };
 
@@ -23,7 +22,7 @@ app.controller('shopLocationCustomersListCtrl',
             setTimeout(function () {
                 $rootScope.manageCustomerListSwapView = '';
                 $scope.$apply();
-                $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/manageCustomerList.html';
+                $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/customer_list/manageCustomerList.html';
                 $scope.$apply();
                 $mdSidenav('manageCustomerListView').open().then(function () {
                 });
@@ -98,7 +97,6 @@ app.controller('shopLocationCustomersListCtrl',
         };
 
         $scope.fnEditCustomerList = function (row) {
-            $rootScope.isCustomerListName = row.entity.name;
             shopLocationsCustomerListService.setCustomerListObj(row.entity);
             $scope.fnOpenTemplateSwap();
         };
@@ -130,7 +128,6 @@ app.controller('shopLocationCustomersListCtrl',
                 $scope.customerListId = row.entity.id;
 
                 $scope.fnDownloadCSV = function () {
-
                     $scope.downloadLink = CarglyPartner.src + '/partners/api/crm/' +
                         locId + '/customer-lists/' + $scope.customerListId + '/results.csv?oauth_token='
                         + CarglyPartner.accessToken;
@@ -148,6 +145,7 @@ app.controller('shopLocationCustomersListCtrl',
             $mdDialog.show({
                 controller: downloadCSVDialogCtrl,
                 scope: $scope,
+                preserveScope: true,
                 template: '<md-dialog aria-label="Download CSV Dialog">' +
                 '   <md-content layout="column" layout-margin>' +
                 '       <div class="md-headline"> Export CSV </div>' +

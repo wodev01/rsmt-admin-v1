@@ -43,7 +43,7 @@
     }
 
     /* Customize breadcrumb */
-    #customerTab ul.breadcrumb {
+    #customerTab ul.breadcrumb, #preview-list ul.breadcrumb {
         font-size: 12px;
         margin-left: -3.3em;
     }

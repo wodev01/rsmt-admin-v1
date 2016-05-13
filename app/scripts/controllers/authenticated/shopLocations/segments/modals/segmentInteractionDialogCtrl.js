@@ -1,5 +1,5 @@
 'use strict';
-app.controller('manageSegmentInteractionCtrl',
+app.controller('segmentInteractionDialogCtrl',
     function ($scope, $mdDialog, $filter, segmentInteractionObj, $rootScope,
                         toastr, segmentInteractionService, shopLocationsService) {
 

@@ -1,5 +1,5 @@
 'use strict';
-app.controller('manageSubSegmentsCtrl',
+app.controller('segmentsConfigurationDialogCtrl',
     function ($scope, $mdDialog, $filter, $rootScope, $mdSidenav, $timeout, subSegment,
               toastr, shopLocationsService, shopLocationSegmentService, segmentConfigurationService) {
 
@@ -13,9 +13,8 @@ app.controller('manageSubSegmentsCtrl',
 
         $scope.subSegment = undefined;
         $scope.subSegment = angular.copy(subSegment);
-        $scope.isEdit = (typeof $scope.subSegment !== 'undefined') ? true : false;
+        $scope.isEdit = $scope.subSegment && Object.keys($scope.subSegment).length !== 0 ? true : false;
         $scope.segmentPreviewData = $scope.item = {};
-        $scope.invalidExpMsg = null;
         $scope.isSegmentPreviewDataNotNull = $scope.isSegmentPreviewMsg = $scope.isInvalidExpMsg = false;
         $scope.isProcessing = false;
 
@@ -127,11 +126,11 @@ app.controller('manageSubSegmentsCtrl',
             })[0];
         };
 
-        $scope.setClickedRow = function(groupIndex, rowIndex) {
+        $scope.setClickedRow = function (groupIndex, rowIndex) {
             $scope.selectedGroup = groupIndex;
             $scope.selectedRow = rowIndex;
         };
 
-        $scope.segmentPreviewSwapView = 'views/authenticated/shopLocations/segments/segmentPreviewRODetails.html';
+        $scope.segmentPreviewSwapView = 'views/authenticated/shopLocations/segments/modals/segmentPreviewRODetails.html';
 
     });

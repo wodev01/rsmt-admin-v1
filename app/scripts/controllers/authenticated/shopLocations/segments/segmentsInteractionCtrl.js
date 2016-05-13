@@ -124,7 +124,7 @@ app.controller('segmentsInteractionCtrl',
 
         $scope.sgmentInteractionAction = '<div class="ui-grid-cell-contents">' +
             '<md-button aria-label="view" class="md-icon-button md-accent margin-left-0"' +
-            '           ng-click="grid.appScope.fnOpenSegmentInteraction(row);">' +
+            '           ng-click="grid.appScope.fnOpenSegmentInteraction(row, $event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">View</md-tooltip>' +
             '</md-button></div>';
@@ -181,14 +181,15 @@ app.controller('segmentsInteractionCtrl',
             }
         };
 
-        $scope.fnOpenSegmentInteraction = function (row) {
-            $scope.fnOpenSegmentInteractionModal(row.entity);
+        $scope.fnOpenSegmentInteraction = function (row, event) {
+            $scope.fnOpenSegmentInteractionModal(row.entity, event);
         };
 
-        $scope.fnOpenSegmentInteractionModal = function (obj) {
+        $scope.fnOpenSegmentInteractionModal = function (obj, event) {
             $mdDialog.show({
-                controller: 'manageSegmentInteractionCtrl',
-                templateUrl: 'views/authenticated/shopLocations/segments/manageSegmentInteraction.html',
+                controller: 'segmentInteractionDialogCtrl',
+                targetEvent: event,
+                templateUrl: 'views/authenticated/shopLocations/segments/modals/segmentInteraction.dialog.html',
                 resolve: {
                     segmentInteractionObj: function () {
                         return obj;
@@ -252,27 +253,29 @@ app.controller('segmentsInteractionCtrl',
 
         /*-------------- Load More Interactions ---------------*/
         $scope.fnLoadMoreSegmentInteractions = function () {
-            $scope.filter.page_num += 1;
-            $scope.isMoreSegmentInteractions = true;
-            $scope.isPagingData = true;
+            if (!$scope.isMoreSegmentInteractions) {
+                $scope.filter.page_num += 1;
+                $scope.isMoreSegmentInteractions = true;
+                $scope.isPagingData = true;
 
-            $scope.fnToggleDateRange(true);
+                $scope.fnToggleDateRange(true);
 
-            segmentInteractionService.fetchSegmentInteraction(locId, $scope.segment.id, $scope.filter)
-                .then(function (data) {
-                    if (data.length != 0) {
-                        $scope.segmentInteractionData = $scope.segmentInteractionData.concat(data);
-                        $scope.isMoreSegmentInteractions = false;
+                segmentInteractionService.fetchSegmentInteraction(locId, $scope.segment.id, $scope.filter)
+                    .then(function (data) {
+                        if (data.length != 0) {
+                            $scope.segmentInteractionData = $scope.segmentInteractionData.concat(data);
+                            $scope.isMoreSegmentInteractions = false;
+                            $scope.fnToggleDateRange(false);
+                        } else {
+                            $scope.isMoreSegmentInteractions = $scope.isPagingData = false;
+                            $scope.fnToggleDateRange(false);
+                        }
+                    }, function (error) {
+                        toastr.error('Failed retrieving more segment interaction', 'STATUS CODE: ' + error.status);
                         $scope.fnToggleDateRange(false);
-                    } else {
-                        $scope.isMoreSegmentInteractions = $scope.isPagingData = false;
-                        $scope.fnToggleDateRange(false);
-                    }
-                }, function (error) {
-                    toastr.error('Failed retrieving more segment interaction', 'STATUS CODE: ' + error.status);
-                    $scope.fnToggleDateRange(false);
-                });
+                    });
 
+            }
         };
 
         $scope.fnChangeSegmentInteractions = function (subSegmentId) {

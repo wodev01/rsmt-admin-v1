@@ -14,7 +14,7 @@
 
     <md-dialog-content class="md-padding" layout="row" layout-xs="column">
         <!-- Segment form section -->
-        <div layout="column" class="formSection md-whiteframe-10dp overflow-hidden" layout-fill flex="40" flex-xs="100">
+        <div layout="column" class="formSection md-whiteframe-1dp overflow-hidden" layout-fill flex="40" flex-xs="100">
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
                 <div class="md-toolbar-tools">
                     <span ng-bind="isEdit ? 'Edit' : 'Create'"></span>
@@ -65,7 +65,7 @@
                     </md-checkbox>
 
                     <md-dialog-actions class="padding-right-0" layout="column" layout-gt-sm="row">
-                        <md-progress-circular class="md-primary" ng-if="isProcessing"
+                        <md-progress-circular class="md-accent" ng-if="isProcessing"
                                               md-mode="indeterminate"></md-progress-circular>
 
                         <md-button class="md-warn md-raised"
@@ -83,7 +83,7 @@
 
         <!-- RO preview section -->
         &nbsp;&nbsp;
-        <div layout="column" class="previewSection md-whiteframe-10dp overflow-hidden" layout-fill flex>
+        <div layout="column" class="previewSection md-whiteframe-1dp overflow-hidden" layout-fill flex>
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
                     <span class="text-small-599 text-small-959" flex="20">Segment Preview</span>

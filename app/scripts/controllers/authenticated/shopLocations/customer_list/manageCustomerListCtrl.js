@@ -6,7 +6,8 @@ app.controller('manageCustomerListCtrl',
         var filterOption = "v.odo,v.make,v.model,v.year,v.ro_count,v.ro_avg,v.spent,v.labor_spent,v.parts_spent," +
             "v.delivered_message,v.scheduled_message,v.any_message,c.customer_type,c.company_name,c.first_seen," +
             "c.last_seen,c.postal_code,c.ro_count,c.ro_avg,c.spent,c.labor_spent,c.parts_spent,c.vehicle_count," +
-            "c.delivered_message,c.scheduled_message,c.any_message,ro.closed_day,ro.marketing_source,ro.techician_name";
+            "c.delivered_message,c.scheduled_message,c.any_message,ro.closed_day,ro.marketing_source," +
+            "ro.techician_name,ro.message,ro.message.status,ro.message.delivery";
 
         var locId = shopLocationsService.getShopLocationsObj().id ? shopLocationsService.getShopLocationsObj().id : '';
 
@@ -35,7 +36,7 @@ app.controller('manageCustomerListCtrl',
         $scope.customerListFilterOptions = filterOption.split(',');
         $scope.customerListFilterValues = [];
         var filteredValuesFor = ['c.first_seen', 'c.last_seen', 'c.customer_type', 'v.make', 'v.model', 'v.year',
-            'c.postal_code', 'ro.marketing_source', 'ro.techician_name'];
+            'c.postal_code', 'ro.marketing_source', 'ro.techician_name', 'ro.message', 'ro.message.status', 'ro.message.delivery'];
 
         $scope.fnGetFilteredValues = function (searchText, filterName) {
             $scope.customerListFilterValues = [];
@@ -86,7 +87,7 @@ app.controller('manageCustomerListCtrl',
 
             $scope.isProcessing = true;
 
-            if ($rootScope.isCustomerListName) {
+            if ($scope.filterObj.id) {
                 shopLocationsCustomerListService.fnUpdateCustomerList(locId, filterObj)
                     .then(function (data) {
                         $rootScope.$broadcast('refreshCustomerListGrid');
@@ -118,7 +119,6 @@ app.controller('manageCustomerListCtrl',
 
             $scope.isPreviewData = true;
             $scope.isPreviewDataMsg = false;
-            $scope.isProcessing = true;
 
             $scope.fnOnSelectBreadcrumb(0);
 
@@ -135,13 +135,11 @@ app.controller('manageCustomerListCtrl',
                     $scope.customerPreviewData = data;
                     $scope.isPreviewData = false;
                     $scope.isPreviewDataMsg = true;
-                    $scope.isProcessing = false;
 
                 }, function (error) {
                     toastr.error('Failed retrieving preview values.', 'STATUS CODE: ' + error.status);
                     $scope.isPreviewData = false;
                     $scope.isPreviewDataMsg = true;
-                    $scope.isProcessing = false;
                 });
         };
 
@@ -238,7 +236,7 @@ app.controller('manageCustomerListCtrl',
             $scope.selectedRow = index;
         };
 
-        $scope.fnInit = function () {
+        $scope.fnInitCustomerList = function () {
             var customerListObj = angular.copy(shopLocationsCustomerListService.getCustomerListObj());
 
             if (Object.keys(customerListObj).length) {
