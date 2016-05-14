@@ -482,3 +482,20 @@ md-dialog#sub-segment-dialog md-sidenav#segment-preview-ro-sidenav md-content.co
     overflow-y: auto;
     max-height: 300px;
 }
+
+#customer-list-tab .ngMapContainer {
+    height: 500px;
+}
+
+#customer-list-tab .ngMapContainer ng-map {
+    height: 100%;
+}
+
+#customer-list-tab .border {
+    border: solid thin #CCCCCC;
+}
+
+#customer-list-tab .subHeader {
+    background-color: #e0e0e0!important;
+    color: #000!important;
+}

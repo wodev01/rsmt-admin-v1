@@ -41,7 +41,7 @@ app.directive('pageTitle', function ($rootScope, $timeout) {
 
             function fnSetPageTitle(state, params) {
                 // Default title
-                var title = 'Rlo training';
+                var title = 'Repair Shop Marketing Tools (Website Design, SEO, SEM)';
                 // Create your own title pattern
                 if (state.data && state.data.pageTitle) {
                     if (state.data.pageTitle === 'Settings') {

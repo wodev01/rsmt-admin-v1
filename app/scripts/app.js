@@ -25,7 +25,8 @@ var app = angular
         'ui.grid.draggable-rows',
         'ngWYSIWYG',
         'angular-bind-html-compile',
-        'mdDateTime'
+        'mdDateTime',
+        'ngMap'
     ])
     .constant('cookieName', 'cargly_rsmtAdmin_access_token')
     .constant('toastr', toastr)

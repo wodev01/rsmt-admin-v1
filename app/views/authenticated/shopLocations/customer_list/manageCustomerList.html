@@ -29,6 +29,7 @@
 
             <md-tab label="Map Preview">
                 <div ng-if="selectedCustListIndex == 2"
+                     ng-init="fnGetLocationDetails(filterObj);"
                      ng-include="'views/authenticated/shopLocations/customer_list/mapPreview.html'"></div>
             </md-tab>
         </md-tabs>

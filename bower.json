@@ -18,7 +18,8 @@
     "md-date-time": "~0.1.0",
     "moment": "~2.11.1",
     "toastr": "~2.1.2",
-    "ui-grid-draggable-rows": "~0.2.2"
+    "ui-grid-draggable-rows": "~0.2.2",
+    "ngmap": "^1.17.3"
   },
   "devDependencies": {
     "angular-mocks": "1.5.5"
