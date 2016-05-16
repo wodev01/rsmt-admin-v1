@@ -476,26 +476,30 @@ md-dialog#sub-segment-dialog md-sidenav#segment-preview-ro-sidenav md-content.co
 /*------- END : md-date-time --------*/
 
 /*------- Customer List tab --------*/
-#customer-list-side-nav .expressionPreviewContainer {
-    border: 1px solid #CCCCCC;
-    border-radius: 5px;
-    overflow-y: auto;
-    max-height: 300px;
-}
-
-#customer-list-tab .ngMapContainer {
+#customer-list-map-preview-tab .ngMapContainer {
     height: 500px;
 }
 
-#customer-list-tab .ngMapContainer ng-map {
+#customer-list-map-preview-tab .ngMapContainer ng-map {
     height: 100%;
 }
 
-#customer-list-tab .border {
-    border: solid thin #CCCCCC;
+#customer-list-map-preview-tab .ngMapContainer .leftLabel {
+    font-weight: bold;
+    padding-right: 3px;
 }
 
-#customer-list-tab .subHeader {
-    background-color: #e0e0e0!important;
-    color: #000!important;
+#customer-list-map-preview-tab .ngMapContainer .mapTable {
+    width: 300px;
+}
+
+#customer-list-map-preview-tab .ngMapContainer .mapTable, #customer-list-map-preview-tab .ngMapContainer .mapTable tr td,
+#customer-list-map-preview-tab .ngMapContainer .mapTable tr th {
+    border: 1px solid !important;
+    border-collapse: collapse;
+}
+
+#customer-list-map-preview-tab .subHeader {
+    background-color: #E0E0E0 !important;
+    color: #000000 !important;
 }

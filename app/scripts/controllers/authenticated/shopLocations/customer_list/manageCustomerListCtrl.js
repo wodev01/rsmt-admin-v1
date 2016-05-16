@@ -27,7 +27,7 @@ app.controller('manageCustomerListCtrl',
         $scope.customerListFilterOptions = $scope.expressionArr = [];
         $scope.filterObj = {};
         $scope.filter = {};
-        $scope.isPreviewData = $scope.isLocationsData = false;
+        $scope.isPreviewData = $scope.mapDataProcessing = false;
         $scope.customerPreviewData = [];
         $scope.customersStatData = []
         $scope.mapLabel = 'Loading Map...';
@@ -162,19 +162,20 @@ app.controller('manageCustomerListCtrl',
 
         $scope.fnGetLocationDetails = function(filterObj){
             $scope.customersStatData = [];
-            $scope.isProcessing = false;
+            $scope.mapDataProcessing = true;
             shopLocationsCustomerListService.fnGetPreviewValues(locId, filterObj)
                 .then(function (data) {
                     if (data.length != 0) {
                         $scope.customersStatData = data;
-                        $scope.isProcessing = true;
+                        $scope.mapDataProcessing = false;
                         $scope.fnInitMap();
                     }else {
-                        $scope.isProcessing =  false;
+                        $scope.mapDataProcessing = false;
 
                     }
                 }, function () {
-                    toastr.error('Failed retrieving data');
+                    toastr.error('Failed retrieving data.');
+                    $scope.mapDataProcessing = false;
                 });
         };
 
@@ -203,11 +204,11 @@ app.controller('manageCustomerListCtrl',
 
             var html = '<div><h4>' + custObj._fullName + '</h4>' +
                 '<div>' + custObj._formattedAddress + '</div>' +
-                '<div><span class="leftLabel">Last Visit: </span>'
-                + $filter('date')(custObj.last_seen, 'MM/dd/yyyy h:mm a') + '</div>' +
-                '<div><table class="mapTable" style="width: 300px;"><thead>' +
+                '<div><span class="leftLabel">Last Visit: </span>' +
+                $filter('date')(custObj.last_seen, 'MM/dd/yyyy h:mm a') + '</div>' +
+                '<table class="mapTable"><thead>' +
                 '<tr><th colspan="4">Vehicles Info</th></tr>' +
-                '<tr><th>Model</th><th>Make</th><th>License</th><th>Year</th></tr></thead<tbody>';
+                '<tr><th>Model</th><th>Make</th><th>License</th><th>Year</th></tr></thead><tbody>';
 
             for (var i = 0; i < custObj.vehicles.length; i++) {
                 html += '<tr><td>' + custObj.vehicles[i].model + '</td>' +
@@ -326,14 +327,12 @@ app.controller('manageCustomerListCtrl',
             });
         };
 
-
         $scope.customerPreviewAction = '<div class="ui-grid-cell-contents" layout="column" layout-fill>' +
             '<md-button aria-label="open" class="md-icon-button md-accent margin-left-0"' +
             '           ng-click="grid.appScope.fnViewCustomerDetails(row,$event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Open</md-tooltip>' +
             '</md-button></div>';
-
 
         $scope.initPreviewListGrid = function () {
             $scope.previewListGridOptions = {
