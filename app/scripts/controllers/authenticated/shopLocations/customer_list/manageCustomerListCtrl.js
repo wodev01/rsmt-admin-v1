@@ -49,6 +49,7 @@ app.controller('manageCustomerListCtrl',
             'c.postal_code', 'ro.marketing_source', 'ro.techician_name', 'ro.message', 'ro.message.status', 'ro.message.delivery'];
 
         $scope.fnGetFilteredValues = function (searchText, filterName) {
+            filterName = filterName.trim();
             $scope.customerListFilterValues = [];
             if (filteredValuesFor.indexOf(filterName) == -1) return false;
 
@@ -171,11 +172,12 @@ app.controller('manageCustomerListCtrl',
                         $scope.fnInitMap();
                     }else {
                         $scope.mapDataProcessing = false;
-
+                        $scope.mapLabel = 'Completed...';
                     }
                 }, function () {
                     toastr.error('Failed retrieving data.');
                     $scope.mapDataProcessing = false;
+                    $scope.mapLabel = 'Completed...';
                 });
         };
 

@@ -11,9 +11,9 @@ app.controller('shopLocationCustomersListCtrl',
 
         $scope.customerListData = [];
         $scope.isDataNotNull = $scope.isMsgShow = false;
-        $scope.isChildForm = false;
 
         $scope.fnCreateNewList = function () {
+            $rootScope.isNewExpression = true;
             $scope.fnOpenTemplateSwap();
         };
 
@@ -67,7 +67,7 @@ app.controller('shopLocationCustomersListCtrl',
             '           ng-click="grid.appScope.fnEditCustomerList(row);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-pencil"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip></md-button>' +
-            '<md-button aria-label="download" class="md-icon-button md-accent"' +
+            '<md-button aria-label="download" class="md-icon-button md-accent" ' +
             '           ng-click="grid.appScope.fnExportPreviewListCSV(row, $event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-download"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Export</md-tooltip></md-button>' +
@@ -97,6 +97,7 @@ app.controller('shopLocationCustomersListCtrl',
         };
 
         $scope.fnEditCustomerList = function (row) {
+            $rootScope.isNewExpression = false;
             shopLocationsCustomerListService.setCustomerListObj(row.entity);
             $scope.fnOpenTemplateSwap();
         };
