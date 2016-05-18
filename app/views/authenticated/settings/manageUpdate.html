@@ -12,14 +12,13 @@
         <form id="updateForm" name="updateForm" layout="column" novalidate>
             <md-input-container class="remove-error-space">
                 <label>URL</label>
-                <input name="updateUrl" type="url" ng-model="update.url" minlength="5" required/>
+                <input name="updateUrl" ng-model="update.url"
+                       ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/" required>
 
                 <div ng-if="updateForm.$submitted || updateForm.updateUrl.$touched">
                     <span class="error-msg" ng-if="updateForm.updateUrl.$error.required">Url is required.</span>
-                    <span class="error-msg" ng-if="updateForm.updateUrl.$error.minlength">
-                        This field is too short minimum 5 characters required.</span>
-                    <span class="error-msg" ng-if="updateForm.updateUrl.$error.url">
-                        This field must be a valid url.</span>
+                    <span class="error-msg"
+                          ng-if="updateForm.url.$error.pattern">This field must contain valid URL.</span>
                 </div>
             </md-input-container>
 
@@ -43,9 +42,11 @@
                 </div>
             </md-input-container>
 
-            <md-checkbox aria-label="checkbox.label" ng-model="update.applies_to_location">
-                Applies to location
-            </md-checkbox>
+            <div>
+                <md-checkbox aria-label="checkbox.label" ng-model="update.applies_to_location">
+                    Applies to location
+                </md-checkbox>
+            </div>
 
             <div layout="row" layout-align="end center">
                 <md-progress-circular class="md-accent"
