@@ -158,12 +158,6 @@
     z-index: 1;
 }
 
-/*---------- RO modal ----------*/
-.leftLabel {
-    font-weight: bold;
-    padding-right: 3px;
-}
-
 /*---------- Bar-chart no data message ----------*/
 .bar-data-msg {
     position: absolute;
@@ -482,11 +476,6 @@ md-dialog#sub-segment-dialog md-sidenav#segment-preview-ro-sidenav md-content.co
 
 #customer-list-map-preview-tab .ngMapContainer ng-map {
     height: 100%;
-}
-
-#customer-list-map-preview-tab .ngMapContainer .leftLabel {
-    font-weight: bold;
-    padding-right: 3px;
 }
 
 #customer-list-map-preview-tab .ngMapContainer .mapTable {

@@ -81,39 +81,15 @@ app.controller('segmentsInteractionCtrl',
             $scope.fnChangeFilter($scope.filter);
         };
 
-        $scope.fnInitSegmentInteraction = function () {
-            if ($scope.segment) {
-                $scope.segment.sub_segments.unshift({id: '', name: 'All Sub Segments'});
-            }
-
-            $timeout(function () {
-                $('#segment-interaction-tab #pickDateRange').daterangepicker({
-                    datepickerOptions: {
-                        numberOfMonths: 2,
-                        maxDate: null
-                    },
-                    initialText: 'Select Date Period...',
-                    presetRanges: [],
-                    onChange: function () {
-                        $scope.fnRefreshGrid();
-                    }
-                });
-
-                $scope.fnToggleDateRange(true);
-            }, 100);
-
-            $scope.getPagedDataAsync($scope.filter);
-        };
-
         $scope.nameTmpl = '<div layout="row">'
             + '<span style="margin: 15px 0 !important;">'
             + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}'
             + '</span></div>';
 
-        $scope.infoTmpl = '<div layout="row">'
-            + '<div style="margin: 15px 5px !important;">'
+        $scope.infoTmpl = '<div class="overflow-auto" layout="row" layout-padding layout-fill>'
+            + '<div class="padding-0">'
             + '     <div> Email: {{row.entity.customer.email_addresses | joinArray}} </div>'
-            + '     <div style="width: 200px"> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>'
+            + '     <div> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>'
             + '     <div> Address: {{row.entity.customer.address1}} </div>'
             + '</div></div>';
 
@@ -164,7 +140,7 @@ app.controller('segmentsInteractionCtrl',
                     name: 'segment',
                     cellTemplate: $scope.segmentTmpl,
                     displayName: 'Segment',
-                    minWidth: 130,
+                    minWidth: 150,
                     enableHiding: false
                 },
                 {field: 'delivery_type', displayName: 'Delivery', minWidth: 80, enableHiding: false},
@@ -235,12 +211,12 @@ app.controller('segmentsInteractionCtrl',
                 template: '<md-dialog aria-label="Download Interaction CSV Dialog">' +
                 '  <md-dialog-content class="layout-padding">' +
                 '      <div class="md-title"> Download Interaction CSV </div>' +
-                '      <div>This could take some time. Are you sure..?</div>' +
+                '      <p class="margin-0">This could take some time. Are you sure..?</p>' +
                 '  </md-content>' +
                 '  <md-dialog-actions>' +
                 '       <md-button aria-label="download" ' +
                 '           class="md-raised md-accent" ng-click="fnDownload();">Download</md-button>' +
-                '       <md-button aria-label="cancel" class="md-warn md-raised md-hue-2" ' +
+                '       <md-button aria-label="cancel" class="md-warn md-raised" ' +
                 '                                       ng-click="fnHide();">Cancel</md-button>' +
                 '  </md-dialog-actions>' +
                 '</md-dialog>',
@@ -292,6 +268,30 @@ app.controller('segmentsInteractionCtrl',
             if ($scope.isSegmentInteractionData) {
                 fnGetDateRange();
             }
+        };
+
+        $scope.fnInitSegmentInteraction = function () {
+            if ($scope.segment) {
+                $scope.segment.sub_segments.unshift({id: '', name: 'All Sub Segments'});
+            }
+
+            $timeout(function () {
+                $('#segment-interaction-tab #pickDateRange').daterangepicker({
+                    datepickerOptions: {
+                        numberOfMonths: 2,
+                        maxDate: null
+                    },
+                    initialText: 'Select Date Period...',
+                    presetRanges: [],
+                    onChange: function () {
+                        $scope.fnRefreshGrid();
+                    }
+                });
+
+                $scope.fnToggleDateRange(true);
+            }, 100);
+
+            $scope.getPagedDataAsync($scope.filter);
         };
 
     });

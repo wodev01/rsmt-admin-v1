@@ -24,6 +24,12 @@
     #client-page section > form > input.filterBox {
         margin-left: -8px;
     }
+
+    /* Dashboard 2nd row */
+    md-toolbar .md-toolbar-tools.toolbar-content-height {
+        height: 70px;
+        max-height: 70px;
+    }
 }
 
 @media screen and (max-width: 599px) {
@@ -34,6 +40,12 @@
 
     md-dialog.subSegmentDialog .roListContainer {
         height: calc(100% - 86px) !important;
+    }
+
+    /* Dashboard 2nd row */
+    md-toolbar .md-toolbar-tools.toolbar-content-height {
+        height: 100px;
+        max-height: 100px;
     }
 }
 

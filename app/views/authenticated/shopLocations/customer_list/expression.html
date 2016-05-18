@@ -1,6 +1,6 @@
 <md-content layout-padding>
     <form name="searchForm" layout="column" novalidate>
-        <div layout="row">
+        <div layout="column" layout-gt-sm="row">
             <md-input-container class="remove-error-space" flex>
                 <label>Customer List Name</label>
                 <input type="text" name="name" ng-model="filterObj.name" required/>
@@ -10,14 +10,14 @@
                 </div>
             </md-input-container>
 
-            <div>
-                <md-checkbox class="md-accent"
+            <div layout="row" layout-align="space-between center">
+                <md-checkbox class="md-accent margin-bottom-0"
                              aria-label="Checkbox No Ink"
                              ng-disabled="isProcessing"
                              ng-model="filterObj.customers_only" md-no-ink>Customers Only
                 </md-checkbox>
 
-                <md-button class="md-raised md-accent margin-top-13 margin-right-0" type="submit"
+                <md-button class="md-raised md-accent margin-right-0" type="submit"
                            aria-label="Add to customer list"
                            ng-disabled="isProcessing"
                            ng-click="searchForm.$valid && fnAddExprToCustomerList(filterObj);">
