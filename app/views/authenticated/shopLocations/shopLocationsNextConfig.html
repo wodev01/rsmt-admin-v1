@@ -14,7 +14,7 @@
 
     <md-content layout="row">
         <div class="custom-table" style="overflow-x: auto !important;">
-            <div style="color: green;margin: 0 auto;" ng-show="isUpdated"><span>{{msg}}</span></div>
+            <div style="color: green; margin: 0 auto;" ng-show="isUpdated"><span>{{msg}}</span></div>
             <table style="overflow-y: hidden;">
                 <tr>
                     <td>Name</td>
@@ -43,6 +43,7 @@
                     <td>
                         <div style="padding-top: 15px;" layout="row" layout-align="space-around center" layout-fill>
                             <md-checkbox aria-label="checkbox.label" ng-disabled="isResetBtnShow"
+                                         ng-init="isChecked = nextConfig[ncKey] == '' ? true: false"
                                          ng-change="fnCheckboxChange(isChecked,nextConfig,ncKey,ncVal);"
                                          ng-model="isChecked"></md-checkbox>
                         </div>
