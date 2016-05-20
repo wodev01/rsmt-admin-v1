@@ -74,15 +74,14 @@
 
                     <md-dialog-actions layout="column" layout-gt-sm="row">
                         <md-progress-circular md-mode="indeterminate"
-                                              class="md-primary" ng-if="isProcessing"></md-progress-circular>
+                                              class="md-accent" ng-if="isProcessing"></md-progress-circular>
 
                         <md-button class="md-warn md-raised"
                                    ng-click="fnCloseDialog();">Cancel
                         </md-button>
 
                         <md-button class="md-raised md-accent margin-right-0"
-                                   ng-disabled="manageSegmentInteractionForm.$invalid
-                                                    || !manageSegmentInteractionForm.$dirty || isProcessing"
+                                   ng-disabled="isProcessing"
                                    ng-click="fnSaveSegmentInteraction(segmentInteraction);">Save
                         </md-button>
                     </md-dialog-actions>

@@ -350,7 +350,8 @@ app.controller('manageCustomerListCtrl',
                         cellTemplate: $scope.customerPreviewAction,
                         width: 50,
                         enableSorting: false,
-                        enableColumnMenu: false
+                        enableColumnMenu: false,
+                        enableColumnResizing: false
                     },
                     {
                         name: 'full name',
@@ -377,7 +378,7 @@ app.controller('manageCustomerListCtrl',
                         cellTemplate: '<div layout="row" class="ui-grid-cell-contents">' +
                         '{{row.entity.matched_vehicle.year}}&nbsp;{{row.entity.matched_vehicle.make}}' +
                         '&nbsp;{{row.entity.matched_vehicle.model}}</div>',
-                        minWidth: 200,
+                        minWidth: 250,
                         visible: typeof $scope.filterObj.customers_only == 'undefined' ?
                             true : $scope.filterObj.customers_only ? false : true,
                         enableSorting: false,

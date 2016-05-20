@@ -22,11 +22,9 @@
 
         <!-- uiGrid -->
         <div ng-if="isSubSegmentDataNotNull"
-             ui-grid-draggable-rows
-             ui-grid-selection
-             ui-grid-auto-resize
              ng-style="fnReturnGridHeight(subSegmentsData.length);"
-             ui-grid="subSegmentsGridOptions"></div>
+             ui-grid="subSegmentsGridOptions"
+             ui-grid-draggable-rows ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
 
     </div>
 </div>

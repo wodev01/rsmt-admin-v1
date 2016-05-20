@@ -69,16 +69,17 @@ app.controller('shopLocationsSegmentsCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Segment Name', minWidth: 100, enableHiding: false},
+                {field: 'name', displayName: 'Segment Name', minWidth: 150, enableHiding: false},
                 {field: 'sub_segments', displayName: 'SubSegment', cellFilter: 'joinArrayOfObj', minWidth: 200, enableHiding: false},
-                {field: 'delivery_enabled', displayName: 'Delivery Enabled', minWidth: 100, enableHiding: false},
+                {field: 'delivery_enabled', displayName: 'Delivery Enabled', minWidth: 80, enableHiding: false},
                 {
                     name: 'action',
                     displayName: '',
                     cellTemplate: $scope.shopLocationSegmentsAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ],
             onRegisterApi: function (gridApi) {

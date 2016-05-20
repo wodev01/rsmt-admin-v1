@@ -16,7 +16,7 @@
 
         <!-- Grid Section -->
         <div ng-if="isDataNotNull"
-             ui-grid="customerListGridOptions" ui-grid-selection ui-grid-auto-resize
-             ng-style="fnReturnGridHeight(customerListData.length);"></div>
+             ng-style="fnReturnGridHeight(customerListData.length);"
+             ui-grid="customerListGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
     </div>
 </md-content>

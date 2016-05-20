@@ -76,8 +76,8 @@
 
         <!-- Grid Section -->
         <div class="margin-bottom-10" ng-if="isSegmentInteractionData"
-             ui-grid="segmentInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
-             ng-style="$root.fnReturnGridHeight(segmentInteractionData.length, _intRowHeight);"></div>
+             ng-style="$root.fnReturnGridHeight(segmentInteractionData.length, _intRowHeight);"
+             ui-grid="segmentInteractionGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
 
         <div ng-if="isSegmentInteractionData" layout="row" layout-align="center center" layout-margin>
             <div ng-if="isPagingData">

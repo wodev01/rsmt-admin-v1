@@ -23,6 +23,7 @@ var app = angular
         'ui.grid.pagination',
         'ui.grid.exporter',
         'ui.grid.draggable-rows',
+        'ui.grid.resizeColumns',
         'ngWYSIWYG',
         'angular-bind-html-compile',
         'mdDateTime',

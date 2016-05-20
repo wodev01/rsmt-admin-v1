@@ -102,10 +102,11 @@ app.controller('shopLocationsCustomersCtrl',
                     width: 50,
                     enableSorting: false,
                     enableFiltering: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 },
-                {field: 'first_name', displayName: 'First Name', minWidth: 200, enableHiding: false},
-                {field: 'last_name', displayName: 'Last Name', minWidth: 200, enableHiding: false},
+                {field: 'first_name', displayName: 'First Name', minWidth: 150, enableHiding: false},
+                {field: 'last_name', displayName: 'Last Name', minWidth: 150, enableHiding: false},
                 {field: 'company', displayName: 'Company', minWidth: 200, enableHiding: false},
                 {
                     field: 'phone_numbers',

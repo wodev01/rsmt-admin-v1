@@ -91,7 +91,8 @@ app.controller('shopLocationCustomersListCtrl',
                     cellTemplate: $scope.customerListAction,
                     width: 150,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ]
         };

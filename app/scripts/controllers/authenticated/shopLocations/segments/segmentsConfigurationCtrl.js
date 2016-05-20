@@ -55,9 +55,9 @@ app.controller('segmentsConfigurationCtrl',
 
         $scope.subSegmentsGridOptions = {
             rowTemplate: '<div grid="grid" class="ui-grid-draggable-row" draggable="true">' +
-            '<div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" ' +
-            'class="ui-grid-cell move" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'custom\': true }" ' +
-            'ui-grid-cell></div></div>',
+            '   <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" ' +
+            '   class="ui-grid-cell move" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'custom\': true }" ' +
+            '           ui-grid-cell></div></div>',
             data: 'subSegmentsData',
             rowHeight: 50,
             multiSelect: false,
@@ -65,8 +65,8 @@ app.controller('segmentsConfigurationCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Sub-segment Name', minWidth: 100, enableHiding: false},
-                {field: 'template_name', displayName: 'Template Name', minWidth: 100, enableHiding: false},
+                {field: 'name', displayName: 'Sub-segment Name', minWidth: 150, enableHiding: false},
+                {field: 'template_name', displayName: 'Template Name', minWidth: 180, enableHiding: false},
                 {
                     field: 'interaction_delay_days',
                     displayName: 'Interaction Delay Days',
@@ -81,7 +81,8 @@ app.controller('segmentsConfigurationCtrl',
                     cellTemplate: $scope.subSegmentsAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ],
             onRegisterApi: function (gridApi) {

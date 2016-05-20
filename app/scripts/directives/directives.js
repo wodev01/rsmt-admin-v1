@@ -248,20 +248,21 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                             cellTemplate: $scope.roAction,
                             minWidth: 50,
                             enableSorting: false,
-                            enableColumnMenu: false
+                            enableColumnMenu: false,
+                            enableColumnResizing: false
                         },
                         {
                             field: 'closed',
                             displayName: 'Closed',
                             cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                            minWidth: 200,
+                            minWidth: 160,
                             enableSorting: false
                         },
                         {
                             field: 'inspection',
                             displayName: 'Inspection',
                             cellFilter: 'inspection',
-                            minWidth: 110,
+                            minWidth: 100,
                             enableSorting: false
                         },
                         {field: 'order_number', displayName: 'RO #', minWidth: 100, enableSorting: false},
@@ -269,14 +270,14 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                             name: 'labor',
                             cellTemplate: $scope.laborTmpl,
                             displayName: 'Labor',
-                            minWidth: 400,
+                            minWidth: 350,
                             enableSorting: false
                         },
                         {
                             name: 'part',
                             cellTemplate: $scope.partsTmpl,
                             displayName: 'Parts',
-                            minWidth: 400,
+                            minWidth: 350,
                             enableSorting: false
                         },
                         {
@@ -315,13 +316,14 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                             minWidth: 50,
                             enableSorting: false,
                             enableFiltering: false,
-                            enableColumnMenu: false
+                            enableColumnMenu: false,
+                            enableColumnResizing: false
                         },
                         {
                             field: 'closed',
                             displayName: 'Closed',
                             cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                            minWidth: 200
+                            minWidth: 160
                         },
                         {
                             field: 'inspection',
@@ -346,7 +348,7 @@ app.directive('repairOrderGrid', function ($mdDialog, shopLocationsService) {
                         {field: 'customer.postal_code', displayName: 'Postal Code', minWidth: 120},
                         {field: 'vehicle.year', displayName: 'Year', minWidth: 80},
                         {field: 'vehicle.make', displayName: 'Make', minWidth: 100},
-                        {field: 'vehicle.model', displayName: 'Model', minWidth: 100},
+                        {field: 'vehicle.model', displayName: 'Model', minWidth: 150},
                         {
                             field: 'total_sold_price_cents',
                             displayName: 'Total RO $',
@@ -430,7 +432,7 @@ app.directive('addDescription', function () {
         link: function (scope, iElement) {
             var html = '';
             angular.forEach(scope.arr, function (objVal) {
-                html += '<div style="white-space: normal; line-height: normal;" layout-margin>'
+                html += '<div class="text-justify" style="white-space: normal; line-height: normal; " layout-margin>'
                     + objVal.description + '</div>';
             });
             iElement.append(html);
@@ -594,31 +596,33 @@ app.directive('recommendedGrid', function ($mdDialog, $timeout, shopLocationsSer
             };
 
             $scope.fnSetGridOptions = function (id) {
-                var colDffArr = [{field: 'text', displayName: 'Service', minWidth: 200, enableHiding: false},
+                var colDffArr = [
+                    {field: 'text', displayName: 'Service', minWidth: 250, enableHiding: false},
                     {
                         field: 'recommended_date',
                         displayName: 'Date',
                         cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                        minWidth: 200, enableHiding: false
+                        minWidth: 160, enableHiding: false
                     },
                     {
                         field: 'due_date',
                         displayName: 'Due Date',
                         cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                        minWidth: 200, enableHiding: false
+                        minWidth: 160, enableHiding: false
                     },
                     {field: 'recommendation_type', displayName: 'Type', minWidth: 100, enableHiding: false}
                 ];
+
                 $scope.tooltip = '<div class="grid-tooltip" add-tooltip obj="row" ' +
                     'row-index="grid.renderContainers.body.visibleRowCache.indexOf(row);"></div>';
+
                 if (!id) {
                     $scope._filteringEnabled = false;
                     colDffArr.unshift({
                         name: 'tooltip',
                         cellTemplate: $scope.tooltip,
                         displayName: 'Recent Labor',
-                        minWidth: 50,
-                        width: 120,
+                        width: 110,
                         enableSorting: false,
                         enableFiltering: false,
                         enableColumnMenu: false

@@ -1,4 +1,4 @@
-<div id="ro-grid" class="md-padding" style="min-height: 100px;">
+<div id="ro-grid" class="md-padding overflow-auto" style="min-height: 100px;">
     <!-- Loader -->
     <div ng-if="!isRODataNotNull && !isROMsgShow" layout="column" layout-align="center center" layout-fill flex>
         <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
@@ -10,5 +10,7 @@
 
     <div ng-if="isRODataNotNull"
          ng-style="$root.fnReturnGridHeight(filteredData.length, _intRowHeight, true, _filteringEnabled);"
-         ui-grid="repairOrderGridOptions" ui-grid-selection ui-grid-pagination ui-grid-auto-resize></div>
+         ui-grid="repairOrderGridOptions"
+         ui-grid-selection ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns></div>
+
 </div>

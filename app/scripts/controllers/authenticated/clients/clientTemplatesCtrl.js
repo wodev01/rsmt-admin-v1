@@ -89,7 +89,8 @@ app.controller('clientTemplatesCtrl',
                     width: 100,
                     enableSorting: false,
                     enableColumnMenu: false,
-                    cellTemplate: $scope.templateAction
+                    cellTemplate: $scope.templateAction,
+                    enableColumnResizing: false
                 }
             ],
             onRegisterApi: function (gridApi) {

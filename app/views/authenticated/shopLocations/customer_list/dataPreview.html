@@ -20,8 +20,8 @@
 
         <!-- Grid Section -->
         <div class="margin-bottom-10" ng-if="customerPreviewData.length !== 0 && !isPreviewData">
-            <div ui-grid="previewListGridOptions" ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(customerPreviewData.length);" ng-cloak></div>
+            <div ng-style="$root.fnReturnGridHeight(customerPreviewData.length);"
+                 ui-grid="previewListGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
         </div>
     </div>
 

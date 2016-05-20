@@ -81,7 +81,7 @@ app.controller('paymentsCtrl',
                     enableHiding: false,
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\''
                 },
-                {field: 'invoice_num', displayName: 'Invoice #', enableHiding: false, minWidth: 100},
+                {field: 'invoice_num', displayName: 'Invoice #', enableHiding: false, minWidth: 200},
                 {field: 'description', displayName: 'Description', enableHiding: false, minWidth: 200},
                 {
                     name: 'status',

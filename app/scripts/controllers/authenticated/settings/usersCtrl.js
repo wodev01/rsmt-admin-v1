@@ -64,7 +64,8 @@ app.controller('usersCtrl',
                     cellTemplate: $scope.userAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ]  ,
             onRegisterApi: function (gridApi) {

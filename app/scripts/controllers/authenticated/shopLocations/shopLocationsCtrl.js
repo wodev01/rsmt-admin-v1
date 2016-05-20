@@ -101,10 +101,11 @@ app.controller('shopLocationsCtrl',
                     cellTemplate: $scope.colorIndicator,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 },
-                {field: 'name', displayName: 'Location', minWidth: 100, enableHiding: false},
-                {field: 'getSMSInfoNameAndDBHealth', displayName: 'SMS', minWidth: 100, enableHiding: false},
+                {field: 'name', displayName: 'Location', minWidth: 200, enableHiding: false},
+                {field: 'getSMSInfoNameAndDBHealth', displayName: 'SMS', minWidth: 150, enableHiding: false},
                 {
                     field: 'lastConfigUpdated',
                     displayName: 'Last Inform',
@@ -126,7 +127,8 @@ app.controller('shopLocationsCtrl',
                     cellTemplate: $scope.shopLocationsAction,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ],
             onRegisterApi: function (gridApi) {

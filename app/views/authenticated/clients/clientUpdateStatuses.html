@@ -57,8 +57,8 @@
     </div>
 
     <!--UI Grid-->
-    <div ng-style="$root.fnReturnGridHeight(clientUpdateStatusesData.length);"
-         ng-if="isDataNotNull"
-         ui-grid="updateStatusesGridOptions" ui-grid-selection ui-grid-auto-resize></div>
+    <div ng-if="isDataNotNull"
+         ng-style="$root.fnReturnGridHeight(clientUpdateStatusesData.length);"
+         ui-grid="updateStatusesGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
 
 </md-content>

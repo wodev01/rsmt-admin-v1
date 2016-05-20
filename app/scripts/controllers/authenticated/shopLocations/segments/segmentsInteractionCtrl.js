@@ -116,7 +116,8 @@ app.controller('segmentsInteractionCtrl',
                 {
                     name: 'action', displayName: '', cellTemplate: $scope.sgmentInteractionAction, width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 },
                 {
                     field: 'due_date', displayName: 'Due Date',
@@ -126,7 +127,7 @@ app.controller('segmentsInteractionCtrl',
                     name: 'customer name',
                     cellTemplate: $scope.nameTmpl,
                     displayName: 'Customer Name',
-                    minWidth: 150,
+                    minWidth: 180,
                     enableHiding: false
                 },
                 {
@@ -140,7 +141,7 @@ app.controller('segmentsInteractionCtrl',
                     name: 'segment',
                     cellTemplate: $scope.segmentTmpl,
                     displayName: 'Segment',
-                    minWidth: 150,
+                    minWidth: 180,
                     enableHiding: false
                 },
                 {field: 'delivery_type', displayName: 'Delivery', minWidth: 80, enableHiding: false},

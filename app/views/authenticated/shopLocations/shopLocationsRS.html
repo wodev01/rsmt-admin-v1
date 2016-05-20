@@ -1,5 +1,6 @@
 <md-content id="rs-grid" class="md-padding" style="min-height: 100px;">
-    <div class="margin-bottom-10" layout="row" layout-xs="column" layout-align-xs="center stretch" layout-align="end center"
+    <div class="margin-bottom-10" layout="row" layout-xs="column" layout-align-xs="center stretch"
+         layout-align="end center"
          ng-if="locId"
          ng-init="fnInit();">
         <div ng-if="isProcessing">
@@ -7,11 +8,13 @@
                                   style="z-index: 2;"
                                   md-mode="indeterminate"></md-progress-circular>
         </div>
+
         <div layout-xs="column" layout-align-xs="center stretch">
-        <input id="pickDateRange" ng-model="drpObj"/>
+            <input id="pickDateRange" ng-model="drpObj"/>
+
             <md-button aria-label="Export CSV"
                        id="btn-export-csv"
-                       class="md-raised md-accent margin-right-0"
+                       class="md-raised md-accent"
                        ng-click="fnExportCSV();"
                        ng-disabled="isProcessing || !isRSDataNotNull">Export CSV
             </md-button>
@@ -28,9 +31,9 @@
 
     <!-- Grid Section -->
     <div ng-if="isRSDataNotNull"
+         ng-style="$root.fnReturnGridHeight(filteredData.length, '', true, _filteringEnabled);"
          ui-grid="recommendedServiceGridOptions"
-         ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-auto-resize
-         ng-style="$root.fnReturnGridHeight(filteredData.length, '', true, _filteringEnabled);">
+         ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-auto-resize ui-grid-resize-columns>
     </div>
 
 </md-content>

@@ -27,8 +27,8 @@
 
         <!-- Grid Section -->
         <div ng-if="isDataNotNull"
-             ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize
-             ng-style="$root.fnReturnGridHeight(customersData.length, '', false, true);" ng-cloak></div>
+             ng-style="$root.fnReturnGridHeight(customersData.length, '', false, true);"
+             ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
     </div>
 
     <div ng-if="customerIndex == 1">

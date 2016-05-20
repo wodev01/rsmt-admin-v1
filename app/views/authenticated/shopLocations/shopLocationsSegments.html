@@ -18,7 +18,7 @@
 
     <!-- Grid Section -->
     <div ng-if="isShopLocSegmentDataNotNull"
-         ui-grid="shopLocationSegmentsGridOptions" ui-grid-selection ui-grid-auto-resize
-         ng-style="fnReturnGridHeight(shopLocationSegmentsData.length);"></div>
+         ng-style="fnReturnGridHeight(shopLocationSegmentsData.length);"
+         ui-grid="shopLocationSegmentsGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
 
 </md-content>

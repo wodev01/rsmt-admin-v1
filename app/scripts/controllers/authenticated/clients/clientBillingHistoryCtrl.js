@@ -70,7 +70,7 @@ app.controller('clientBillingHistoryCtrl',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
                     enableHiding: false
                 },
-                {field: 'reference', displayName: 'Invoice #', minWidth: 100, enableHiding: false},
+                {field: 'reference', displayName: 'Invoice #', minWidth: 200, enableHiding: false},
                 {field: 'description', displayName: 'Description', minWidth: 250, enableHiding: false},
                 {
                     field: 'status',
@@ -92,7 +92,8 @@ app.controller('clientBillingHistoryCtrl',
                     cellTemplate: $scope.billingHistoryAction,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 }
             ],
             onRegisterApi: function (gridApi) {
