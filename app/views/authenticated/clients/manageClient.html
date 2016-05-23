@@ -11,7 +11,8 @@
     <md-content md-theme="grey">
         <md-tabs class="md-primary" md-selected="selectedClientTab" md-dynamic-height ng-if="isTabsLoad">
             <md-tab label="Info">
-                <div ng-if="selectedClientTab == 0"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 0"
                      ng-controller="clientInfoCtrl"
                      ng-include="'views/authenticated/clients/clientInfo.html'"
                      ng-init="fnInitClientInfo();">
@@ -19,55 +20,63 @@
             </md-tab>
 
             <md-tab label="Users">
-                <div ng-if="selectedClientTab == 1"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 1"
                      ng-controller="clientUsersCtrl"
                      ng-include="'views/authenticated/clients/clientUser.html'"
                      ng-init="fnInitUsers();"></div>
             </md-tab>
 
             <md-tab label="Locations">
-                <div ng-if="selectedClientTab == 2"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 2"
                      ng-controller="clientLocationCtrl"
                      ng-include="'views/authenticated/clients/clientLocation.html'"
                      ng-init="fnInitLocation(selectedClientTab);"></div>
             </md-tab>
 
             <md-tab label="Billing">
-                <div ng-if="selectedClientTab == 3"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 3"
                      ng-controller="clientBillingCtrl"
                      ng-include="'views/authenticated/clients/clientBilling.html'"
                      ng-init="fnClientBillingInit();"></div>
             </md-tab>
 
             <md-tab label="Billing History">
-                <div ng-if="selectedClientTab == 4"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 4"
                      ng-controller="clientBillingHistoryCtrl"
                      ng-include="'views/authenticated/clients/clientBillingHistory.html'"
                      ng-init="fnInitBillingHistory();"></div>
             </md-tab>
 
             <md-tab label="Templates">
-                <div ng-if="selectedClientTab == 5"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 5"
                      ng-controller="clientTemplatesCtrl"
                      ng-include="'views/authenticated/clients/clientTemplates.html'"
                      ng-init="fnInitTemplates();"></div>
             </md-tab>
 
             <md-tab label="Act-On">
-                <div ng-if="selectedClientTab == 6"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 6"
                      ng-controller="clientActOnCtrl"
                      ng-include="'views/authenticated/clients/clientActOn.html'"></div>
             </md-tab>
 
             <md-tab label="Updates">
-                <div ng-if="selectedClientTab == 7"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 7"
                      ng-controller="clientUpdatesCtrl"
                      ng-include="'views/authenticated/clients/clientUpdates.html'"
                      ng-init="fnInitUpdates();"></div>
             </md-tab>
 
             <md-tab label="Update Statuses">
-                <div ng-if="selectedClientTab == 8"
+                <div md-theme="rsmt"
+                     ng-if="selectedClientTab == 8"
                      ng-controller="clientUpdateStatusesCtrl"
                      ng-include="'views/authenticated/clients/clientUpdateStatuses.html'"
                      ng-init="fnInitUpdateStatuses();"></div>

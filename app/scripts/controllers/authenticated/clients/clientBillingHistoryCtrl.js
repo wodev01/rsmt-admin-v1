@@ -75,7 +75,7 @@ app.controller('clientBillingHistoryCtrl',
                 {
                     field: 'status',
                     displayName: 'Status',
-                    minWidth: 150,
+                    minWidth: 130,
                     cellTemplate: $scope.errorTooltip,
                     enableHiding: false
                 },

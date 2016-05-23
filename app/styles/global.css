@@ -1242,6 +1242,10 @@ md-toolbar.light-black-bg-1 {
     line-height: 3em;
 }
 
+.ui-grid-menu-button {
+    height: 20px;
+}
+
 md-dialog[aria-label=Delete] button[aria-label=Delete], md-dialog[aria-label=Delete] button[aria-label=Remove] {
     background-color: rgb(198, 40, 40) !important;
     border-color: #C9302C !important;
@@ -1364,7 +1368,7 @@ md-input-container.remove-error-space .md-errors-spacer {
 }
 
 /* Remove outline for repair order list */
-md-list md-list-item > div {
+md-list md-list-item > div, textarea {
     outline: none;
 }
 

@@ -368,7 +368,7 @@ app.controller('manageCustomerListCtrl',
                         cellTemplate: '<div layout="row" class="ui-grid-cell-contents">' +
                         '{{row.entity.first_seen | date: \'MM/dd/yyyy\'}},&nbsp;' +
                         '{{row.entity.last_seen | date: \'MM/dd/yyyy\'}}</div>',
-                        minWidth: 200,
+                        minWidth: 180,
                         enableSorting: false,
                         enableColumnMenu: false
                     },

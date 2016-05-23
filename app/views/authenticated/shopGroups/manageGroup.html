@@ -15,12 +15,14 @@
         <div ng-if="$parent.isGroupEditable" ng-init="fnManageGroupInit();" md-theme="grey">
             <md-tabs class="md-primary" md-dynamic-height md-selected="selectedGroupsTab">
                 <md-tab label="Update Group">
-                    <div ng-if="selectedGroupsTab == 0"
+                    <div md-theme="rsmt"
+                         ng-if="selectedGroupsTab == 0"
                          ng-include="'views/authenticated/shopGroups/editGroup.html'"></div>
                 </md-tab>
 
                 <md-tab label="Membership List">
-                    <div ng-if="selectedGroupsTab == 1"
+                    <div md-theme="rsmt"
+                         ng-if="selectedGroupsTab == 1"
                          ng-include="'views/authenticated/shopGroups/groupMemberList.html'"></div>
                 </md-tab>
             </md-tabs>

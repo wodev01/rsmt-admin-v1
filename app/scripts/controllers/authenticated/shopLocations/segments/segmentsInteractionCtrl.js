@@ -81,10 +81,8 @@ app.controller('segmentsInteractionCtrl',
             $scope.fnChangeFilter($scope.filter);
         };
 
-        $scope.nameTmpl = '<div layout="row">'
-            + '<span style="margin: 15px 0 !important;">'
-            + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}'
-            + '</span></div>';
+        $scope.nameTmpl = '<div class="ui-grid-cell-contents">'
+            + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}</div>';
 
         $scope.infoTmpl = '<div class="overflow-auto" layout="row" layout-padding layout-fill>'
             + '<div class="padding-0">'
@@ -93,10 +91,8 @@ app.controller('segmentsInteractionCtrl',
             + '     <div> Address: {{row.entity.customer.address1}} </div>'
             + '</div></div>';
 
-        $scope.segmentTmpl = '<div layout="row">'
-            + '<span style="margin: 15px 0 !important;">'
-            + '{{row.entity.segment.name}}\\{{ row.entity.sub_segment.name}}'
-            + '</span></div>';
+        $scope.segmentTmpl = '<div class="ui-grid-cell-contents">'
+            + '{{row.entity.segment.name}}\\{{ row.entity.sub_segment.name}}</div>';
 
         $scope.sgmentInteractionAction = '<div class="ui-grid-cell-contents">' +
             '<md-button aria-label="view" class="md-icon-button md-accent margin-left-0"' +

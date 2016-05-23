@@ -136,9 +136,9 @@ app.controller('clientUpdateStatusesCtrl',
                 },
                 {field: 'update_type', displayName: 'Type', minWidth: 100},
                 {field: 'update_url', displayName: 'URL', minWidth: 200},
-                {field: 'update_version', displayName: 'Update Version', minWidth: 150},
-                {field: 'prior_version', displayName: 'Prior Version', minWidth: 150},
-                {field: 'status', displayName: 'Status', minWidth: 150},
+                {field: 'update_version', displayName: 'Update Version', minWidth: 100},
+                {field: 'prior_version', displayName: 'Prior Version', minWidth: 100},
+                {field: 'status', displayName: 'Status', minWidth: 100},
                 {field: 'details', displayName: 'Details', visible: false, minWidth: 200}
             ],
             onRegisterApi: function (gridApi) {

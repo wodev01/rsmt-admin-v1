@@ -77,7 +77,7 @@ app.controller('paymentsCtrl',
                 {
                     field: 'date',
                     displayName: 'Date',
-                    minWidth: 180,
+                    minWidth: 160,
                     enableHiding: false,
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\''
                 },
@@ -87,7 +87,7 @@ app.controller('paymentsCtrl',
                     name: 'status',
                     displayName: 'Status',
                     cellTemplate: $scope.error_tooltip,
-                    minWidth: 150,
+                    minWidth: 130,
                     enableHiding: false
                 },
                 {
@@ -95,7 +95,7 @@ app.controller('paymentsCtrl',
                     displayName: 'Amount',
                     enableHiding: false,
                     cellFilter: 'CentToDollar | currency',
-                    minWidth: 120
+                    minWidth: 100
                 },
                 {
                     name: 'action',
@@ -103,7 +103,8 @@ app.controller('paymentsCtrl',
                     cellTemplate: $scope.paymentsAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResize: false
                 }
             ],
             onRegisterApi: function (gridApi) {

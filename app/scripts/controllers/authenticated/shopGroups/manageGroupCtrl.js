@@ -128,7 +128,7 @@ app.controller('manageGroupCtrl',
                 enableRowSelection: true,
                 enableRowHeaderSelection: false,
                 columnDefs: [
-                    {field: 'partner', displayName: 'Member Name', minWidth: 200, enableHiding: false},
+                    {field: 'partner', displayName: 'Member Name', minWidth: 250, enableHiding: false},
                     {
                         name: 'action',
                         displayName: '',

@@ -17,7 +17,7 @@
                                 fnGetInterpolatedTemplate('html') : fnGetInterpolatedTemplate('text') : '';">
 
                 <md-tab label="Template Info">
-                    <div class="md-padding" ng-if="selectedIndex == 0" layout="column" layout-fill flex>
+                    <div class="md-padding" md-theme="rsmt" ng-if="selectedIndex == 0" layout="column" layout-fill flex>
                         <md-input-container class="remove-error-space">
                             <label>Name</label>
                             <input name="name" ng-model="template.name" required/>
@@ -63,7 +63,7 @@
                 </md-tab>
 
                 <md-tab label="Template Text">
-                    <div class="tab-container md-padding" layout="column" ng-if="selectedIndex == 1">
+                    <div class="tab-container md-padding" md-theme="rsmt" layout="column" ng-if="selectedIndex == 1">
                             <textarea name="template_text"
                                       layout="column" ng-model="template.text"
                                       placeholder="Enter template text here."></textarea>
@@ -71,23 +71,26 @@
                 </md-tab>
 
                 <md-tab label="Template HTML">
-                    <div class="tab-container md-padding" layout="column" ng-if="selectedIndex == 2">
+                    <div class="tab-container md-padding" md-theme="rsmt" layout="column" ng-if="selectedIndex == 2">
                         <wysiwyg-edit content="template.html"></wysiwyg-edit>
                     </div>
                 </md-tab>
 
                 <md-tab label="Template Preview">
-                    <div class="tab-container md-padding" style="padding: 16px !important;" layout-fill flex
-                         ng-if="selectedIndex == 3" ng-click="$event.stopPropagation();">
+                    <div class="tab-container md-padding"
+                         md-theme="rsmt" style="padding: 16px !important;"
+                         ng-if="selectedIndex == 3" ng-click="$event.stopPropagation();" layout-fill flex>
                         <!-- Loader -->
                         <div ng-if="!isInterpolated" layout="column" layout-align="center center" layout-fill flex>
                             <md-progress-circular class="md-accent" md-diameter="100"
                                                   md-mode="indeterminate"></md-progress-circular>
                         </div>
+
                         <div ng-if="isInterpolated" layout-fill>
                             <div ng-if="!isToggled" layout-fill>
                                 <div bind-html-compile="rendered_template.html" layout-fill></div>
                             </div>
+
                             <div ng-if="isToggled" layout-fill>
                                     <textarea name="previewText"
                                               layout="column" ng-model="rendered_template.text"
@@ -98,7 +101,9 @@
                 </md-tab>
             </md-tabs>
 
-            <div style="border-top: 1px solid;" layout="column" layout-gt-sm="row" layout-align="end center">
+            <md-divider></md-divider>
+
+            <div layout="column" layout-gt-sm="row" layout-align="end center">
                 <div layout="row" layout-align-sm="center center" layout-align-xs="center center" flex>
                     <md-button class="md-raised md-accent" ng-if="selectedIndex == 3" ng-click="fnTogglePreview();">
                         Preview {{ toggleText }}

@@ -110,14 +110,14 @@ app.controller('shopLocationsCtrl',
                     field: 'lastConfigUpdated',
                     displayName: 'Last Inform',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                    minWidth: 100,
+                    minWidth: 160,
                     enableHiding: false
                 },
                 {
                     field: 'lastConfig.settings["carglyconnect.lastsync"]',
                     displayName: 'Last Sync',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                    minWidth: 100,
+                    minWidth: 160,
                     enableHiding: false
                 },
                 {field: 'currentVersion', displayName: 'Sync app’s version', minWidth: 100, enableHiding: false},

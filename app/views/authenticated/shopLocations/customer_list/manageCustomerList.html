@@ -16,19 +16,22 @@
     <div ng-controller="manageCustomerListCtrl" layout="column" md-theme="grey">
         <md-tabs class="md-primary" md-dynamic-height md-selected="selectedCustListIndex">
             <md-tab label="Expression">
-                <div ng-if="selectedCustListIndex == 0"
+                <div md-theme="rsmt"
+                     ng-if="selectedCustListIndex == 0"
                      ng-init="fnInitCustomerList();"
                      ng-include="'views/authenticated/shopLocations/customer_list/expression.html'"></div>
             </md-tab>
 
             <md-tab label="Data Preview">
-                <div ng-if="selectedCustListIndex == 1"
+                <div md-theme="rsmt"
+                     ng-if="selectedCustListIndex == 1"
                      ng-init="fnGetPreviewValues(filterObj);"
                      ng-include="'views/authenticated/shopLocations/customer_list/dataPreview.html'"></div>
             </md-tab>
 
             <md-tab label="Map Preview">
-                <div ng-if="selectedCustListIndex == 2"
+                <div md-theme="rsmt"
+                     ng-if="selectedCustListIndex == 2"
                      ng-init="fnGetLocationDetails(filterObj);"
                      ng-include="'views/authenticated/shopLocations/customer_list/mapPreview.html'"></div>
             </md-tab>

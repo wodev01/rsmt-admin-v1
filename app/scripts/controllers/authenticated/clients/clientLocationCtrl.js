@@ -62,7 +62,8 @@ app.controller('clientLocationCtrl',
                     cellTemplate: $scope.colorIndicator,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResizing: false
                 },
                 {field: 'name', displayName: 'Name', minWidth: 200, enableHiding: false},
                 {field: 'address', displayName: 'Address', minWidth: 200, enableHiding: false},
