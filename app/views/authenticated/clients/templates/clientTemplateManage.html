@@ -3,10 +3,11 @@
 
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
-        <h1 class="md-toolbar-tools" layout="row" layout-align="space-between center">
-            <span>{{editTemplateName}}</span>
+        <div class="md-toolbar-tools" layout="row">
+            <span ng-bind="editTemplateName"></span>
+            <span flex></span>
             <md-button ng-click="fnCloseManageTemplate();" class="md-raised md-accent"> Back</md-button>
-        </h1>
+        </div>
     </md-toolbar>
 
     <md-content ng-controller="clientTemplateManageCtrl">
@@ -88,7 +89,7 @@
 
                         <div ng-if="isInterpolated" layout-fill>
                             <div ng-if="!isToggled" layout-fill>
-                                <div bind-html-compile="rendered_template.html" layout-fill></div>
+                                <div ng-bind-html="rendered_template.html" layout-fill></div>
                             </div>
 
                             <div ng-if="isToggled" layout-fill>
