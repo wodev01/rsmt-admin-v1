@@ -81,6 +81,22 @@
                      ng-include="'views/authenticated/clients/clientUpdateStatuses.html'"
                      ng-init="fnInitUpdateStatuses();"></div>
             </md-tab>
+
+            <md-tab label="Forms">
+                <div md-theme="rsmt"
+                     ng-controller="clientFormsCtrl"
+                     ng-if="selectedClientTab == 9"
+                     ng-include="'views/authenticated/clients/clientForms.html'"
+                     ng-init="fnInitClientForms();"></div>
+            </md-tab>
+
+            <md-tab label="Activity">
+                <div md-theme="rsmt"
+                     ng-controller="clientActivityCtrl"
+                     ng-if="selectedClientTab == 10"
+                     ng-include="'views/authenticated/clients/clientActivity.html'"
+                     ng-init="fnInitClientActivity();"></div>
+            </md-tab>
         </md-tabs>
     </md-content>
 </md-sidenav>

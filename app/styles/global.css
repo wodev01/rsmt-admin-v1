@@ -1385,3 +1385,8 @@ md-list md-list-item > div, textarea {
     font-weight: bold;
     padding-right: 3px;
 }
+
+/* In IE-11(Edge) to popup dialog center of the screen*/
+md-dialog.fullScreenDialog {
+    width: 100%;
+}

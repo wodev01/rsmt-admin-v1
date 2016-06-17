@@ -492,3 +492,27 @@ md-dialog#sub-segment-dialog md-sidenav#segment-preview-ro-sidenav md-content.co
     background-color: #E0E0E0 !important;
     color: #000000 !important;
 }
+
+/*---------- Clients Activity tab ----------*/
+#client-activity-tab md-list md-list-item md-icon {
+    min-width: 40px;
+}
+
+#client-activity-tab #market-session-icon {
+    border: 1px solid #CCCCCC;
+    border-radius: 50%;
+}
+
+#client-activity-tab #customer-vehicle-info p {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+#client-activity-tab #customer-vehicle-info .customerDetails,
+#client-activity-tab #session-activities md-list md-list-item {
+    line-height: 25px;
+    font-size: 13px;
+}
+
+#client-activity-tab #session-activities md-list md-list-item {
+    min-height: 0px;
+}
