@@ -35,9 +35,31 @@ app.controller('clientFormsCtrl', function ($scope, clientService, clientFormSer
         '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
         '</md-button></div>';
 
+    var customerTemplate = '<div style="padding: 15px 5px;line-height: 1.4em;overflow-y: auto; height: inherit;display: block;" ng-if="row.entity.session.customer" layout="column">' +
+        '<div layout="row" flex>'+
+                '<label style="font-weight: 500;">Name :&nbsp;</label>' +
+                '<label flex>{{row.entity.session.customer.first_name}}&nbsp;{{row.entity.session.customer.last_name}}</label>' +
+        '</div>'+
+        '<div layout="row" flex>'+
+            '<label style="font-weight: 500;">Phone :&nbsp;</label>' +
+            '<label flex>{{row.entity.session.customer.phone_numbers | joinArray}}</label>' +
+        '</div>'+
+        '<div layout="row" flex>'+
+            '<label style="font-weight: 500;">Email :&nbsp;</label>' +
+            '<label flex>{{row.entity.session.customer.email_addresses | joinArray}}</label>' +
+        '</div>'+
+        '<div layout="row" flex>'+
+            '<label style="font-weight: 500;">Vehicle :&nbsp;</label>' +
+            '<label>{{row.entity.session.vehicle.year}}</label>'+
+            '<label>&nbsp;{{row.entity.session.vehicle.make}}</label>'+
+            '<label>&nbsp;{{row.entity.session.vehicle.model}}</label>' +
+        '</div>'+
+   '</div>' +
+   '<div style="line-height: 3em;padding: 5px;" ng-if="!row.entity.session.customer">Anonymous</div>';
+
     $scope.clientFormsGridOptions = {
         data: 'clientFormsDetails',
-        rowHeight: 50,
+        rowHeight: 100,
         multiSelect: false,
         enableRowSelection: true,
         enableRowHeaderSelection: false,
@@ -62,6 +84,14 @@ app.controller('clientFormsCtrl', function ($scope, clientService, clientFormSer
                 displayName: 'Form Name',
                 width: 150,
                 minWidth: 150,
+                enableHiding: false
+            },
+            {
+                field: 'customer',
+                displayName: 'Customer',
+                cellTemplate : customerTemplate,
+                width: 300,
+                minWidth: 300,
                 enableHiding: false
             },
             {
