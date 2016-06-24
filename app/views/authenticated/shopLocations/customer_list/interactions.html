@@ -1,0 +1,84 @@
+<div id="customer-list-interaction-tab" class="md-padding">
+    <div ng-init="fnInitCustomerListInteraction();">
+        <section layout="row" layout-sm="column" layout-xs="column"
+                 layout-align="space-between center"
+                 layout-align-sm="space-around start"
+                 layout-align-xs="space-around start">
+            <div class="margin-top-13" layout="row" flex>
+                <input id="pickDateRange" ng-model="drpObj"/>
+            </div>
+
+            <div layout="row" layout-align="space-between center" layout-fill flex>
+                <md-input-container flex>
+                    <md-select-label>Status:</md-select-label>
+                    <md-select aria-label="Select staus" ng-model="filter.status"
+                               ng-change="fnChangeFilter(filter);"
+                               ng-disabled="isProcessing">
+                        <md-option value="" selected>All Status</md-option>
+                        <md-option value="SCHEDULED">Scheduled</md-option>
+                        <md-option value="UNDELIVERED">Undelivered</md-option>
+                        <md-option value="DELIVERED">Delivered</md-option>
+                        <md-option value="FAILED">Failed</md-option>
+                        <md-option value="IGNORED">Ignored</md-option>
+                        <md-option value="PREEMPTED">Preempted</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <md-select-label>Type:</md-select-label>
+                    <md-select aria-label="Select type" ng-model="filter.deliveryType"
+                               ng-change="fnChangeFilter(filter);"
+                               ng-disabled="isProcessing">
+                        <md-option value="" selected>All Type</md-option>
+                        <md-option value="EMAIL">Email</md-option>
+                        <md-option value="POST">Post</md-option>
+                        <md-option value="SMS">SMS</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div layout="row" layout-align="end center"
+                 layout-align-sm="space-between center" layout-align-xs="space-between center"
+                 layout-fill flex>
+                <md-button aria-label="Refresh Grid"
+                           class="md-raised md-accent"
+                           ng-click="fnRefreshGrid();"
+                           ng-disabled="isProcessing">Refresh
+                </md-button>
+                <md-button aria-label="Download CSV"
+                           class="md-raised md-accent"
+                           ng-click="fnDownloadClientListInteractionCSV($event);"
+                           ng-disabled="isProcessing">Export Interaction CSV
+                </md-button>
+            </div>
+        </section>
+
+        <div ng-if="!isCustomerListInteractionData && !isMsgGridShow" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <div class="margin-bottom-10" ng-if="isMsgGridShow">
+            <div class="md-headline text-center">No CustomerList Interactions Available.</div>
+        </div>
+
+        <!-- Grid Section -->
+        <div class="margin-bottom-10" ng-if="isCustomerListInteractionData"
+             ng-style="$root.fnReturnGridHeight(customerListInteractionData.length,_intRowHeight);"
+             ui-grid="customerListInteractionGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
+
+        <div ng-if="isCustomerListInteractionData" layout="row" layout-align="center center" layout-margin>
+            <div ng-if="isPagingData">
+                <md-button aria-label="More Client-list Interactions" class="md-raised md-accent"
+                           ng-click="fnLoadMoreCustomerListInteractions();">
+                    <span ng-if="isMoreCustomerListInteractions"> Loading... </span>
+                    <span ng-if="!isMoreCustomerListInteractions">More ClientList Interactions </span>
+                </md-button>
+            </div>
+            <div ng-if="!isPagingData">
+                <div class="md-title">... No more results found ...</div>
+            </div>
+        </div>
+
+    </div>
+</div>

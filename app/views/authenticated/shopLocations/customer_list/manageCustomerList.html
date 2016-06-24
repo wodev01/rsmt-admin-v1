@@ -29,9 +29,16 @@
                      ng-include="'views/authenticated/shopLocations/customer_list/dataPreview.html'"></div>
             </md-tab>
 
-            <md-tab label="Map Preview">
+            <md-tab label="Interactions">
                 <div md-theme="rsmt"
                      ng-if="selectedCustListIndex == 2"
+                     ng-controller="customerListInteractionCtrl"
+                     ng-include="'views/authenticated/shopLocations/customer_list/interactions.html'"></div>
+            </md-tab>
+
+            <md-tab label="Map Preview">
+                <div md-theme="rsmt"
+                     ng-if="selectedCustListIndex == 3"
                      ng-init="fnGetLocationDetails(filterObj);"
                      ng-include="'views/authenticated/shopLocations/customer_list/mapPreview.html'"></div>
             </md-tab>
