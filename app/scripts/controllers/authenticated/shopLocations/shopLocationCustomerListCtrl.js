@@ -5,9 +5,9 @@ app.controller('shopLocationCustomersListCtrl',
 
         $rootScope.manageCustomerListSwapView = 'views/authenticated/shopLocations/customer_list/manageCustomerList.html';
 
-        var locId =
-            shopLocationsService.getShopLocationsObj().id ?
-                shopLocationsService.getShopLocationsObj().id : '';
+        var shopLocationObj = shopLocationsService.getShopLocationsObj(),
+            locId = shopLocationObj.id ? shopLocationObj.id : '',
+            partnerId = shopLocationObj.partnerId ? shopLocationObj.partnerId : '';
 
         $scope.customerListData = [];
         $scope.isDataNotNull = $scope.isMsgShow = false;
@@ -101,8 +101,17 @@ app.controller('shopLocationCustomersListCtrl',
             ]
         };
 
-        $scope.fnOpenModalTemplateView = function(row, event){
-
+        $scope.fnOpenModalTemplateView = function(row, event) {
+            $mdDialog.show({
+                controller: 'sendEmailToListCtrl',
+                templateUrl: 'views/authenticated/shopLocations/modals/sendEmailToList.html',
+                targetEvent: event,
+                resolve: {
+                    partnerId: function () {
+                        return partnerId;
+                    }
+                }
+            });
         };
 
         $scope.fnEditCustomerList = function (row) {

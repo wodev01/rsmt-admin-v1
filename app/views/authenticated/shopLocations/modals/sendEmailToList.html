@@ -1,0 +1,38 @@
+<md-dialog aria-label="Send Email To List" id="send-email-to-list-dialog" class="fullScreenDialog"
+           ng-init="fnInitSendEmailToList();">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools" layout="row">
+            <span class="md-title">Send Email To List</span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="fnCloseFormDataDialog();" aria-label="Close">
+                <md-icon md-font-set="fa fa-lg fa-fw fa-close"></md-icon>
+                <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content class="md-padding" layout="column">
+        <div ng-init="fnInitCustomerListInteraction();">
+            <section layout="row" layout-sm="column" layout-xs="column"
+                     layout-align="space-between center"
+                     layout-align-sm="space-around start"
+                     layout-align-xs="space-around start">
+                <div class="margin-top-13" layout="row" flex>
+                    <input id="pickDateRange" ng-model="drpObj"/>
+                </div>
+                <div layout="row" layout-align="space-between center" layout-fill flex>
+                    <md-input-container flex>
+                        <md-select-label>Template:</md-select-label>
+                        <md-select aria-label="Select Template" ng-model="filter.templateName"
+                                   ng-disabled="isProcessing">
+                            <md-option value=""">Select Template</md-option>
+                            <md-option ng-repeat="template in templatesData" ng-value="template.name">
+                                {{template.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                 </div>
+            </section>
+        </div>
+    </md-dialog-content>
+</md-dialog>

@@ -7,4 +7,8 @@ app.controller('clientFormsDataCtrl', function ($scope, $mdDialog, clientFormDat
         $mdDialog.hide();
     };
 
+    $scope.fnCheckFormData = function(data){
+        return Object.keys(data).length;
+    };
+
 });
