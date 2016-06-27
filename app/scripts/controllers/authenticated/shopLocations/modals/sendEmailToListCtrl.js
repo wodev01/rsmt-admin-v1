@@ -33,22 +33,18 @@ app.controller('sendEmailToListCtrl', function ($scope, $timeout, $mdDialog, par
         $mdDialog.hide();
     };
 
-    $scope.fnInitSendEmailToList = function () {
-        $timeout(function () {
-            $('#send-email-to-list-dialog #pickDateRange').daterangepicker({
-                datepickerOptions: {
-                    numberOfMonths: 2,
-                    maxDate: null
-                },
-                initialText: 'Select Date Period...',
-                presetRanges: [],
-                onChange: function () {
-                    $scope.fnRefreshGrid();
-                }
-            });
-            $scope.fnToggleDateRange(true);
-        }, 100);
+    function fnGetDateRange(dateRangeObj) {
+        $scope.filter['from'] = dateRangeObj && dateRangeObj.start ? moment(dateRangeObj.start).format('YYYY-MM-DD') : '';
+        $scope.filter['to'] = dateRangeObj && dateRangeObj.end ? moment(dateRangeObj.end).format('YYYY-MM-DD') : '';
+        //$scope.fnChangeFilter($scope.filter);
+        console.log($scope.filter);
+    }
 
+    $scope.fnRefreshGrid = function (dateRangeObj) {
+        fnGetDateRange(dateRangeObj);
+    };
+
+    $scope.fnInitSendEmailToList = function () {
         $scope.getPagedDataAsync(partnerId);
     };
 
