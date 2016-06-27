@@ -20,7 +20,7 @@ app.controller('segmentsInteractionCtrl',
         $scope.isPagingData = true;
 
         $scope.isProcessing = true;
-        $scope.drpObj;
+        $scope.dateRangeObj = {};
 
         $scope.pagingOptions = {
             pageSize: 20,
@@ -37,8 +37,10 @@ app.controller('segmentsInteractionCtrl',
         $scope.fnToggleDateRange = function (isProcessing) {
             $scope.isProcessing = isProcessing;
             if (isProcessing) {
-                $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
-                $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+                $timeout(function () {
+                    $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
+                    $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+                });
             } else {
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', '');
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').removeAttr('disabled');
@@ -75,9 +77,9 @@ app.controller('segmentsInteractionCtrl',
             $scope.getPagedDataAsync(filter);
         };
 
-        function fnGetDateRange(dateObj) {
-            $scope.filter['from'] = dateObj && dateObj.start ? moment(dateObj.start).format('YYYY-MM-DD') : '';
-            $scope.filter['to'] = dateObj && dateObj.end ? moment(dateObj.end).format('YYYY-MM-DD') : '';
+        function fnGetDateRange(dateRangeObj) {
+            $scope.filter['from'] = dateRangeObj && dateRangeObj.start ? moment(dateRangeObj.start).format('YYYY-MM-DD') : '';
+            $scope.filter['to'] = dateRangeObj && dateRangeObj.end ? moment(dateRangeObj.end).format('YYYY-MM-DD') : '';
             $scope.fnChangeFilter($scope.filter);
         };
 
@@ -171,13 +173,12 @@ app.controller('segmentsInteractionCtrl',
             });
         };
 
-        $scope.fnRefreshGrid = function () {
-            $scope.drpObj = $('#segment-interaction-tab #pickDateRange').daterangepicker('getRange');
-            fnGetDateRange($scope.drpObj);
+        $scope.fnRefreshGrid = function (dateRangeObj) {
+            fnGetDateRange(dateRangeObj);
         };
 
         $scope.$on('refreshSegmentInteraction', function () {
-            $scope.fnRefreshGrid();
+            $scope.fnRefreshGrid($scope.dateRangeObj);
         });
 
         $scope.fnDownloadInteractionCSV = function (event) {
@@ -219,9 +220,8 @@ app.controller('segmentsInteractionCtrl',
                 '</md-dialog>',
                 targetEvent: event
             }).then(function () {
-                },
-                function (err) {
-                });
+            }, function (err) {
+            });
         };
 
         /*-------------- Load More Interactions ---------------*/
@@ -247,7 +247,6 @@ app.controller('segmentsInteractionCtrl',
                         toastr.error('Failed retrieving more segment interaction', 'STATUS CODE: ' + error.status);
                         $scope.fnToggleDateRange(false);
                     });
-
             }
         };
 
@@ -271,22 +270,6 @@ app.controller('segmentsInteractionCtrl',
             if ($scope.segment) {
                 $scope.segment.sub_segments.unshift({id: '', name: 'All Sub Segments'});
             }
-
-            $timeout(function () {
-                $('#segment-interaction-tab #pickDateRange').daterangepicker({
-                    datepickerOptions: {
-                        numberOfMonths: 2,
-                        maxDate: null
-                    },
-                    initialText: 'Select Date Period...',
-                    presetRanges: [],
-                    onChange: function () {
-                        $scope.fnRefreshGrid();
-                    }
-                });
-
-                $scope.fnToggleDateRange(true);
-            }, 100);
 
             $scope.getPagedDataAsync($scope.filter);
         };

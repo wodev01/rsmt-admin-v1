@@ -450,8 +450,8 @@ app.directive('recommendedGrid', function ($mdDialog, $timeout, shopLocationsSer
         templateUrl: 'views/authenticated/shopLocations/shopLocationsRS.html',
         link: function ($scope) {
             $scope.isRSDataNotNull = $scope.isRSMsgShow = $scope._filteringEnabled = false;
-            $scope.isProcessing = true;
-            $scope.drpObj;
+            $scope.isProcessing = false;
+            $scope.dateRangeObj = {};
             var _paginationPageSize = 5;
 
             var vehicleId = null, locId = null;
@@ -477,74 +477,49 @@ app.directive('recommendedGrid', function ($mdDialog, $timeout, shopLocationsSer
                 });
             };
 
-            $scope.fnToggleDateRange = function () {
-                if ($scope.isProcessing) {
-                    $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
-                    $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+            $scope.fnToggleDateRange = function (isProcessing) {
+                $scope.isProcessing = isProcessing;
+                if (isProcessing) {
+                    $timeout(function () {
+                        $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
+                        $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+                    });
                 } else {
                     $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', '');
                     $('.comiseo-daterangepicker-triggerbutton.ui-button').removeAttr('disabled');
                 }
             };
 
-            $scope.fnToggleDateRange();
+            $scope.fnRefreshGrid = function (dateRangeObj) {
+                $scope.isProcessing = false;
+                $scope.dateRangeObj = dateRangeObj;
+                if (!$scope.isRSDataNotNull && $scope.isRSMsgShow) {
+                    $scope.isRSDataNotNull = $scope.isRSMsgShow = false;
+                } else if (!$scope.isRSMsgShow) {
+                    $scope.isProcessing = true;
+                }
+
+                $scope.recommendedServiceGridOptions.paginationCurrentPage = 1;
+                $scope.fnToggleDateRange($scope.isProcessing);
+                $scope.fnRefreshDom();
+                $scope.getPagedDataAsync();
+            };
 
             $scope.fnInit = function () {
                 $timeout(function () {
-                    $scope.isProcessing = false;
-                    $('#rs-grid #pickDateRange').daterangepicker({
-                        datepickerOptions: {
-                            numberOfMonths: 2,
-                            maxDate: null
-                        },
-                        initialText: 'Select Date Period...',
-                        presetRanges: [],
-                        onChange: function () {
-                            $scope.drpObj = $('#rs-grid #pickDateRange').daterangepicker('getRange');
-                            if (!$scope.isRSDataNotNull && $scope.isRSMsgShow) {
-                                $scope.isRSDataNotNull = $scope.isRSMsgShow = false;
-                            } else if (!$scope.isRSMsgShow) {
-                                $scope.isProcessing = true;
-                            }
-
-                            $scope.recommendedServiceGridOptions.paginationCurrentPage = 1;
-                            $scope.fnToggleDateRange();
-                            $scope.fnRefreshDom();
-                            $scope.getPagedDataAsync();
-                        }
-                    });
-
                     $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
                     $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
-
-                    /*--- Date-range picker has same class for Clear, Cancel btns ---*/
-                    $('.comiseo-daterangepicker-buttonpanel .ui-priority-secondary:first').click(function () {
-                        if ($scope.drpObj) {
-                            if (!$scope.isRSDataNotNull && $scope.isRSMsgShow) {
-                                $scope.isRSDataNotNull = $scope.isRSMsgShow = false;
-                            } else if (!$scope.isRSMsgShow) {
-                                $scope.isProcessing = true;
-                            }
-
-                            $scope.recommendedServiceGridOptions.paginationCurrentPage = 1;
-                            $scope.fnToggleDateRange();
-                            $scope.fnRefreshDom();
-                            $scope.drpObj = '';
-                            $scope.getPagedDataAsync();
-                        }
-                    });
-
-                }, 100);
+                });
             };
 
             $scope.getPagedDataAsync = function () {
                 if (locId) {
                     shopLocationsService.recommendedService(locId).then(function (data) {
-                        if ($scope.drpObj) {
+                        if ($scope.dateRangeObj && Object.keys($scope.dateRangeObj).length !== 0) {
                             data = data.filter(function (obj) {
                                 var date = moment(obj.recommended_date);
-                                var startDate = $scope.drpObj.start;
-                                var endDate = $scope.drpObj.end;
+                                var startDate = $scope.dateRangeObj.start;
+                                var endDate = $scope.dateRangeObj.end;
 
                                 if (date.isBefore(endDate) && date.isAfter(startDate)
                                     || (date.isSame(startDate, 'day') || date.isSame(endDate, 'day'))) {
@@ -564,13 +539,13 @@ app.directive('recommendedGrid', function ($mdDialog, $timeout, shopLocationsSer
                                 $scope.filteredData = tempData.slice(0, _paginationPageSize);
                             }
                             $scope.isProcessing = false;
-                            $scope.fnToggleDateRange();
+                            $scope.fnToggleDateRange($scope.isProcessing);
                             $scope.fnRefreshDom();
                         } else {
                             $scope.isRSDataNotNull = false;
                             $scope.isRSMsgShow = true;
                             $scope.isProcessing = false;
-                            $scope.fnToggleDateRange();
+                            $scope.fnToggleDateRange($scope.isProcessing);
                             $scope.fnRefreshDom();
                         }
                     });
@@ -800,6 +775,40 @@ app.directive('jsonText', function () {
                 // better than JSON.stringify(), because it formats + filters $$hashKey etc.
                 return angular.toJson(object, true);
             }
+        }
+    };
+});
+
+app.directive('dateRangePicker', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            dateRangeObj: '=',
+            selectionChange: '='
+        },
+        link: function(scope, elem) {
+
+            function onSelectionChange() {
+                scope.dateRangeObj = angular.element(elem).daterangepicker('getRange');
+                if (scope.selectionChange) {
+                    scope.selectionChange(scope.dateRangeObj);
+                }
+            }
+
+            angular.element(elem).daterangepicker({
+                datepickerOptions: {
+                    numberOfMonths: 2,
+                    maxDate: null
+                },
+                initialText: 'Select Date Period...',
+                presetRanges: [],
+                change: function () {
+                    onSelectionChange();
+                },
+                clear: function () {
+                    onSelectionChange();
+                }
+            });
         }
     };
 });

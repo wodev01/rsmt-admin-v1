@@ -253,14 +253,13 @@ app.controller('shopLocationsCtrl',
 
         $scope.fnDownloadCustomerCSV = function (shopLocationObj, event) {
             $mdDialog.show({
-                locals: {locationId: $scope.selectedLocationId, pId: shopLocationObj.partnerId},
+                locals: {partnerId: shopLocationObj.partnerId},
                 controller: 'downloadCustomerCSVCtrl',
                 templateUrl: 'views/authenticated/shopLocations/modals/downloadCustomerCSV.tmpl.html',
                 targetEvent: event
             }).then(function () {
-                },
-                function (err) {
-                });
+            }, function (err) {
+            });
         };
         /*----------- End of Manage Shop Locations ------------*/
 

@@ -20,7 +20,7 @@ app.controller('customerListInteractionCtrl',
 
         $scope.isPagingData = true;
         $scope.isProcessing = true;
-        $scope.drpObj = {};
+        $scope.dateRangeObj = {};
 
         $scope.pagingOptions = {
             pageSize: 20,
@@ -34,28 +34,25 @@ app.controller('customerListInteractionCtrl',
             'deliveryType': ''
         };
 
-        $scope.fnRefreshGrid = function () {
-            $scope.drpObj = $('#customer-list-interaction-tab #pickDateRange').daterangepicker('getRange');
-            fnGetDateRange($scope.drpObj);
-        };
-
         $scope.fnChangeFilter = function (filter) {
             $scope.filter.page_num = 1;
             $scope.isPagingData = true;
             $scope.getPagedDataAsync(filter);
         };
 
-        function fnGetDateRange(dateObj) {
-            $scope.filter['from'] = dateObj && dateObj.start ? moment(dateObj.start).format('YYYY-MM-DD') : '';
-            $scope.filter['to'] = dateObj && dateObj.end ? moment(dateObj.end).format('YYYY-MM-DD') : '';
+        function fnGetDateRange(dateRangeObj) {
+            $scope.filter['from'] = dateRangeObj && dateRangeObj.start ? moment(dateRangeObj.start).format('YYYY-MM-DD') : '';
+            $scope.filter['to'] = dateRangeObj && dateRangeObj.end ? moment(dateRangeObj.end).format('YYYY-MM-DD') : '';
             $scope.fnChangeFilter($scope.filter);
         }
 
         $scope.fnToggleDateRange = function (isProcessing) {
             $scope.isProcessing = isProcessing;
             if (isProcessing) {
-                $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
-                $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+                $timeout(function () {
+                    $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
+                    $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+                });
             } else {
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', '');
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').removeAttr('disabled');
@@ -96,7 +93,6 @@ app.controller('customerListInteractionCtrl',
             + '     <div> Address: {{row.entity.customer.address1}} </div>'
             + '</div></div>';
 
-
         $scope.customerListInteractionGridOptions = {
             data: 'customerListInteractionData',
             rowHeight: $scope._intRowHeight,
@@ -133,26 +129,26 @@ app.controller('customerListInteractionCtrl',
             }
         };
 
-        $scope.fnRefreshGrid = function () {
-            $scope.drpObj = $('#customer-list-interaction-tab #pickDateRange').daterangepicker('getRange');
-            fnGetDateRange($scope.drpObj);
+        $scope.fnRefreshGrid = function (dateRangeObj) {
+            fnGetDateRange(dateRangeObj);
         };
 
         $scope.fnDownloadClientListInteractionCSV = function (event) {
             var DialogController = ['$scope', '$window', 'locationId', 'customerListId', 'filterObj',
                 function ($scope, $window, locationId, customerListId, filterObj) {
-                    if (CarglyPartner) {
-                        $scope.carglyPartnerObj = CarglyPartner;
-                    }
                     var filter = angular.copy(filterObj);
-                    filter.oauth_token = $scope.carglyPartnerObj.accessToken;
 
                     $scope.fnDownload = function () {
-                        $mdDialog.hide();
-                        $scope.downloadLink = $scope.carglyPartnerObj.src + '/partners/api/crm/' +
-                            locationId + '/customer-lists/' + customerListId + '/interactions/interactions.csv' +
-                            encodeParamService.getEncodedParams(filter);
-                        $window.open($scope.downloadLink, '_blank');
+                        if (CarglyPartner) {
+                            filter.oauth_token = CarglyPartner.accessToken;
+                            $mdDialog.hide();
+
+                            $scope.downloadLink = CarglyPartner.src + '/partners/api/crm/' +
+                                locationId + '/customer-lists/' +
+                                customerListId + '/interactions/interactions.csv' +
+                                encodeParamService.getEncodedParams(filter);
+                            $window.open($scope.downloadLink, '_blank');
+                        }
                     };
 
                     $scope.fnHide = function () {
@@ -208,20 +204,6 @@ app.controller('customerListInteractionCtrl',
         };
 
         $scope.fnInitCustomerListInteraction = function () {
-            $timeout(function () {
-                $('#customer-list-interaction-tab #pickDateRange').daterangepicker({
-                    datepickerOptions: {
-                        numberOfMonths: 2,
-                        maxDate: null
-                    },
-                    initialText: 'Select Date Period...',
-                    presetRanges: [],
-                    onChange: function () {
-                        $scope.fnRefreshGrid();
-                    }
-                });
-                $scope.fnToggleDateRange(true);
-            }, 100);
             $scope.getPagedDataAsync($scope.filter)
         };
 
