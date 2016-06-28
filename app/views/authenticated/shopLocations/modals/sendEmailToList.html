@@ -13,26 +13,19 @@
 
     <md-dialog-content class="md-padding" layout="column">
         <div ng-init="fnInitCustomerListInteraction();">
-            <section layout="row" layout-sm="column" layout-xs="column"
-                     layout-align="space-between center"
-                     layout-align-sm="space-around start"
-                     layout-align-xs="space-around start">
-                <div class="margin-top-13" layout="row" flex>
-                    <date-range-picker date-range-obj="dateRangeObj"
-                                       selection-change="fnRefreshGrid"></date-range-picker>
-                </div>
-                <div layout="row" layout-align="space-between center" layout-fill flex>
-                    <md-input-container flex>
-                        <md-select-label>Template:</md-select-label>
-                        <md-select aria-label="Select Template" ng-model="filter.templateName"
-                                   ng-disabled="isProcessing">
-                            <md-option value=""">Select Template</md-option>
-                            <md-option ng-repeat="template in templatesData" ng-value="template.name">
-                                {{template.name}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                 </div>
+            <section layout="column">
+                <time-date-picker ng-model="dateValue"  on-cancel="fnCancel();"
+                                  data-display-mode="{{display_mode}}"></time-date-picker>
+                <md-input-container flex>
+                    <md-select-label>Template:</md-select-label>
+                    <md-select aria-label="Select Template" ng-model="filter.templateName"
+                               ng-disabled="isProcessing">
+                        <md-option value=""">Select Template</md-option>
+                        <md-option ng-repeat="template in templatesData" ng-value="template.name">
+                            {{template.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
             </section>
         </div>
     </md-dialog-content>

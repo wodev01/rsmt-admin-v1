@@ -134,9 +134,11 @@ app.controller('customerListInteractionCtrl',
         };
 
         $scope.fnDownloadClientListInteractionCSV = function (event) {
-            var DialogController = ['$scope', '$window', 'locationId', 'customerListId', 'filterObj',
-                function ($scope, $window, locationId, customerListId, filterObj) {
+            var DialogController = ['$scope', '$window', 'locationId', 'customerListId', 'filterObj', 'pageSize',
+                function ($scope, $window, locationId, customerListId, filterObj, pageSize) {
                     var filter = angular.copy(filterObj);
+                    filter.page_num = 1;
+                    filter.page_size = pageSize;
 
                     $scope.fnDownload = function () {
                         if (CarglyPartner) {
@@ -145,8 +147,9 @@ app.controller('customerListInteractionCtrl',
 
                             $scope.downloadLink = CarglyPartner.src + '/partners/api/crm/' +
                                 locationId + '/customer-lists/' +
-                                customerListId + '/interactions/interactions.csv' +
+                                customerListId + '/interactions.csv' +
                                 encodeParamService.getEncodedParams(filter);
+
                             $window.open($scope.downloadLink, '_blank');
                         }
                     };
@@ -157,7 +160,7 @@ app.controller('customerListInteractionCtrl',
                 }];
 
             $mdDialog.show({
-                locals: {locationId: locId, customerListId: customerListId, filterObj: $scope.filter},
+                locals: {locationId: locId, customerListId: customerListId, filterObj: $scope.filter, pageSize: $scope.customerListInteractionData.length},
                 controller: DialogController,
                 template: '<md-dialog aria-label="Download Client-list Interaction CSV Dialog">' +
                 '  <md-dialog-content class="layout-padding">' +

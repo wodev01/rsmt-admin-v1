@@ -1,6 +1,6 @@
 'use strict';
 app.controller('segmentsInteractionCtrl',
-    function ($scope, $filter, cookieName, $cookies, $mdDialog, $window, $timeout,
+    function ($scope, $filter, $mdDialog, $window, $timeout,
               encodeParamService, shopLocationsService, segmentInteractionService, shopLocationSegmentService) {
 
         var locId =
@@ -81,7 +81,7 @@ app.controller('segmentsInteractionCtrl',
             $scope.filter['from'] = dateRangeObj && dateRangeObj.start ? moment(dateRangeObj.start).format('YYYY-MM-DD') : '';
             $scope.filter['to'] = dateRangeObj && dateRangeObj.end ? moment(dateRangeObj.end).format('YYYY-MM-DD') : '';
             $scope.fnChangeFilter($scope.filter);
-        };
+        }
 
         $scope.nameTmpl = '<div class="ui-grid-cell-contents">'
             + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}</div>';
@@ -182,19 +182,22 @@ app.controller('segmentsInteractionCtrl',
         });
 
         $scope.fnDownloadInteractionCSV = function (event) {
-            var token = $cookies.get(cookieName);
-
-            var DialogController = ['$scope', '$window', 'locationId', 'segmentId', 'filterObj',
-                function ($scope, $window, locationId, segmentId, filterObj) {
+            var DialogController = ['$scope', '$window', 'locationId', 'segmentId', 'filterObj', 'pageSize',
+                function ($scope, $window, locationId, segmentId, filterObj, pageSize) {
                     var filter = angular.copy(filterObj);
+                    filter.page_num = 1;
+                    filter.page_size = pageSize;
 
-                    filter.oauth_token = token;
                     $scope.fnDownload = function () {
-                        $mdDialog.hide();
-                        $scope.downloadLink = 'https://carglyplatform.appspot.com/partners/api/crm/' +
-                            locationId + '/segments/' + segmentId + '/interactions.csv' +
-                            encodeParamService.getEncodedParams(filter);
-                        $window.open($scope.downloadLink, '_blank');
+                        if (CarglyPartner) {
+                            filter.oauth_token = CarglyPartner.accessToken;
+                            $mdDialog.hide();
+
+                            $scope.downloadLink = CarglyPartner.src + '/partners/api/crm/' +
+                                locationId + '/segments/' + segmentId + '/interactions.csv' +
+                                encodeParamService.getEncodedParams(filter);
+                            $window.open($scope.downloadLink, '_blank');
+                        }
                     };
 
                     $scope.fnHide = function () {
@@ -204,7 +207,7 @@ app.controller('segmentsInteractionCtrl',
                 }];
 
             $mdDialog.show({
-                locals: {locationId: locId, segmentId: $scope.segment.id, filterObj: $scope.filter},
+                locals: {locationId: locId, segmentId: $scope.segment.id, filterObj: $scope.filter , pageSize: $scope.segmentInteractionData.length},
                 controller: DialogController,
                 template: '<md-dialog aria-label="Download Interaction CSV Dialog">' +
                 '  <md-dialog-content class="layout-padding">' +

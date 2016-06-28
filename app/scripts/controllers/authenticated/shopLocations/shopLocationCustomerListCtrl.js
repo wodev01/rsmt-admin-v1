@@ -67,10 +67,7 @@ app.controller('shopLocationCustomersListCtrl',
             '           ng-click="grid.appScope.fnEditCustomerList(row);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-pencil"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Edit</md-tooltip></md-button>' +
-            '<md-button aria-label="send email" class="md-icon-button md-accent" ' +
-            '           ng-click="grid.appScope.fnOpenModalTemplateView(row, $event);">' +
-            '   <md-icon md-font-set="fa fa-lg fa-fw fa-envelope"></md-icon>' +
-            '   <md-tooltip ng-if="$root.isMobile === null" md-direction="top">Send email to list</md-tooltip></md-button>' +
+
             '<md-button aria-label="download" class="md-icon-button md-accent" ' +
             '           ng-click="grid.appScope.fnExportPreviewListCSV(row, $event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-download"></md-icon>' +
@@ -93,7 +90,7 @@ app.controller('shopLocationCustomersListCtrl',
                     name: 'action',
                     displayName: '',
                     cellTemplate: $scope.customerListAction,
-                    width: 180,
+                    width: 150,
                     enableSorting: false,
                     enableColumnMenu: false,
                     enableColumnResizing: false
